@@ -1,81 +1,53 @@
 'use client';
 
-import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import NextLink from 'next/link';
+import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Separator } from '@/components/ui/separator';
 import { BookingModal } from '@/components/booking/BookingModal';
-import {
-  Star,
-  MapPin,
-  Clock,
-  MessageCircle,
-  Calendar,
-  GraduationCap,
-  Globe,
-  Award,
-} from 'lucide-react';
-import { mockTutors } from '@/lib/mockData';
 import { useSession } from 'next-auth/react';
-import { WPUser } from '@/lib/types';
 
 export default function TutorProfilePage() {
   const params = useParams();
   const router = useRouter();
   const { data: session, status } = useSession();
-  const [showBookingModal, setShowBookingModal] = useState(false);
-  const [author, setAuthor] = useState<WPUser>();
-  const [loading, setLoading] = useState<boolean>(true);
 
-  const tutor = mockTutors.find((t) => t.id == '1');
+  const [author, setAuthor] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   useEffect(() => {
     const abortCtrl = new AbortController();
-    async function fetchUsers() {
-      setLoading(true);
+
+    async function fetchAuthor() {
       try {
         const base = (process.env.NEXT_PUBLIC_WP_URL ?? '').replace(/\/+$/, '');
-        if (!base) throw new Error('NEXT_PUBLIC_WP_URL is not set');
-        const url = `${base}/wp-json/custom/v1/author?id=${params.id}`;
-        const res = await fetch(url, { signal: abortCtrl.signal, mode: 'cors' });
-        if (!res.ok) {
-          const text = await res.text();
-          throw new Error(`Fetch error ${res.status}: ${text}`);
-        }
+        const res = await fetch(
+          `${base}/wp-json/custom/v1/author?id=${params.id}`,
+          { signal: abortCtrl.signal }
+        );
         const json = await res.json();
-        const data: WPUser = json.data ?? json;
-        setAuthor(data);
-      } catch (_) {
-      } finally {
+        setAuthor(json.data ?? json);
+      } catch {}
+      finally {
         setLoading(false);
       }
     }
-    fetchUsers();
+
+    fetchAuthor();
     return () => abortCtrl.abort();
   }, [params.id]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-[#f7f6f2]">
         <Header />
-        <div className="max-w-6xl mx-auto py-12 px-4 space-y-4">
-          {/* simple skeletons */}
-          <div className="animate-pulse grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-6">
-              <div className="h-40 bg-muted rounded-2xl" />
-              <div className="h-56 bg-muted rounded-2xl" />
-              <div className="h-56 bg-muted rounded-2xl" />
-              <div className="h-56 bg-muted rounded-2xl" />
-            </div>
-            <div className="space-y-6">
-              <div className="h-64 bg-muted rounded-2xl sticky top-24" />
-            </div>
+        <div className="max-w-[1120px] mx-auto py-12 px-4">
+          <div className="animate-pulse space-y-6">
+            <div className="h-40 bg-[#eceae5] rounded-xl" />
+            <div className="h-60 bg-[#eceae5] rounded-xl" />
+            <div className="h-60 bg-[#eceae5] rounded-xl" />
           </div>
         </div>
         <Footer />
@@ -83,12 +55,12 @@ export default function TutorProfilePage() {
     );
   }
 
-  if (!author && !tutor) {
+  if (!author) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-[#f7f6f2]">
         <Header />
-        <div className="py-16 px-4 text-center">
-          <h1 className="text-2xl font-bold">Author not found</h1>
+        <div className="text-center py-20">
+          <h1 className="text-xl font-semibold">Author not found</h1>
         </div>
         <Footer />
       </div>
@@ -96,301 +68,168 @@ export default function TutorProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
 
-      <div className="py-8 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid gap-8 lg:grid-cols-3">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Profile Header */}
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex flex-col md:flex-row items-start gap-4 md:gap-6">
-                    {/* Avatar */}
-                    <div className="flex md:block w-full md:w-auto justify-center md:justify-start">
-                      <Avatar className="h-24 w-24 md:h-28 md:w-28">
-                        <AvatarImage src={author?.avatar} alt={author?.name} />
-                        <AvatarFallback className="text-lg">
-                          {author?.name
-                            .split(' ')
-                            .map((n) => n[0])
-                            .join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                    </div>
+      <main className="py-10 px-4">
+        <div className="max-w-[1120px] mx-auto grid lg:grid-cols-[1fr_320px] gap-8">
 
-                    <div className="flex-1 w-full">
-                      <h1 className="text-2xl sm:text-3xl font-bold mb-2 text-center md:text-left">
-                        {author?.name}
-                      </h1>
+          {/* LEFT SIDE */}
+          <div className="space-y-6">
 
-                      {/* Rating + location + response */}
-                      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mb-4 text-sm sm:text-base justify-center md:justify-start">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 sm:h-5 sm:w-5 fill-yellow-400 text-yellow-400" />
-                          <span className="font-medium">{author?.average_rating}</span>
-                          <span className="text-gray-500">
-                            ({author?.reviews_count} reviews)
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1 text-gray-600">
-                          <MapPin className="h-4 w-4" />
-                          <span>{author?.location}</span>
-                        </div>
-                        {/* <div className="flex items-center gap-1 text-gray-600">
-                          <Clock className="h-4 w-4" />
-                          <span>Responds in {tutor?.responseTime}</span>
-                        </div> */}
-                      </div>
+            {/* PROFILE HEADER */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+              <div className="flex gap-6 items-start">
 
-                      {/* Subjects */}
-                      <div className="flex flex-wrap gap-2 mb-4 justify-center md:justify-start">
-                        {author?.subjects?.map((subject) => (
-                          <Badge key={subject.trim()} variant="secondary">
-                            {subject.trim()}
-                          </Badge>
-                        ))}
-                      </div>
+                <img
+                  src={author.avatar}
+                  alt={author.name}
+                  className="w-24 h-24 rounded-full object-cover border"
+                />
 
-                      {/* Availability */}
-                      <div className="flex items-center gap-2 text-green-600 justify-center md:justify-start">
-                        <div className="h-2 w-2 bg-green-600 rounded-full" />
-                        <span className="font-medium">{tutor?.availability}</span>
-                      </div>
-                    </div>
+                <div className="flex-1">
+                  <h1 className="font-[var(--font-display)] text-[clamp(1.8rem,2.5vw,2.8rem)]">
+                    {author.name}
+                  </h1>
+
+                  <div className="flex flex-wrap gap-4 text-sm text-[#6e6a63] mt-2">
+                    <span>{author.average_rating} rating</span>
+                    <span>{author.reviews_count} reviews</span>
+                    <span>{author.location}</span>
                   </div>
-                </CardContent>
-              </Card>
 
-              {/* About */}
-              <Card>
-              <CardHeader className="text-center md:text-left">
-                <CardTitle>About Me</CardTitle>
-              </CardHeader>
-
-              <CardContent className="text-center md:text-left">
-                <p className="text-gray-600 leading-relaxed">
-                  {author?.bio}
-                </p>
-              </CardContent>
-            </Card>
-
-
-              {/* My Books */}
-              {Array.isArray((author as any)?.books) &&
-                (author as any).books.length > 0 && (
-                  <Card>
-                    <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                      <CardTitle>My Books</CardTitle>
-                      <NextLink
-                        href="/books"
-                        className="text-blue-600 text-sm font-medium hover:underline"
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {author.subjects?.map((s: string) => (
+                      <span
+                        key={s}
+                        className="text-xs bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full"
                       >
-                        Manage All Books →
-                      </NextLink>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="overflow-x-auto">
-                        <table className="min-w-full text-sm text-left">
-                          <thead>
-                            <tr className="text-gray-500 border-b">
-                              <th className="py-3 px-4 font-medium">Book</th>
-                              <th className="py-3 px-4 font-medium">Link</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {(author as any).books.slice(0, 4).map((book: any) => (
-                              <tr
-                                key={book.id}
-                                className="border-b last:border-b-0 hover:bg-muted/60 transition-colors"
-                              >
-                                <td className="py-3 px-4">
-                                  <div className="flex items-center gap-3">
-                                    {book.featured_image && (
-                                      <img
-                                        src={book.featured_image}
-                                        alt={book.title}
-                                        className="h-12 w-12 rounded-md object-cover border"
-                                      />
-                                    )}
-                                    <span className="font-medium">{book.title}</span>
-                                  </div>
-                                </td>
-                                <td className="py-3 px-4">
-                                  {book.book_url ? (
-                                    <a
-                                      href={book.book_url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="text-blue-600 hover:underline font-medium"
-                                    >
-                                      View Book →
-                                    </a>
-                                  ) : (
-                                    <span className="text-gray-400">
-                                      No link available
-                                    </span>
-                                  )}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-              {/* Experience & Education */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Experience & Education</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <GraduationCap className="h-5 w-5 text-blue-600 mt-1" />
-                    <div>
-                      <p className="font-medium">Education</p>
-                      <p className="text-gray-600">{author?.education}</p>
-                    </div>
+                        {s}
+                      </span>
+                    ))}
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Award className="h-5 w-5 text-blue-600 mt-1" />
-                    <div>
-                      <p className="font-medium">Teaching Experience</p>
-                      <p className="text-gray-600">
-                        {author?.teaching_experience}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Globe className="h-5 w-5 text-blue-600 mt-1" />
-                    <div>
-                      <p className="font-medium">Languages</p>
-                      <p className="text-gray-600">{author?.languages}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Reviews */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Reviews ({author?.reviews_count})</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {author?.reviews && author.reviews.length > 0 ? (
-                    <div className="space-y-4">
-                      {author.reviews.map((review: { id: Key | null | undefined; rating: number; studentName: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; date: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; comment: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; }) => (
-                        <div
-                          key={review.id}
-                          className="border-b last:border-b-0 pb-4 last:pb-0"
-                        >
-                          <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <div className="flex items-center">
-                              {[...Array(5)].map((_, i) => (
-                                <Star
-                                  key={i}
-                                  className={`h-4 w-4 ${
-                                    i < review.rating
-                                      ? 'fill-yellow-400 text-yellow-400'
-                                      : 'text-gray-300'
-                                  }`}
-                                />
-                              ))}
-                            </div>
-                            <span className="font-medium">
-                              {review.studentName}
-                            </span>
-                            <span className="text-gray-500 text-sm">
-                              {review.date}
-                            </span>
-                          </div>
-                          <p className="text-gray-600">{review.comment}</p>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-gray-500">No reviews yet</p>
-                  )}
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </div>
 
-            {/* Booking Sidebar */}
-            <div className="space-y-6">
-              <Card className="lg:sticky lg:top-24">
-                <CardContent className="p-6">
-                  <div className="text-center mb-6">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">
-                      ${author?.hourly_rate}/hr
+            {/* ABOUT */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+              <h2 className="font-[var(--font-display)] text-xl mb-3">
+                About
+              </h2>
+              <p className="text-[#6e6a63] leading-relaxed">
+                {author.bio}
+              </p>
+            </div>
+
+            {/* BOOKS */}
+            {author.books?.length > 0 && (
+              <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+                <h2 className="font-[var(--font-display)] text-xl mb-4">
+                  Books
+                </h2>
+
+                <div className="space-y-3">
+                  {author.books.slice(0, 4).map((book: any) => (
+                    <div key={book.id} className="flex gap-3 items-center">
+                      {book.featured_image && (
+                        <img
+                          src={book.featured_image}
+                          className="w-12 h-12 rounded-md object-cover"
+                        />
+                      )}
+                      <div>
+                        <p className="font-medium">{book.title}</p>
+                        {book.book_url && (
+                          <a
+                            href={book.book_url}
+                            target="_blank"
+                            className="text-sm text-[#01696f] hover:underline"
+                          >
+                            View book →
+                          </a>
+                        )}
+                      </div>
                     </div>
-                    <p className="text-gray-600">Starting rate</p>
-                  </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
-                  <div className="space-y-3">
-                    <Button
-                      className="w-full bg-blue-600 hover:bg-blue-700"
-                      onClick={() => {
-                        if (status === 'loading') return;
+            {/* EXPERIENCE */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+              <h2 className="font-[var(--font-display)] text-xl mb-4">
+                Experience & Education
+              </h2>
 
-                        const wpToken =
-                          typeof window !== 'undefined'
-                            ? localStorage.getItem('wpToken')
-                            : null;
-                        const isLoggedIn = !!(wpToken || session);
+              <div className="space-y-3 text-[#6e6a63]">
+                <p><strong>Education:</strong> {author.education}</p>
+                <p><strong>Experience:</strong> {author.teaching_experience}</p>
+                <p><strong>Languages:</strong> {author.languages}</p>
+              </div>
+            </div>
 
-                        if (!isLoggedIn) {
-                          router.push(
-                            `/auth/user/login?redirect=/tutors/${author?.id}`
-                          );
-                        } else {
-                          setShowBookingModal(true);
-                        }
-                      }}
-                    >
-                      <Calendar className="mr-2 h-4 w-4" />
-                      Book a Lesson
-                    </Button>
+            {/* REVIEWS */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+              <h2 className="font-[var(--font-display)] text-xl mb-4">
+                Reviews ({author.reviews_count})
+              </h2>
 
-                    <Button
-                      variant="outline"
-                      className="w-full"
-                      onClick={() =>
-                        router.push(`/messages?to=${author?.id}`)
-                      }
-                    >
-                      <MessageCircle className="mr-2 h-4 w-4" />
-                      Send Message
-                    </Button>
-                  </div>
-
-                  <Separator className="my-6" />
-
-                  <div className="space-y-3 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Response time:</span>
-                      <span className="font-medium">
-                        {tutor?.responseTime}
-                      </span>
+              {author.reviews?.length > 0 ? (
+                <div className="space-y-4">
+                  {author.reviews.map((r: any) => (
+                    <div key={r.id} className="border-b pb-4 last:border-none">
+                      <p className="font-medium">{r.studentName}</p>
+                      <p className="text-sm text-[#6e6a63]">{r.comment}</p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Lessons taught:</span>
-                      <span className="font-medium">500+</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-600">Repeat students:</span>
-                      <span className="font-medium">85%</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[#6e6a63]">No reviews yet</p>
+              )}
+            </div>
+
+          </div>
+
+          {/* RIGHT SIDEBAR */}
+          <div>
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6 sticky top-24">
+
+              <div className="text-center mb-6">
+                <div className="text-2xl font-semibold">
+                  ${author.hourly_rate}
+                  <span className="text-sm text-[#6e6a63]"> / 30 min</span>
+                </div>
+              </div>
+
+              <button
+                className="w-full h-[44px] rounded-full bg-[#01696f] text-white"
+                onClick={() => {
+                  if (status === 'loading') return;
+
+                  const token = localStorage.getItem('wpToken');
+                  if (!token && !session) {
+                    router.push(`/auth/user/login?redirect=/tutors/${author.id}`);
+                  } else {
+                    setShowBookingModal(true);
+                  }
+                }}
+              >
+                Book session
+              </button>
+
+              <button
+                className="w-full h-[44px] mt-3 rounded-full border border-[#d4d1ca]"
+                onClick={() => router.push(`/messages?to=${author.id}`)}
+              >
+                Message
+              </button>
+
             </div>
           </div>
+
         </div>
-      </div>
+      </main>
 
       {author && (
         <BookingModal

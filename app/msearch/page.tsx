@@ -287,7 +287,7 @@ export default function SearchPage() {
           </button>
 <button
  onClick={() => router.push(`/mtutor/${u.id}`)}
-  className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-9 rounded-md px-3 bg-blue-600 hover:bg-blue-700"
+  className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-9 rounded-md px-3 bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5"
 >
   View Profile
 </button>

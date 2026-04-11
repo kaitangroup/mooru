@@ -9,7 +9,12 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Search, BookOpen, MessageCircle, Star, Users, Clock } from 'lucide-react';
 import Link from 'next/link';
+import { Cormorant_Garamond } from "next/font/google";
 
+const displayFont = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
 
 export default function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -24,120 +29,287 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-16 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Find Your Perfect <span className="text-blue-600">Author</span>
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
-            Connect with qualified Author for personalized learning. Get the academic support you need to succeed.
-          </p>
-          
-          {/* Search Bar */}
-          <div className="bg-white p-4 rounded-lg shadow-lg max-w-4xl mx-auto mb-8">
-            <div className="flex flex-col md:flex-row gap-4">
-              <div className="flex-1">
-                <Input 
-                  placeholder="Search by Subject, Book or Author name..." 
-                  className="h-12 text-lg"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') handleSearch();
-                  }}
-                />
-              </div>
-              <Button
-                size="lg"
-                className="h-12 px-8 bg-blue-600 hover:bg-blue-700"
-                onClick={handleSearch}
-              >
-                <Search className="mr-2 h-5 w-5" />
-                Find Authors
-              </Button>
+      {/* HERO SECTION */}
+{/* HERO SECTION */}
+<section className="py-24 px-4 bg-[#f7f6f2]">
+  <div className="max-w-[1120px] mx-auto grid md:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
+
+    {/* LEFT */}
+    <div>
+      <span className=" eyebrow inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-4 py-1.5 rounded-full">
+        Private video sessions with experts
+      </span>
+
+      <h1 className="mt-6">
+        Book time with the experts behind the ideas.
+      </h1>
+
+      <p className="mt-6 text-gray-600 max-w-xl text-base">
+        When a book, podcast, or video leaves you with real questions, you should be able to ask the person who made it.
+      </p>
+
+      <div className="mt-8 flex flex-wrap gap-4">
+        <Button className=" btn bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-6">
+          Find an expert
+        </Button>
+
+        <Button variant="outline" className=" btn rounded-full px-6 border-[#d4d1ca]">
+          Become an expert
+        </Button>
+      </div>
+
+      <div className="mt-8 flex flex-wrap gap-6 text-sm text-gray-500">
+        <span>One-on-one video calls</span>
+        <span>Experts join free</span>
+        <span>Transparent user booking fee</span>
+      </div>
+    </div>
+
+    {/* RIGHT CARD */}
+    <div className="relative">
+  
+  {/* Glow */}
+  <div className="absolute -bottom-20 -right-20 w-[220px] h-[220px] rounded-full bg-[#01696f]/10 blur-xl" />
+
+  {/* Card */}
+  <div className="relative bg-[#f9f8f5] border border-[#dcd9d5] rounded-2xl p-8 shadow-[0_10px_30px_rgba(0,0,0,0.08)]">
+
+
+        <div className="border border-[#e5e2dc] rounded-xl p-5">
+          <div className="flex justify-between items-start">
+            <div>
+              <h4 className="all-bold-text-1 font-semibold">Dr. Maya Bennett</h4>
+              <p className="text-sm text-gray-500">
+                Author, host, and policy expert
+              </p>
             </div>
+            <span className="all-bold-text-1 font-semibold">$120 / 30 min</span>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-            <span className="bg-blue-100 px-3 py-1 rounded-full">Romance</span>
-            <span className="bg-green-100 px-3 py-1 rounded-full">Science Fiction & Fantasy</span>
-            <span className="bg-purple-100 px-3 py-1 rounded-full">Mystery, Thriller & Suspense</span>
-            <span className="bg-orange-100 px-3 py-1 rounded-full">Self-help</span>
-            <span className="bg-pink-100 px-3 py-1 rounded-full">History</span>
-            <span className="bg-pink-100 px-3 py-1 rounded-full">Children's Books</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Why Choose AuthorConnect?</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent>
-                <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-blue-600" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Qualified Authors</h3>
-                <p className="text-gray-600">
-                  All Authors are verified and have proven expertise in their subjects
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent>
-                <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Clock className="h-8 w-8 text-green-600" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Flexible Scheduling</h3>
-                <p className="text-gray-600">
-                  Book lessons that fit your schedule, with easy rescheduling options
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center p-6 hover:shadow-lg transition-shadow">
-              <CardContent>
-                <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MessageCircle className="h-8 w-8 text-orange-600" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">Direct Communication</h3>
-                <p className="text-gray-600">
-                  Chat directly with Authors to discuss your learning goals
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Start Learning?</h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Join thousands of students who have found success with our authors
+          <p className="text-sm text-gray-600 mt-3">
+            Best for follow-up questions after a book, podcast episode,
+            interview, or lecture.
           </p>
-          
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/auth/user/register">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                Find a Authors
-              </Button>
-            </Link>
-            <Link href="/auth/author/register">
-              <Button size="lg" variant="outline">
-                Become a Author
-              </Button>
-            </Link>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 mt-5">
+          <div className="border border-[#e5e2dc] rounded-lg p-4 text-sm">
+            <strong className='all-bold-text'>85%</strong>
+            <p className="text-gray-500">
+              of session price goes directly to the expert
+            </p>
+          </div>
+
+          <div className="border border-[#e5e2dc] rounded-lg p-4 text-sm">
+            <strong className='all-bold-text'>+ fee</strong>
+            <p className="text-gray-500">
+              Small platform charge paid by the user
+            </p>
           </div>
         </div>
-      </section>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{/* HOW IT WORKS */}
+<section className="py-20 px-4 bg-[#f7f6f2]">
+  <div className="max-w-[1120px] mx-auto">
+
+    {/* Header */}
+    <div className="mb-12">
+      <h2 className="text-[clamp(1.6rem,2.5vw,2.4rem)] font-[var(--font-display)] tracking-[-0.03em] max-w-[14ch]">
+        How it works
+      </h2>
+
+    </div>
+
+    {/* Steps */}
+    <div className="grid md:grid-cols-3 gap-6">
+
+      {/* Step 1 */}
+      <div className="p-6 border border-[#dcd9d5] rounded-xl bg-[#f9f8f5]">
+        <div className="w-8 h-8 rounded-full bg-[#d7e7e5] text-[#01696f] flex items-center justify-center text-xs font-bold mb-4">
+          1
+        </div>
+        <h4 className="all-bold-text font-semibold">Choose an expert</h4>
+        <p className="text-sm text-[#6e6a63] mt-2">
+          Browse experts by topic, book, podcast, or video and find the right person.
+        </p>
+      </div>
+
+      {/* Step 2 */}
+      <div className="p-6 border border-[#dcd9d5] rounded-xl bg-[#f9f8f5]">
+        <div className="w-8 h-8 rounded-full bg-[#d7e7e5] text-[#01696f] flex items-center justify-center text-xs font-bold mb-4">
+          2
+        </div>
+        <h4 className="all-bold-text font-semibold">Book a time</h4>
+        <p className="text-sm text-[#6e6a63] mt-2">
+          Pick a slot, review pricing, and confirm your session with transparent checkout.
+        </p>
+      </div>
+
+      {/* Step 3 */}
+      <div className="p-6 border border-[#dcd9d5] rounded-xl bg-[#f9f8f5]">
+        <div className="w-8 h-8 rounded-full bg-[#d7e7e5] text-[#01696f] flex items-center justify-center text-xs font-bold mb-4">
+          3
+        </div>
+        <h4 className="all-bold-text font-semibold">Meet face to face</h4>
+        <p className="text-sm text-[#6e6a63] mt-2">
+          Join a private video call and get direct answers from the expert.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+ 
+<section className="py-20 px-4 bg-[#f7f6f2]">
+  <div className="max-w-[1120px] mx-auto grid md:grid-cols-2 gap-12">
+    
+    <div>
+      <h2 className="text-3xl font-serif mb-4">Why users book</h2>
+    
+      <div className="grid md:grid-cols-3 gap-6 mt-10">
+        <div className="p-6 border border-[#e5e2dc] rounded-xl bg-[#f9f8f5]">
+          <h4 className="all-bold-text all-bold-text font-semibold mb-2">Clarity</h4>
+          <p className="text-sm text-gray-600">
+          Move beyond notes and highlights. Get direct answers from the people behind the ideas.
+          </p>
+        </div>
+
+        <div className="p-6 border border-[#e5e2dc] rounded-xl bg-[#f9f8f5]">
+          <h4 className="all-bold-text font-semibold mb-2">Access</h4>
+          <p className="text-sm text-gray-600">
+            Reach the expert directly instead of waiting.
+          </p>
+        </div>
+
+        <div className="p-6 border border-[#e5e2dc] rounded-xl bg-[#f9f8f5]">
+          <h4 className="all-bold-text font-semibold mb-2">Depth</h4>
+          <p className="text-sm text-gray-600">
+            Turn ideas into real conversations.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Pricing Card */}
+    <div className="bg-[#f9f8f5] border border-[#e5e2dc] rounded-2xl p-8">
+      <span className="text-xs uppercase tracking-wide text-[#01696f] bg-[#d7e7e5] px-3 py-1 rounded-full">
+        Simple pricing
+      </span>
+
+      <h4 className="all-bold-text mt-4 font-semibold">
+        You pay for access, the expert gets paid for insight.
+      </h4>
+
+      <p className="text-gray-600 mt-3">
+        Users pay the expert’s rate plus a small platform fee.
+      </p>
+
+      <ul className="mt-5 text-gray-600 space-y-2 text-sm">
+        <li>• No subscriptions required</li>
+        <li>• No sign-up fee for experts</li>
+        <li>• Transparent checkout</li>
+      </ul>
+
+      <div className="mt-6">
+        <Button className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full">
+          See common questions
+        </Button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section className="py-20 px-4 bg-[#f7f6f2]">
+  <div className="max-w-[1120px] mx-auto">
+    
+    <h2 className="text-3xl font-serif mb-6">Why experts join</h2>
+
+
+    <div className="  grid md:grid-cols-2 gap-6">
+      {[
+        "Free to join",
+        "Earn from your expertise",
+        "Keep control",
+        "We handle logistics",
+      ].map((title, i) => (
+        <div key={i} className="p-6 border border-[#e5e2dc] rounded-xl bg-[#f9f8f5]">
+          <h4 className="all-bold-text font-semibold">{title}</h4>
+          <p className="text-sm text-gray-600 mt-2">
+            Set your availability, pricing, and focus on conversations.
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<section className="py-20 px-4 bg-[#f7f6f2]">
+  <div className="max-w-[1120px] mx-auto">
+
+    <h2 className="text-3xl font-serif mb-6">Common questions</h2>
+
+
+    <div className="grid md:grid-cols-2 gap-6">
+      {[
+        "Who is this for?",
+        "How do experts get paid?",
+        "Can experts set their own rates?",
+        "Is the video call private?",
+      ].map((q, i) => (
+        <div key={i} className="p-6 border border-[#e5e2dc] rounded-xl bg-[#f9f8f5]">
+          <h4 className="all-bold-text-1 font-semibold">{q}</h4>
+          <p className="text-sm text-gray-600 mt-2">
+            Direct one-on-one conversations with experts.
+          </p>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<section className="py-20 px-4">
+  <div className="max-w-[1120px] mx-auto">
+
+    <div className="bg-[#01696f] text-white rounded-2xl p-10 flex flex-col md:flex-row justify-between items-center gap-6">
+      
+      <div>
+        <h2 className="text-3xl font-serif max-w-md">
+          A better way to ask better questions.
+        </h2>
+        <p className="text-white/80 mt-3">
+          Give users direct access to insight.
+        </p>
+      </div>
+
+      <div className="flex gap-4">
+        <Link href="/auth/author/register">
+        <Button className="btn-join-as-an-expert bg-white text-[#01696f] rounded-full">
+          Join as an expert
+        </Button>
+        </Link>
+
+         <Link href="/auth/user/register">
+        <Button variant="outline" className=" btn-book-an-expert border-white text-white rounded-full">
+          Book an expert
+        </Button>
+        </Link>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+     
 
       <Footer />
     </div>

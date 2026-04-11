@@ -30,7 +30,7 @@ export default function RequestTutorPage() {
               <a
                   href="/search"
                   className="inline-flex items-center justify-center h-11 rounded-md 
-                            bg-blue-600 hover:bg-blue-700 
+                            bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5 
                             px-8 text-sm font-medium text-white 
                             transition-colors duration-150 ease-in-out"
                 >

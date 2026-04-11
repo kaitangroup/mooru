@@ -364,7 +364,7 @@ console.log("Fetched profile data:", data);
               <Button type="button" variant="outline">
                 Cancel
               </Button>
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+              <Button type="submit" className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5">
                 Save Changes
               </Button>
             </div>

@@ -406,7 +406,7 @@ export default function ProfileEditPage() {
 
             <div className="flex justify-end gap-4">
               <Button type="button" variant="outline">Cancel</Button>
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">Save Changes</Button>
+              <Button type="submit" className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5">Save Changes</Button>
             </div>
           </form>
         </div>

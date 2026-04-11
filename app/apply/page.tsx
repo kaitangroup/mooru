@@ -974,7 +974,7 @@ export default function TutorApplicationPage() {
                     <Button
                     type="button"  // changed from submit
                     onClick={handleSubmit}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5"
                     disabled={!profileData.agreeToTerms || !profileData.agreeToBackground  }
                   >
                     Submit Application

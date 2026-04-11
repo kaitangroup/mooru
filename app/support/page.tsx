@@ -126,7 +126,7 @@ export default function HelpCenterPage() {
       <Header />
       {/* Hero */}
       <section className="bg-gradient-to-b from-blue-700 to-blue-500 text-white">
-        <div className="mx-auto max-w-6xl px-4 py-16 text-center">
+        <div className="mx-auto max-w-[1120px] px-4 py-16 text-center">
           <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">How can we help you?</h1>
           <p className="mt-3 text-white/90">Search our knowledge base or browse categories below</p>
           
@@ -134,7 +134,7 @@ export default function HelpCenterPage() {
       </section>
 
       {/* Browse by Category */}
-      <section className="mx-auto max-w-6xl px-4 py-12">
+      <section className="mx-auto max-w-[1120px] px-4 py-12">
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((c) => (
             <a
@@ -161,7 +161,7 @@ export default function HelpCenterPage() {
 
       {/* Still need help */}
       <section className="bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-12">
+        <div className="mx-auto max-w-[1120px] px-4 py-12">
           <h2 className="text-center text-xl font-semibold text-gray-900">Still need help?</h2>
           <p className="mt-2 text-center text-gray-600">Our support team is ready to assist you</p>
 

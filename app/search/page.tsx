@@ -7,6 +7,7 @@ import { SearchFilters } from '@/components/search/SearchFilters';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
+import Link from "next/link"; 
 import { useSearchParams } from 'next/navigation';
 import { TutorCard } from '@/components/tutors/TutorCard';
 import { useDebounce } from 'react-use';
@@ -207,240 +208,319 @@ export default function SearchPage() {
 }, [debounceSearchTerm, filters, page]);
 
 
-  return (
-    <div className="min-h-screen bg-background">
-      <Header />
+return (
+  <div className="min-h-screen bg-[#f7f6f2]">
+    <Header />
 
-      <div className="py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          {/* Heading + Search */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Find Your Perfect Author
-            </h1>
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
-                <Input
-                  placeholder="Search by Subject, Book or Author name..."
+    <main className="px-4 py-10">
+      <div className="max-w-[1120px] mx-auto">
+
+        {/* HERO (NEW) */}
+        <div className="mb-10">
+          <span className="inline-block text-xs font-bold uppercase tracking-[0.05em] bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+            Search and compare
+          </span>
+
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[12ch] leading-[1.05]">
+            Find the right expert before you book.
+          </h1>
+
+          <p className="mt-4 text-[#6e6a63] max-w-[60ch]">
+            Search by topic, author, book, or podcast. Filter results and compare experts before booking.
+          </p>
+        </div>
+
+        {/* SEARCH SHELL */}
+        <div className="grid lg:grid-cols-[280px_1fr] gap-8">
+
+          {/* SIDEBAR (FIXED STYLE) */}
+          <aside className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6 shadow-md h-fit sticky top-24">
+            <h2 className="font-semibold text-lg">Filters</h2>
+            <p className="text-sm text-[#6e6a63] mt-2">
+              Refine results without losing context.
+            </p>
+
+            <div className="mt-6 space-y-4">
+              <SearchFilters
+                filters={filters}
+                onFiltersChange={(nf) => {
+                  setFilters(nf);
+                  setPage(1);
+                }}
+              />
+            </div>
+          </aside>
+
+          {/* RIGHT SIDE */}
+          <div>
+
+            {/* SEARCH BAR (IMPORTANT FIX) */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5 shadow-md mb-6">
+
+              <div className="grid md:grid-cols-[1fr_180px_180px_auto] gap-3">
+
+                <input
                   value={searchTerm}
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
                     setPage(1);
                   }}
-                  className="pl-10 h-12"
+                  placeholder="Search experts..."
+                  className="h-[48px] px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
                 />
+
+                <select className="h-[48px] px-3 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]">
+                  <option>Best match</option>
+                  <option>Lowest price</option>
+                </select>
+
+                <select className="h-[48px] px-3 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]">
+                  <option>Any availability</option>
+                  <option>Today</option>
+                </select>
+
+                <button className="h-[48px] px-5 rounded-full bg-[#01696f] text-white font-semibold">
+                  Search
+                </button>
               </div>
-              <Button
-                variant="outline"
-                onClick={() => setShowFilters(!showFilters)}
-                className="h-12"
-              >
-                <Filter className="mr-2 h-5 w-5" />
-                Filters
-              </Button>
             </div>
 
-            <p className="text-gray-600">
-              {loading
-                ? 'Loading...'
-                : `${tutors.length} Out of ${totalAutors} Authors displayed (Page ${page} of ${totalPages})`}
-            </p>
-          </div>
+            {/* META INFO */}
+            <div className="flex justify-between items-center mb-4">
 
-          {/* Layout: sidebar + grid */}
-          {/* 👇 Ekhane flex-col lg:flex-row kore dilam */}
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
-            {showFilters && (
-              // 👇 Mobile e full width, large e 320px sidebar
-              <div className="w-full lg:w-80 flex-shrink-0">
-                <SearchFilters
-                  filters={filters}
-                  onFiltersChange={(nf) => {
-                    setFilters(nf);
-                    setPage(1);
-                  }}
-                />
-              </div>
-            )}
-
-            <div className="flex-1 min-w-0">
-              <div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                style={{ gridAutoRows: '1fr' }}
-              >
-                {tutors.map((t) => (
-                  <TutorCard key={t.id} tutor={t} />
-                ))}
+              <div className="text-sm">
+                <strong>{totalAutors}</strong>{" "}
+                <span className="text-[#6e6a63]">results</span>
               </div>
 
-              {/* No results + Save search */}
-              {!loading && tutors.length === 0 && (
-                <div className="text-center py-12 space-y-4">
-                  <p className="text-xl text-gray-500">
-                    No results found for “{searchTerm}”
-                  </p>
-                  <p className="text-gray-400">
-                    Try adjusting your search or filters
-                  </p>
-
-                  {searchTerm && (
-                    <div className="mt-6 max-w-sm mx-auto bg-gray-50 border rounded-lg p-5 shadow-sm">
-                      <p className="text-gray-700 mb-3 font-semibold">
-                        Save this search for later
-                      </p>
-
-                      {/* Auto-filled name field */}
-                      <input
-                        type="text"
-                        placeholder="Search name"
-                        value={searchTerm}
-                        readOnly
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 bg-gray-100 text-gray-700"
-                      />
-
-                      {/* Email field with inline error */}
-                      <div className="text-left mb-3">
-                        <input
-                          type="email"
-                          placeholder="Your email address"
-                          onChange={(e) => {
-                            setUserEmail(e.target.value);
-                            setEmailError('');
-                          }}
-                          value={userEmail}
-                          className={`w-full px-3 py-2 rounded-lg border ${
-                            emailError
-                              ? 'border-red-500 focus:ring-red-500 text-red-600'
-                              : 'border-gray-300 focus:ring-blue-500'
-                          }`}
-                        />
-
-                        {/* Error text (left aligned) */}
-                        {emailError && (
-                          <p className="text-red-500 text-sm mt-1 text-left">
-                            {emailError}
-                          </p>
-                        )}
-                      </div>
-
-                      {/* Search type checkboxes */}
-                      <div className="text-left mb-4 mt-3">
-                        <p className="text-gray-700 mb-2 font-medium">
-                          Search Type (optional)
-                        </p>
-                        <div className="flex flex-col gap-2">
-                          {(['author', 'book', 'subject'] as const).map(
-                            (type) => (
-                              <label
-                                key={type}
-                                className="flex items-center gap-2 text-gray-700"
-                              >
-                                <input
-                                  type="checkbox"
-                                  checked={searchTypes.includes(type)}
-                                  onChange={(e) => {
-                                    if (e.target.checked) {
-                                      setSearchTypes([...searchTypes, type]);
-                                    } else {
-                                      setSearchTypes(
-                                        searchTypes.filter((t) => t !== type)
-                                      );
-                                    }
-                                  }}
-                                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                />
-                                <span className="capitalize">{type}</span>
-                              </label>
-                            )
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Save button */}
-                      <Button
-                        onClick={async () => {
-                          if (!userEmail) {
-                            setEmailError('Email is required');
-                            return;
-                          }
-
-                          setEmailError('');
-                          setSavingSearch(true);
-
-                          try {
-                            const base = (
-                              process.env.NEXT_PUBLIC_WP_URL ?? ''
-                            ).replace(/\/+$/, '');
-                            const res = await fetch(
-                              `${base}/wp-json/authorpro/v1/save-search`,
-                              {
-                                method: 'POST',
-                                headers: {
-                                  'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                  name: searchTerm,
-                                  term: searchTerm,
-                                  types: searchTypes,
-                                  email: userEmail,
-                                }),
-                              }
-                            );
-
-                            if (!res.ok)
-                              throw new Error('Failed to save search');
-
-                            toast.success(
-                              'Search saved ✅ We’ll notify you when we find matching authors.'
-                            );
-
-                            setUserEmail('');
-                            setSearchTypes([]);
-                          } catch (e) {
-                            toast.error(
-                              'Could not save your search. Please try again.'
-                            );
-                          } finally {
-                            setSavingSearch(false);
-                          }
-                        }}
-                        disabled={savingSearch}
-                        className="w-full"
-                      >
-                        {savingSearch ? 'Saving...' : 'Save Search'}
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Pagination */}
-              <div className="flex justify-center items-center gap-4 mt-8">
-                <Button
-                  variant="outline"
-                  disabled={page <= 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  Previous
-                </Button>
-                <span className="text-gray-700">
-                  Page {page} of {totalPages}
+              <div className="flex gap-2">
+                <span className="text-xs bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full">
+                  Guest browsing
                 </span>
-                <Button
-                  variant="outline"
-                  disabled={page >= totalPages}
-                  onClick={() => setPage((p) => p + 1)}
-                >
-                  Next
-                </Button>
+                <span className="text-xs bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full">
+                  Book in 2 steps
+                </span>
               </div>
             </div>
+
+            {/* RESULTS */}
+            <div className="space-y-4">
+
+            {tutors.map((t) => (
+  <div
+    key={t.id}
+    className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6 flex gap-5 justify-between"
+  >
+
+    {/* LEFT */}
+    <div className="flex gap-4">
+
+      {/* ✅ AVATAR */}
+      <img
+        src={t.avatar || "/default-avatar.png"}
+        alt={t.name}
+        className="w-16 h-16 rounded-full object-cover border"
+      />
+
+      <div>
+        {/* SUBJECT TAGS */}
+        <div className="flex flex-wrap gap-2 text-xs mb-2">
+          {t.subjects.slice(0, 3).map((s, i) => (
+            <span
+              key={i}
+              className="bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+
+        {/* NAME */}
+        <h3 className="font-semibold text-lg">{t.name}</h3>
+
+        {/* BIO */}
+        <p className="text-sm text-[#6e6a63] mt-1 max-w-[60ch]">
+          {t.bio || "Expert in their field."}
+        </p>
+
+        {/* META */}
+        <div className="flex gap-4 text-sm text-[#6e6a63] mt-2">
+          <span>{t.rating} rating</span>
+          <span>{t.responseTime || "Fast response"}</span>
+          <span>{t.location}</span>
+        </div>
+      </div>
+    </div>
+
+    {/* RIGHT CTA */}
+    <div className="flex flex-col items-end gap-3 min-w-[180px]">
+
+      {/* PRICE */}
+      <div className="font-semibold text-lg">
+        ${t.hourlyRate}
+        <span className="text-sm text-gray-500"> / 30 min</span>
+      </div>
+
+      {/* VIEW PROFILE (PRIMARY CTA) */}
+      <Link
+  href={`/tutors/${t.id}`}
+  className="inline-flex items-center justify-center whitespace-nowrap bg-[#01696f] hover:bg-[#0c4e54] text-white px-5 h-[40px] rounded-full text-sm font-medium transition"
+>
+  View profile
+</Link>
+
+    </div>
+  </div>
+))}
+
+{/* No results + Save search */}
+{!loading && tutors.length === 0 && (
+  <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-10 text-center">
+
+    {/* TITLE */}
+    <h3 className="font-[var(--font-display)] text-[clamp(1.4rem,2vw,1.8rem)]">
+      No results found
+    </h3>
+
+    {/* SUBTEXT */}
+    <p className="text-[#6e6a63] mt-3 max-w-md mx-auto">
+      We couldn’t find any experts for “{searchTerm}”. Try adjusting your filters or search terms.
+    </p>
+
+    {/* ACTIONS */}
+    <div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+
+      {/* RESET */}
+      <button
+        onClick={() => {
+          setSearchTerm('');
+          setFilters({
+            subjects: [],
+            priceRange: [0, 100],
+            ageRange: [18, 80],
+            rating: 0,
+            availability: '',
+            credentials: {
+              backgroundCheck: false,
+              ixlCertified: false,
+              licensedTeacher: false,
+            },
+            instantBook: false,
+            inPerson: false,
+          });
+        }}
+        className="px-5 h-[44px] rounded-full border border-[#d4d1ca] bg-[#fbfbf9] text-sm"
+      >
+        Reset filters
+      </button>
+
+    </div>
+
+    {/* SAVE SEARCH (CLEAN VERSION) */}
+    {searchTerm && (
+      <div className="mt-8 max-w-md mx-auto text-left">
+
+        <div className="p-5 border border-[#e5e2dc] rounded-lg bg-[#fbfbf9]">
+          <p className="font-semibold mb-2">Get notified</p>
+          <p className="text-sm text-[#6e6a63] mb-4">
+            Save this search and we’ll notify you when experts become available.
+          </p>
+
+          <input
+            type="email"
+            placeholder="Your email address"
+            value={userEmail}
+            onChange={(e) => {
+              setUserEmail(e.target.value);
+              setEmailError('');
+            }}
+            className="w-full h-[48px] px-4 rounded-md border border-[#d4d1ca] bg-white mb-3"
+          />
+
+          {emailError && (
+            <p className="text-red-500 text-xs mb-2">{emailError}</p>
+          )}
+
+          <button
+            onClick={async () => {
+              if (!userEmail) {
+                setEmailError('Email is required');
+                return;
+              }
+
+              setSavingSearch(true);
+
+              try {
+                const base = (
+                  process.env.NEXT_PUBLIC_WP_URL ?? ''
+                ).replace(/\/+$/, '');
+
+                const res = await fetch(
+                  `${base}/wp-json/authorpro/v1/save-search`,
+                  {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      name: searchTerm,
+                      term: searchTerm,
+                      email: userEmail,
+                    }),
+                  }
+                );
+
+                if (!res.ok) throw new Error();
+
+                toast.success('Search saved successfully');
+                setUserEmail('');
+              } catch {
+                toast.error('Failed to save search');
+              } finally {
+                setSavingSearch(false);
+              }
+            }}
+            className="w-full h-[44px] rounded-full bg-[#01696f] text-white text-sm font-medium"
+          >
+            {savingSearch ? 'Saving...' : 'Notify me'}
+          </button>
+        </div>
+
+      </div>
+    )}
+
+  </div>
+)}
+
+            </div>
+
+            {/* PAGINATION */}
+            <div className="flex justify-center gap-4 mt-10">
+              <button
+                disabled={page <= 1}
+                onClick={() => setPage(page - 1)}
+                className="px-4 py-2 border rounded-md"
+              >
+                Previous
+              </button>
+
+              <span className="text-[#6e6a63]">
+                Page {page} of {totalPages}
+              </span>
+
+              <button
+                disabled={page >= totalPages}
+                onClick={() => setPage(page + 1)}
+                className="px-4 py-2 border rounded-md"
+              >
+                Next
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
+    </main>
 
-      <Footer />
-    </div>
-  );
+    <Footer />
+  </div>
+);
 }

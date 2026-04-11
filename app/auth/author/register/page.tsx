@@ -133,269 +133,247 @@ export default function TutorRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      
-      <div className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-3 gap-12">
-            {/* Main Content */}
-            <div className="lg:col-span-2">
-              {/* Hero Section */}
-              <div className="mb-12">
-                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                  Share your expertise and earn money teaching students
-                </h1>
+    <div className="min-h-screen bg-[#f7f6f2] relative">
+  
+      {/* MINIMAL TOP BAR */}
+      <div className="absolute top-0 left-0 w-full px-6 py-5 flex justify-between items-center">
+        
+        {/* LOGO → Guroos */}
+        <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
+  <svg
+    width="22"
+    height="22"
+    viewBox="0 0 64 64"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M20 32C20 26 25 22 32 22C36 22 40 24 42 28"
+      stroke="white"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+    <path
+      d="M32 32H44V40"
+      stroke="white"
+      strokeWidth="3"
+      strokeLinecap="round"
+    />
+  </svg>
+</div>
+  
+        {/* BACK LINK */}
+        <Link
+          href="/"
+          className="text-sm text-[#6e6a63] hover:text-[#28251d] transition"
+        >
+          ← Back to home
+        </Link>
+      </div>
+  
+      {/* MAIN CONTENT */}
+      <div className="flex items-center justify-center min-h-screen px-4 py-10">
+        <div className="w-full max-w-[1080px] grid md:grid-cols-[0.95fr_1.05fr] gap-8">
+  
+          {/* LEFT PANEL */}
+          <div className="bg-[#f9f8f5]/90 border border-[#dcd9d5] rounded-2xl p-10 shadow-[0_18px_50px_rgba(0,0,0,0.08)] flex flex-col justify-between">
+  
+            <div>
+              {/* BRAND */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#01696f] to-[#6aa6a3] text-white flex items-center justify-center font-bold">
+                  G
+                </div>
+                <span className="font-semibold">Guroos</span>
               </div>
-
-              {/* Signup Card */}
-              <Card className="bg-white shadow-sm  mx-auto lg:mx-0">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-2xl font-bold text-gray-900">Welcome to AuthorConnect!</CardTitle>
-                  <p className="text-gray-600">Apply to become a author and start earning.</p>
-                  <p className="text-sm text-gray-500 mt-2">
-                    Already have an account?{' '}
-                    <Link href="/auth/author/login" className="text-blue-600 hover:underline">
-                      Log in.
-                    </Link>
-                  </p>
-                </CardHeader>
-                
-                <CardContent className="space-y-4">
-                  <p className="text-xs text-gray-500 text-center">
-                    By signing up, I agree to AuthorConnect's{' '}
-                    <Link href="/terms" className="text-blue-600 hover:underline">terms of use</Link>
-                    {' '}and{' '}
-                    <Link href="/privacy" className="text-blue-600 hover:underline">privacy policy</Link>.
-                  </p>
-
-                  {/* Signup Form */}
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="firstName">First Name *</Label>
-                        <Input
-                          id="firstName"
-                          type="text"
-                          value={formData.firstName}
-                          onChange={(e) => handleInputChange('firstName', e.target.value)}
-                          className="mt-1 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="Visible publicly"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <Label htmlFor="lastName">Last Name *</Label>
-                        <Input
-                          id="lastName"
-                          type="text"
-                          value={formData.lastName}
-                          onChange={(e) => handleInputChange('lastName', e.target.value)}
-                          className="mt-1 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="email">Email Address *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleInputChange('email', e.target.value)}
-                        className={`mt-1 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${
-                          errors.email ? 'border-red-500' : ''
-                        }`}
-                        required
-                      />
-                      {errors.email && (
-                        <p className="text-red-500 text-xs mt-1">{errors.email}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="password">Create Password *</Label>
-                      <Input
-                        id="password"
-                        type="password"
-                        value={formData.password}
-                        onChange={(e) => handleInputChange('password', e.target.value)}
-                        className={`mt-1 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${
-                          errors.password ? 'border-red-500' : ''
-                        }`}
-                        required
-                      />
-                      {errors.password && (
-                        <p className="text-red-500 text-xs mt-1">{errors.password}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="confirmPassword">Confirm Password *</Label>
-                      <Input
-                        id="confirmPassword"
-                        type="password"
-                        value={formData.confirmPassword}
-                        onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                        className={`mt-1 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 ${
-                          errors.confirmPassword ? 'border-red-500' : ''
-                        }`}
-                        required
-                      />
-                      {errors.confirmPassword && (
-                        <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>
-                      )}
-                    </div>
-
-                    <div>
-                      <Label htmlFor="zipCode">Zip Code *</Label>
-                      <Input
-                        id="zipCode"
-                        type="text"
-                        value={formData.zipCode}
-                        onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                        className="mt-1 h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="e.g., 10001"
-                        required
-                      />
-                    </div>
-
-                    <div className="flex items-start space-x-3 pt-4">
-                      <Checkbox
-                        id="agreeToTerms"
-                        checked={formData.agreeToTerms}
-                        onCheckedChange={(checked) => handleInputChange('agreeToTerms', checked)}
-                        required
-                      />
-                      <Label htmlFor="agreeToTerms" className="text-sm">
-                        I agree to AuthorConnect's{' '}
-                        <Link href="/terms" className="text-blue-600 hover:underline">terms of use</Link>
-                        {' '}and{' '}
-                        <Link href="/privacy" className="text-blue-600 hover:underline">privacy policy</Link>. *
-                      </Label>
-                    </div>
-
-                    <Button 
-                      type="submit" 
-                      className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded-md"
-                    >
-                      Apply to Become a Author
-                    </Button>
-                  </form>
-
-                  <div className="text-center mt-4">
-                    <p className="text-sm text-gray-600">
-                      Looking for a Author?{' '}
-                      <Link href="/auth/user/register" className="text-blue-600 hover:underline">
-                        Sign up as a student.
-                      </Link>
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Testimonial */}
-              <div className="mt-12 max-w-md mx-auto lg:mx-0">
-                <Card className="bg-white shadow-sm">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <img 
-                        src="https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=100"
-                        alt="Tutor testimonial"
-                        className="w-16 h-16 rounded-full object-cover"
-                      />
-                      <div>
-                        <div className="flex items-center gap-1 mb-2">
-                          <span className="text-green-600 font-medium">💬</span>
-                          <span className="text-green-600 font-medium">Great platform for Authors!</span>
-                        </div>
-                        <p className="text-gray-600 text-sm mb-2">
-                          I've been Authoring on AuthorConnect for 2 years and love the flexibility. 
-                          The platform makes it easy to connect with students and manage my schedule.
-                        </p>
-                        <p className="text-gray-400 text-xs">– Sarah, Mathematics Author</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-8">
-              {/* Featured In */}
-              <div>
-                <p className="text-sm font-medium text-gray-500 mb-4 uppercase tracking-wide">FEATURED IN</p>
-                <div className="flex flex-wrap items-center gap-4 opacity-60">
-                  <div className="text-gray-400 font-bold text-lg">Forbes</div>
-                  <div className="text-gray-400 font-bold text-lg">NBC</div>
-                  <div className="text-gray-400 font-bold text-lg">TIME</div>
-                  <div className="text-gray-400 font-bold text-lg">CNN</div>
-                  <div className="text-gray-400 font-bold text-lg">Chicago Tribune</div>
+  
+              {/* EYEBROW */}
+              <span className="inline-block mt-6 text-xs font-bold uppercase tracking-[0.06em] bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+                Expert registration
+              </span>
+  
+              {/* TITLE */}
+              <h1 className="mt-6 font-[var(--font-display)] text-[clamp(2.4rem,4vw,4rem)] leading-[1.05] tracking-[-0.03em] max-w-[10ch]">
+                Join Guroos and start taking questions.
+              </h1>
+  
+              {/* DESCRIPTION */}
+              <p className="mt-5 text-[#6e6a63] max-w-[54ch]">
+                Keep it simple. Add your name, email, and links to the content people already know you for.
+              </p>
+  
+              {/* BENEFITS */}
+              <div className="mt-8 space-y-4">
+                <div className="p-4 rounded-lg border border-[#e5e2dc] bg-[#fbfbf9]">
+                  <strong>Free to join.</strong> Users pay when they book you.
                 </div>
-              </div>
-
-              {/* Benefits */}
-              <div className="space-y-6">
-                <div className="flex items-start gap-3">
-                  <div className="bg-green-100 rounded-full p-1 mt-1">
-                    <Check className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Set Your Own Schedule</h3>
-                    <p className="text-gray-600 text-sm">
-                      Work when you want, where you want. You have complete control over your 
-                      availability and can teach from anywhere.
-                    </p>
-                  </div>
+                <div className="p-4 rounded-lg border border-[#e5e2dc] bg-[#fbfbf9]">
+                  <strong>Fast setup.</strong> No long profile required.
                 </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-green-100 rounded-full p-1 mt-1">
-                    <Check className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Earn $20-$80+ Per Hour</h3>
-                    <p className="text-gray-600 text-sm">
-                      Set your own rates and keep 85% of what you earn. Top Authors on our platform 
-                      earn over $1,000 per week.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-green-100 rounded-full p-1 mt-1">
-                    <Check className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">Teach Any Subject</h3>
-                    <p className="text-gray-600 text-sm">
-                      From academic subjects to music, art, and languages. Share your expertise 
-                      in whatever you're passionate about.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-green-100 rounded-full p-1 mt-1">
-                    <Check className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 mb-2">No Experience Required</h3>
-                    <p className="text-gray-600 text-sm">
-                      Whether you're a certified teacher or subject matter expert, we welcome 
-                      Authors of all backgrounds and experience levels.
-                    </p>
-                  </div>
+                <div className="p-4 rounded-lg border border-[#e5e2dc] bg-[#fbfbf9]">
+                  <strong>One link is enough.</strong> Start with a single content link.
                 </div>
               </div>
             </div>
+  
+            <p className="text-sm text-[#9a958d] mt-6">
+              You can update your profile later.
+            </p>
           </div>
+  
+          {/* RIGHT FORM */}
+          <div className="bg-[#f9f8f5]/90 border border-[#dcd9d5] rounded-2xl p-10 shadow-[0_18px_50px_rgba(0,0,0,0.08)]">
+
+  {/* HEADER */}
+  <div className="flex justify-between items-start mb-8">
+    <div>
+      <h2 className="font-[var(--font-display)] text-[clamp(1.6rem,2.5vw,2.4rem)]">
+        Create your expert profile
+      </h2>
+      <p className="text-[#6e6a63] mt-2">
+        Only the essentials are required.
+      </p>
+    </div>
+  </div>
+
+  {/* FORM */}
+  <form onSubmit={handleSubmit} className="space-y-5">
+
+    {/* FULL NAME */}
+    <div className="space-y-2">
+      <label className="text-sm font-semibold">
+        Full name <span className="text-[#01696f]">*</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Jane Smith"
+        className="w-full h-[52px] px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9] focus:outline-none focus:ring-2 focus:ring-[#01696f]/30"
+        value={formData.firstName}
+        onChange={(e) => handleInputChange("firstName", e.target.value)}
+      />
+    </div>
+
+    {/* EMAIL */}
+    <div className="space-y-2">
+      <label className="text-sm font-semibold">
+        Email <span className="text-[#01696f]">*</span>
+      </label>
+      <input
+        type="email"
+        placeholder="jane@example.com"
+        className="w-full h-[52px] px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
+        value={formData.email}
+        onChange={(e) => handleInputChange("email", e.target.value)}
+      />
+    </div>
+
+    {/* PASSWORD */}
+<div className="space-y-2">
+  <label className="text-sm font-semibold">
+    Password <span className="text-[#01696f]">*</span>
+  </label>
+  <input
+    type="password"
+    placeholder="Enter your password"
+    className="w-full h-[52px] px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
+    value={formData.password}
+    onChange={(e) => handleInputChange("password", e.target.value)}
+  />
+  {errors.password && (
+    <p className="text-xs text-red-500">{errors.password}</p>
+  )}
+</div>
+
+{/* CONFIRM PASSWORD */}
+<div className="space-y-2">
+  <label className="text-sm font-semibold">
+    Confirm password <span className="text-[#01696f]">*</span>
+  </label>
+  <input
+    type="password"
+    placeholder="Confirm your password"
+    className="w-full h-[52px] px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
+    value={formData.confirmPassword}
+    onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+  />
+  {errors.confirmPassword && (
+    <p className="text-xs text-red-500">{errors.confirmPassword}</p>
+  )}
+</div>
+
+    {/* CONTENT LINKS GROUP (IMPORTANT FIX) */}
+    <div className="p-5 rounded-lg border border-[#e5e2dc] bg-[#fbfbf9]">
+      <h3 className="font-semibold text-lg mb-2">Content links</h3>
+      <p className="text-sm text-[#6e6a63] mb-4">
+        Add any links that show your work.
+      </p>
+
+      <div className="space-y-4">
+        <div>
+          <label className="text-sm font-medium">
+            Amazon book link <span className="text-[#9a958d]">(optional)</span>
+          </label>
+          <input className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]" placeholder="https://www.amazon.com/..." />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">
+            YouTube video link <span className="text-[#9a958d]">(optional)</span>
+          </label>
+          <input className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]" placeholder="https://www.youtube.com/..." />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">
+            Apple Podcasts link <span className="text-[#9a958d]">(optional)</span>
+          </label>
+          <input className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]" placeholder="https://podcasts.apple.com/..." />
         </div>
       </div>
-      
-      <Footer />
+    </div>
+
+    {/* CONSENT (MISSING BEFORE) */}
+    <div className="flex items-start gap-3 p-4 rounded-lg bg-[#f3f2ee] border border-[#e5e2dc]">
+      <input
+        type="checkbox"
+        className="mt-1 accent-[#01696f]"
+        checked={formData.agreeToTerms}
+        onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
+      />
+      <span className="text-sm">
+        I agree to the User Agreement <span className="text-[#01696f]">*</span>
+      </span>
+    </div>
+
+    {/* BUTTONS (IMPORTANT DIFFERENCE) */}
+    <div className="flex gap-3">
+      <button
+        type="submit"
+        className="flex-1 h-[48px] rounded-full bg-[#01696f] text-white font-semibold"
+        disabled={submitting}
+      >
+        {submitting ? "Signing up..." : "Register as expert"}
+      </button>
+
+      <button
+        type="reset"
+        className="flex-1 h-[48px] rounded-full border border-[#d4d1ca] bg-[#f9f8f5]"
+      >
+        Clear form
+      </button>
+    </div>
+
+  </form>
+
+  {/* FOOTNOTE */}
+  <p className="text-xs text-[#9a958d] mt-6">
+    Required fields are marked clearly to reduce errors.
+  </p>
+
+</div>
+  
+        </div>
+      </div>
     </div>
   );
 }

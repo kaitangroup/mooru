@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useSession, signOut } from 'next-auth/react';
 
+
 export function Header() {
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -21,6 +22,90 @@ export function Header() {
   const [profileEditLink, setProfileEditLink] = useState('profile/edit');
   const [userType, setUserType] = useState<'student' | 'author'>('student');
   const [wpUser, setWpUser] = useState<string | null>(null);
+  const MooruLogo = () => (
+    <div className="flex items-center gap-2">
+      {/* ICON */}
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="text-[#01696f]"
+      >
+        {/* Book Shape */}
+        <path
+          d="M6 10C6 8.9 6.9 8 8 8H20C23 8 24 10 24 10V40C24 40 23 38 20 38H8C6.9 38 6 37.1 6 36V10Z"
+          fill="currentColor"
+          opacity="0.9"
+        />
+        <path
+          d="M42 10C42 8.9 41.1 8 40 8H28C25 8 24 10 24 10V40C24 40 25 38 28 38H40C41.1 38 42 37.1 42 36V10Z"
+          fill="currentColor"
+          opacity="0.7"
+        />
+  
+        {/* Center "M" Shape */}
+        <path
+          d="M16 28L20 20L24 26L28 20L32 28"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+  
+      {/* TEXT */}
+      <div className="flex flex-col leading-tight">
+        <span className="text-xl font-semibold tracking-tight">
+          Guroos
+        </span>
+        <span className="text-xs text-gray-500">
+          Read. Listen. Watch. Ask
+        </span>
+      </div>
+    </div>
+  );
+
+ const GuroosLogo = () => (
+    <div className="flex items-center gap-3">
+  
+      {/* ICON */}
+      <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 64 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Simplified G mark */}
+          <path
+            d="M20 32C20 26 25 22 32 22C36 22 40 24 42 28"
+            stroke="white"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <path
+            d="M32 32H44V40"
+            stroke="white"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+        </svg>
+      </div>
+  
+      {/* TEXT */}
+      <div className="flex flex-col leading-tight">
+        <span className="text-[20px] font-semibold tracking-tight text-[#1f2937]">
+          Guroos
+        </span>
+        <span className="text-xs text-[#6e6a63]">
+          Read. Listen. Watch. Ask
+        </span>
+      </div>
+    </div>
+  );
 
   useEffect(() => {
     if (session?.wpToken) {
@@ -65,38 +150,37 @@ export function Header() {
   };
 
   return (
-    <header className="bg-white border-b sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
+    <header className="bg-[#f8f7f4]/80 backdrop-blur border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-[1120px] mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
-            <BookOpen className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold text-gray-900">AuthorConnect</span>
+<GuroosLogo />
           </Link>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
               href="/search"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
+              className="text-gray-600 hover:text-black transition-colors"
             >
-              Find Authors
+              Find Experts
             </Link>
             <Link
               href="/about"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
+              className="text-gray-600 hover:text-black transition-colors"
             >
               About
             </Link>
             <Link
               href="/blogs"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
+              className="text-gray-600 hover:text-black transition-colors"
             >
               Blogs
             </Link>
             <Link
               href="/contact"
-              className="text-gray-600 hover:text-blue-600 transition-colors"
+              className="text-gray-600 hover:text-black transition-colors"
             >
               Contact
             </Link>
@@ -107,25 +191,28 @@ export function Header() {
             {/* Desktop Auth / User menu */}
             {!isLoggedIn ? (
               // 👉 only desktop
-              <div className="hidden md:flex items-center space-x-4">
-                <Link href="/auth/user/login">
-                  <Button variant="ghost">Login</Button>
-                </Link>
+              <div className="hidden md:flex items-center space-x-5">
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className="bg-blue-600 hover:bg-blue-700">Sign Up</Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem asChild>
-                      <Link href="/auth/user/register">Find an Author</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/auth/author/register">Become an Author</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+  <Link href="/auth/author/register">
+    <button className="text-gray-700 hover:text-black text-sm">
+      Join as an expert
+    </button>
+  </Link>
+
+  {/* 👇 ADD THIS */}
+  <Link href="/auth/user/login">
+    <button className="text-gray-600 hover:text-black text-sm">
+      Log in
+    </button>
+  </Link>
+
+  <Link href="/auth/user/register">
+    <button className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5 py-2 text-sm">
+      Book an expert
+    </button>
+  </Link>
+
+</div>
             ) : (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>

@@ -85,7 +85,7 @@ export default function AuthorLoginPage() {
       <Header />
       
       <div className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-[1120px] mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Main Login Form */}
             <div className="lg:col-span-2">

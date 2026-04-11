@@ -511,7 +511,7 @@ const endIso = toIsoWithOffset(end);
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Book a Lesson with {tutor?.name}</DialogTitle>
+          <DialogTitle>Book a Time with {tutor?.name}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-6">
