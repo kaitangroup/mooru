@@ -20,7 +20,7 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-5">
 
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#01696f] to-[#6aa6a3] flex items-center justify-center text-white font-semibold shadow-lg">
-                M
+                G
               </div>
 
               <div>
