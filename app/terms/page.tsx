@@ -1,170 +1,205 @@
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { Card, CardContent } from '@/components/ui/card';
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2] text-[#28251d]">
       <Header />
-      
-      <div className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <Card>
-            <CardContent className="p-8">
-              <h1 className="text-4xl font-bold mb-6">Terms of Service</h1>
-              <p className="text-gray-600 mb-8">Last updated: January 1, 2025</p>
 
-              <div className="prose max-w-none space-y-8">
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">1. Acceptance of Terms</h2>
-                  <p className="text-gray-600 mb-4">
-                    By accessing and using AuthorConnect, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
-                  </p>
-                </section>
+      {/* HERO */}
+      <section className="px-6 py-20 border-b border-[#e5e2dc]">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-sm text-[#6b665d] mb-4">
+            Effective Date: April 12, 2026
+          </p>
 
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">2. Description of Service</h2>
-                  <p className="text-gray-600 mb-4">
-                    AuthorConnect is an online platform that connects students with qualified authors for educational services. We facilitate the booking, scheduling, and payment for authoring sessions but do not directly provide educational services.
-                  </p>
-                </section>
+          <h1 className="text-5xl md:text-6xl font-serif leading-tight tracking-tight">
+            Terms of Use
+          </h1>
 
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">3. User Accounts</h2>
-                  <p className="text-gray-600 mb-4">
-                    Users must create accounts to access our services. You are responsible for:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Providing accurate and complete information</li>
-                    <li>Maintaining the security of your account credentials</li>
-                    <li>All activities that occur under your account</li>
-                    <li>Notifying us immediately of any unauthorized use</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">4. User Conduct</h2>
-                  <p className="text-gray-600 mb-4">
-                    Users agree not to use the platform to:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Violate any applicable laws or regulations</li>
-                    <li>Harass, abuse, or harm other users</li>
-                    <li>Share inappropriate or offensive content</li>
-                    <li>Attempt to circumvent platform fees</li>
-                    <li>Interfere with the platform's operation</li>
-                    <li>Impersonate others or provide false information</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">5. Author Responsibilities</h2>
-                  <p className="text-gray-600 mb-4">
-                    Authors using our platform agree to:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Provide accurate qualifications and experience</li>
-                    <li>Maintain professional conduct during all interactions</li>
-                    <li>Honor scheduled appointments or provide adequate notice</li>
-                    <li>Deliver quality educational services</li>
-                    <li>Comply with all applicable laws and regulations</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">6. Student Responsibilities</h2>
-                  <p className="text-gray-600 mb-4">
-                    Students using our platform agree to:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Attend scheduled sessions or cancel with appropriate notice</li>
-                    <li>Make payments promptly as required</li>
-                    <li>Treat Authors with respect and professionalism</li>
-                    <li>Provide honest feedback and reviews</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">7. Payments and Fees</h2>
-                  <p className="text-gray-600 mb-4">
-                    Payment terms include:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Students pay for lessons through our secure platform</li>
-                    <li>Platform fees are deducted from author payments</li>
-                    <li>Cancellation fees may apply per our cancellation policy</li>
-                    <li>Refunds are provided according to our refund policy</li>
-                    <li>All fees and rates are clearly disclosed</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">8. Cancellation and Refunds</h2>
-                  <p className="text-gray-600 mb-4">
-                    Our cancellation policy provides:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Free cancellation up to 24 hours before scheduled lessons</li>
-                    <li>Cancellations within 24 hours may incur fees</li>
-                    <li>Refunds for author no-shows or technical issues</li>
-                    <li>Dispute resolution process for unsatisfactory lessons</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">9. Intellectual Property</h2>
-                  <p className="text-gray-600 mb-4">
-                    The platform, including all content, features, and functionality, is owned by AuthorConnect and protected by intellectual property laws. Users retain rights to their own content but grant us license to use it as necessary to provide our services.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">10. Privacy</h2>
-                  <p className="text-gray-600 mb-4">
-                    Your privacy is important to us. Please review our Privacy Policy to understand how we collect, use, and protect your information.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">11. Disclaimers and Limitations</h2>
-                  <p className="text-gray-600 mb-4">
-                    AuthorConnect provides the platform "as is" without warranties. We are not responsible for the quality of authoring services, though we strive to maintain high standards through our review process.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">12. Termination</h2>
-                  <p className="text-gray-600 mb-4">
-                    We reserve the right to suspend or terminate accounts for violations of these terms. Users may also terminate their accounts at any time through their account settings.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">13. Changes to Terms</h2>
-                  <p className="text-gray-600 mb-4">
-                    We may update these terms from time to time. Users will be notified of significant changes, and continued use of the platform constitutes acceptance of the updated terms.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">14. Contact Information</h2>
-                  <p className="text-gray-600 mb-4">
-                    For questions about these terms, please contact us:
-                  </p>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-gray-600">
-                      Email: legal@authorconnect.com<br />
-                      Address: 123 Education Ave, New York, NY 10001<br />
-                      Phone: +1 (555) 123-4567
-                    </p>
-                  </div>
-                </section>
-              </div>
-            </CardContent>
-          </Card>
+          <p className="mt-6 text-lg text-[#6b665d] leading-relaxed">
+            These Terms govern your use of Guroos. Please read them carefully before using the platform.
+          </p>
         </div>
-      </div>
-      
+      </section>
+
+      {/* CONTENT */}
+      <section className="px-6 py-16">
+        <div className="max-w-3xl mx-auto space-y-14">
+
+          {/* 1 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              1. Acceptance of Terms
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              By using Guroos, you agree to these Terms and our Privacy Policy.
+              If you do not agree, you may not access or use the Service.
+            </p>
+          </div>
+
+          {/* 2 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              2. Description of Service
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Guroos connects readers with authors through live video sessions.
+              We provide the platform but do not guarantee outcomes or endorse participants.
+            </p>
+          </div>
+
+          {/* 3 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              3. Eligibility
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              You must be at least 18 years old and legally capable of entering
+              into binding agreements.
+            </p>
+          </div>
+
+          {/* 4 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              4. Accounts & Security
+            </h2>
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>You are responsible for your account credentials</li>
+              <li>Provide accurate information</li>
+              <li>Notify us of unauthorized access</li>
+            </ul>
+          </div>
+
+          {/* 5 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              5. User Roles
+            </h2>
+
+            <div className="space-y-4 text-[#4b463f]">
+              <p><strong>Readers:</strong> Book sessions and interact with authors.</p>
+              <p><strong>Authors:</strong> Provide sessions and set pricing.</p>
+            </div>
+          </div>
+
+          {/* 6 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              6. Payments & Fees
+            </h2>
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>Payments are processed via third-party providers</li>
+              <li>Fees are displayed at booking</li>
+              <li>Refunds follow platform policy</li>
+            </ul>
+          </div>
+
+          {/* 7 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              7. Prohibited Activities
+            </h2>
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>Harassment or abuse</li>
+              <li>Illegal or harmful content</li>
+              <li>Impersonation</li>
+              <li>System misuse or scraping</li>
+            </ul>
+          </div>
+
+          {/* 8 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              8. Sessions & Recording
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed mb-4">
+              Sessions may be recorded for quality, safety, and support purposes.
+              By continuing participation, you consent to recording.
+            </p>
+
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>Unauthorized recording is prohibited</li>
+              <li>Users must comply with applicable laws</li>
+            </ul>
+          </div>
+
+          {/* 9 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              9. Intellectual Property
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              All platform content and branding belong to Guroos or its licensors.
+            </p>
+          </div>
+
+          {/* 10 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              10. Disclaimers
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              The Service is provided “as is” without warranties. We do not guarantee
+              results or session quality.
+            </p>
+          </div>
+
+          {/* 11 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              11. Limitation of Liability
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Guroos is not liable for indirect damages or losses arising from platform use.
+            </p>
+          </div>
+
+          {/* 12 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              12. Termination
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              We may suspend or terminate accounts that violate these Terms.
+            </p>
+          </div>
+
+          {/* 13 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              13. Changes to Terms
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Continued use after updates means acceptance of revised Terms.
+            </p>
+          </div>
+
+          {/* 14 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              14. Governing Law
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              These Terms are governed by the laws of Delaware, USA.
+            </p>
+          </div>
+
+          {/* 15 */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              15. Contact
+            </h2>
+
+            <div className="bg-white border border-[#e5e2dc] rounded-xl p-6 text-[#4b463f]">
+              <p>Email: support@guroos.net</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

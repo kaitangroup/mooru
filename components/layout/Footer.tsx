@@ -49,10 +49,10 @@ export function Footer() {
             {
               title: "Work",
               links: [
-                { label: "Careers", href: "/careers-at-author" },
-                { label: "Become Expert", href: "/auth/author/register" },
-                { label: "Request Expert", href: "/emailtutor" },
-                { label: "Support", href: "/support" },
+              
+                { label: "Join as an expert", href: "/auth/author/register" },
+                { label: "Book an expert", href: "/emailtutor" },
+               
               ],
             },
             {

@@ -421,7 +421,7 @@ export default function TutorApplicationPage() {
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
             {/* Profile Photo */}
-            <Card>
+            <div className="space-y-6">
               <CardHeader className="text-center">
                 <CardTitle>Profile Photo</CardTitle>
               </CardHeader>
@@ -458,12 +458,12 @@ export default function TutorApplicationPage() {
                       {uploadingAvatar ? 'Uploading...' : 'Change Photo'}
                     </Button>
                     <p className="text-sm text-gray-500 mt-2 max-w-xs">
-                      Upload a professional photo. JPG, PNG, GIF or WEBP. Max size 5MB.
+                      Upload a professional photo. JPG, PNG, GIF or WEBP. 
                     </p>
                   </div>
                 </div>
               </CardContent>
-            </Card>
+            </div>
 
             
             <div className="grid md:grid-cols-2 gap-4">
@@ -655,19 +655,25 @@ export default function TutorApplicationPage() {
             <div>
               <Label className="text-base font-medium mb-3 block">Subjects You Can Teach *</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4">
-                {subjects.map((subject) => (
-                  <div
-                    key={subject}
-                    onClick={() => addSubject(subject)}
-                    className={`p-2 text-sm border rounded cursor-pointer transition-colors ${
-                      profileData.subjects.includes(subject)
-                        ? 'bg-blue-100 border-blue-300 text-blue-700'
-                        : 'bg-white border-gray-200 hover:bg-gray-50'
-                    }`}
-                  >
-                    {subject}
-                  </div>
-                ))}
+              {subjects.map((subject) => {
+  const selected = profileData.subjects.includes(subject);
+
+  return (
+    <div
+      key={subject}
+      onClick={() => addSubject(subject)}
+      className={`px-3 py-2 text-sm rounded-lg cursor-pointer border transition-all duration-150
+        ${
+          selected
+            ? 'bg-[#d7e7e5] border-[#01696f] text-[#01696f]'
+            : 'bg-[#fbfbf9] border-[#e5e2dc] text-[#3a3732] hover:border-[#bdb8ae]'
+        }
+      `}
+    >
+      {subject}
+    </div>
+  );
+})}
               </div>
 
               <div className="flex gap-2 mb-4">
@@ -829,7 +835,7 @@ export default function TutorApplicationPage() {
               />
             </div>
 
-            <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
+            <div className="space-y-4 p-4 bg-[#fbfbf9] border border-[#e5e2dc] rounded-lg">
               <div className="flex items-start space-x-3">
                 <Checkbox
                   id="agreeToBackground"
@@ -871,192 +877,118 @@ export default function TutorApplicationPage() {
 
   return (
     <RoleGuard allowed={['author']} redirectTo="/">
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#fbfbf9] border border-[#e5e2dc]">
       <Header />
       
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Become an AuthorConnect Author
-          </h1>
-          <p className="text-xl mb-8 opacity-90">
-            Share your knowledge, set your own schedule, and earn up to $80+ per hour
-          </p>
-          
-          <div className="grid md:grid-cols-4 gap-6 mt-12">
-            <div className="text-center">
-              <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <DollarSign className="h-8 w-8" />
-              </div>
-              <h3 className="font-semibold mb-2">Earn More</h3>
-              <p className="text-sm opacity-80">Set your own rates and keep 85% of earnings</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <Clock className="h-8 w-8" />
-              </div>
-              <h3 className="font-semibold mb-2">Flexible Schedule</h3>
-              <p className="text-sm opacity-80">Work when and where you want</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <Users className="h-8 w-8" />
-              </div>
-              <h3 className="font-semibold mb-2">Help Students</h3>
-              <p className="text-sm opacity-80">Make a real impact on learning</p>
-            </div>
-            
-            <div className="text-center">
-              <div className="bg-white/20 rounded-full p-4 w-16 h-16 mx-auto mb-3 flex items-center justify-center">
-                <Star className="h-8 w-8" />
-              </div>
-              <h3 className="font-semibold mb-2">Join the Best</h3>
-              <p className="text-sm opacity-80">Be part of our top-rated platform</p>
-            </div>
-          </div>
+     
+
+      <div className="min-h-screen bg-[#f7f6f2]">
+
+  <div className="max-w-[1200px] mx-auto grid lg:grid-cols-2 gap-8 p-6">
+
+    {/* LEFT PANEL */}
+    <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-2xl p-10 flex flex-col justify-between">
+
+      <div>
+        <div className="mb-6">
+          <span className="text-xs font-semibold bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+            EXPERT APPLICATION
+          </span>
         </div>
-      </section>
 
-      <div className="py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          {/* Progress Steps */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between">
-              {[1, 2, 3, 4].map((step) => (
-                <div key={step} className="flex items-center">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-medium ${
-                    step <= currentStep 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {step < currentStep ? <Check className="h-5 w-5" /> : step}
-                  </div>
-                  {step < 4 && (
-                    <div className={`flex-1 h-1 mx-4 ${
-                      step < currentStep ? 'bg-blue-600' : 'bg-gray-200'
-                    }`} />
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="flex justify-between mt-2 text-sm text-gray-600">
-              <span>Personal Info</span>
-              <span>Education</span>
-              <span>Subjects</span>
-              <span>Profile</span>
-            </div>
-          </div>
+        <h1 className="font-[var(--font-display)] text-[clamp(2rem,3vw,3.2rem)] leading-[1.05] mb-4">
+  Keep your profile up to date.
+</h1>
 
-          {/* Application Form */}
-          <Card>
-            <CardContent className="p-8">
-              <form >
-                {renderStepContent()}
+<p className="text-[#6e6a63] max-w-[50ch]">
+  Update your details, availability, and expertise to get better matches and more bookings.
+</p>
 
-                <div className="flex justify-between mt-8">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={prevStep}
-                    disabled={currentStep === 1}
-                  >
-                    Previous
-                  </Button>
-                  
-                  {currentStep < 4 ? (
-                    <Button type="button" onClick={nextStep}>
-                      Next Step
-                    </Button>
-                  ) : (
-                    <Button
-                    type="button"  // changed from submit
-                    onClick={handleSubmit}
-                    className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5"
-                    disabled={!profileData.agreeToTerms || !profileData.agreeToBackground  }
-                  >
-                    Submit Application
-                  </Button>
-                  )}
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-
-          {/* Additional Info */}
-          <div className="mt-12 grid md:grid-cols-2 gap-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>What happens next?</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-blue-600" />
-                    </div>
-                    <span>We review your application within 2-3 business days</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-blue-600" />
-                    </div>
-                    <span>Background check and verification process</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-blue-600" />
-                    </div>
-                    <span>Profile setup and onboarding</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-blue-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-blue-600" />
-                    </div>
-                    <span>Start receiving student requests!</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Requirements</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 text-sm">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-green-600" />
-                    </div>
-                    <span>18+ years old</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-green-600" />
-                    </div>
-                    <span>Subject matter expertise</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-green-600" />
-                    </div>
-                    <span>Pass background check</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-green-100 rounded-full p-1 mt-0.5">
-                      <Check className="h-3 w-3 text-green-600" />
-                    </div>
-                    <span>Reliable internet connection</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        <p className="text-[#6e6a63] max-w-[50ch]">
+          Share your expertise, set your schedule, and earn from meaningful conversations.
+        </p>
       </div>
+
+      {/* BENEFITS */}
+      <div className="mt-10 space-y-3">
+        {[
+  "Keep your profile visible to users",
+  "Update availability anytime",
+  "Improve your chances of getting booked",
+].map((item, i) => (
+          <div key={i} className="border border-[#e5e2dc] rounded-lg p-3 text-sm">
+            {item}
+          </div>
+        ))}
+      </div>
+
+    </div>
+
+    {/* RIGHT FORM */}
+    <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-2xl p-8">
+
+      {/* STEP HEADER */}
+      <div className="mb-6">
+        <h2 className="font-[var(--font-display)] text-2xl">
+        Update your profile
+        </h2>
+        <p className="text-[#6e6a63] text-sm mt-1">
+          Step {currentStep} of 4
+        </p>
+      </div>
+
+      {/* PROGRESS BAR */}
+      <div className="flex gap-2 mb-8">
+        {[1,2,3,4].map(step => (
+          <div
+            key={step}
+            className={`h-1 flex-1 rounded-full ${
+              step <= currentStep ? 'bg-[#01696f]' : 'bg-[#e5e2dc]'
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* FORM CONTENT */}
+      <form>
+        {renderStepContent()}
+
+        {/* ACTIONS */}
+        <div className="flex justify-between mt-8">
+
+          <button
+            type="button"
+            onClick={prevStep}
+            disabled={currentStep === 1}
+            className="px-4 h-[40px] border border-[#d4d1ca] rounded-full text-sm"
+          >
+            Back
+          </button>
+
+          {currentStep < 4 ? (
+            <button
+              type="button"
+              onClick={nextStep}
+              className="px-5 h-[40px] rounded-full bg-[#01696f] text-white text-sm"
+            >
+              Continue
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="px-5 h-[40px] rounded-full bg-[#01696f] text-white text-sm"
+            >
+              Save changes
+            </button>
+          )}
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
       
       <Footer />
     </div>

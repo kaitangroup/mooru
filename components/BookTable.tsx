@@ -91,139 +91,138 @@ export function BookTable() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#01696f]" />
       </div>
     );
   }
 
   return (
     <div className="w-full">
-      {/* Header */}
-      <div className="text-center flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">My Books</h1>
+
+      {/* HEADER */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <h1 className="font-[var(--font-display)] text-[clamp(1.8rem,2.5vw,2.4rem)] text-[#28251d]">
+          Your books
+        </h1>
+
         <button
           onClick={handleCreate}
-          className="w-full sm:w-auto flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="flex items-center gap-2 px-5 h-[42px] rounded-full bg-[#01696f] text-white text-sm font-medium hover:bg-[#0c4e54] transition"
         >
-          <Plus className="h-5 w-5" />
-          <span>Add Book</span>
+          <Plus className="h-4 w-4" />
+          Add book
         </button>
       </div>
 
+      {/* ERROR */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+        <div className="bg-[#fff4f4] border border-[#f5c2c2] text-[#b42318] px-4 py-3 rounded-lg mb-4">
           {error}
         </div>
       )}
 
+      {/* EMPTY STATE */}
       {books.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-12 text-center">
-          <p className="text-gray-500 text-lg mb-4">No books found</p>
+        <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-12 text-center">
+          <h3 className="font-[var(--font-display)] text-xl mb-2">
+            No books yet
+          </h3>
+          <p className="text-[#6e6a63] mb-6">
+            Add your published work to build credibility and attract more users.
+          </p>
+
           <button
             onClick={handleCreate}
-            className="inline-flex items-center space-x-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 px-5 h-[42px] rounded-full bg-[#01696f] text-white text-sm"
           >
-            <Plus className="h-5 w-5" />
-            <span>Add Your First Book</span>
+            <Plus className="h-4 w-4" />
+            Add your first book
           </button>
         </div>
       ) : (
         <>
-          {/* Desktop / Tablet: table view */}
-          <div className="hidden md:block bg-white rounded-lg shadow overflow-hidden">
+          {/* TABLE VIEW */}
+          <div className="hidden md:block bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead className="bg-gray-50 border-b border-gray-200">
+                <thead className="border-b border-[#e5e2dc]">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                      Cover Image
-                    </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                      Title
-                    </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                      Description
-                    </th>
-                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900">
-                      URL
-                    </th>
-                    <th className="px-6 py-4 text-right text-sm font-semibold text-gray-900">
-                      Actions
-                    </th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#28251d]">Cover</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#28251d]">Title</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#28251d]">Description</th>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-[#28251d]">Link</th>
+                    <th className="px-6 py-4 text-right text-sm font-semibold text-[#28251d]">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
+
+                <tbody className="divide-y divide-[#e5e2dc]">
                   {books.map((book) => (
-                    <tr key={book.id} className="hover:bg-gray-50 transition-colors">
+                    <tr key={book.id} className="hover:bg-[#f3f2ef] transition">
+
+                      {/* IMAGE */}
                       <td className="px-6 py-4">
                         {book.featured_image_url ? (
                           <img
                             src={book.featured_image_url}
                             alt={book.title.rendered}
-                            className="h-16 w-12 object-cover rounded shadow-sm"
+                            className="h-16 w-12 object-cover rounded"
                           />
                         ) : (
-                          <div className="h-16 w-12 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
+                          <div className="h-16 w-12 bg-[#e5e2dc] rounded flex items-center justify-center text-xs text-[#a8a29e]">
                             No Image
                           </div>
                         )}
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="font-medium text-gray-900 break-words">
-                          {book.title.rendered}
-                        </div>
+
+                      {/* TITLE */}
+                      <td className="px-6 py-4 font-medium text-[#28251d]">
+                        {book.title.rendered}
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="text-sm text-gray-600 max-w-md truncate">
-                          {book.content.rendered.replace(/<[^>]*>/g, '')}
-                        </div>
+
+                      {/* DESC */}
+                      <td className="px-6 py-4 text-sm text-[#6e6a63] max-w-md truncate">
+                        {book.content.rendered.replace(/<[^>]*>/g, '')}
                       </td>
+
+                      {/* LINK */}
                       <td className="px-6 py-4">
                         {book.book_url ? (
                           <a
                             href={book.book_url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700"
+                            className="inline-flex items-center gap-1 text-[#01696f] text-sm hover:underline"
                           >
-                            <span className="text-sm">View</span>
+                            View
                             <ExternalLink className="h-4 w-4" />
                           </a>
                         ) : (
-                          <span className="text-gray-400 text-sm">No URL</span>
+                          <span className="text-[#a8a29e] text-sm">—</span>
                         )}
                       </td>
+
+                      {/* ACTIONS */}
                       <td className="px-6 py-4">
-                        <div className="flex items-center justify-end space-x-2">
+                        <div className="flex justify-end gap-2">
+
                           <button
                             onClick={() => handleEdit(book)}
-                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                            title="Edit book"
+                            className="p-2 text-[#01696f] hover:bg-[#d7e7e5] rounded-lg"
                           >
                             <Pencil className="h-4 w-4" />
                           </button>
 
                           <button
                             onClick={() => handleDelete(book.id)}
-                            className={`px-3 py-1 rounded-lg font-medium transition-colors ${
+                            className={`px-3 py-1 rounded-lg text-sm ${
                               deleteConfirm === book.id
-                                ? 'bg-red-600 text-white hover:bg-red-700'
+                                ? 'bg-red-600 text-white'
                                 : 'text-red-600 hover:bg-red-50'
                             }`}
-                            aria-pressed={deleteConfirm === book.id}
-                            aria-label={
-                              deleteConfirm === book.id ? 'Confirm delete' : 'Delete book'
-                            }
                           >
-                            {deleteConfirm === book.id ? (
-                              <span className="flex items-center space-x-2">
-                                <Trash2 className="h-4 w-4" />
-                                <span className="text-sm">Confirm</span>
-                              </span>
-                            ) : (
-                              <Trash2 className="h-4 w-4" />
-                            )}
+                            {deleteConfirm === book.id ? 'Confirm' : <Trash2 className="h-4 w-4" />}
                           </button>
+
                         </div>
                       </td>
                     </tr>
@@ -233,70 +232,51 @@ export function BookTable() {
             </div>
           </div>
 
-          {/* Mobile: card list view */}
+          {/* MOBILE */}
           <div className="md:hidden space-y-4">
             {books.map((book) => (
               <div
                 key={book.id}
-                className="bg-white rounded-lg shadow p-4 flex gap-4 items-start"
+                className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-4 flex gap-4"
               >
-                {/* Cover */}
-                <div className="shrink-0">
+                <div>
                   {book.featured_image_url ? (
                     <img
                       src={book.featured_image_url}
-                      alt={book.title.rendered}
-                      className="h-24 w-16 object-cover rounded shadow-sm"
+                      className="h-24 w-16 object-cover rounded"
                     />
                   ) : (
-                    <div className="h-24 w-16 bg-gray-200 rounded flex items-center justify-center text-gray-400 text-xs">
+                    <div className="h-24 w-16 bg-[#e5e2dc] rounded flex items-center justify-center text-xs text-[#a8a29e]">
                       No Image
                     </div>
                   )}
                 </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-gray-900 text-base break-words">
+                <div className="flex-1">
+                  <div className="font-semibold text-[#28251d]">
                     {book.title.rendered}
                   </div>
-                  <div className="text-xs text-gray-600 mt-1 line-clamp-2">
+
+                  <div className="text-sm text-[#6e6a63] mt-1 line-clamp-2">
                     {book.content.rendered.replace(/<[^>]*>/g, '')}
                   </div>
 
-                  {book.book_url ? (
-                    <a
-                      href={book.book_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs mt-2"
-                    >
-                      <span>View</span>
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  ) : (
-                    <p className="text-gray-400 text-xs mt-2">No URL</p>
-                  )}
-
-                  {/* Actions */}
                   <div className="flex justify-end gap-2 mt-3">
                     <button
                       onClick={() => handleEdit(book)}
-                      className="px-3 py-1 text-xs rounded-lg text-blue-600 border border-blue-100 hover:bg-blue-50 flex items-center gap-1"
+                      className="px-3 py-1 text-xs rounded-full border border-[#d4d1ca]"
                     >
-                      <Pencil className="h-3 w-3" />
                       Edit
                     </button>
 
                     <button
                       onClick={() => handleDelete(book.id)}
-                      className={`px-3 py-1 text-xs rounded-lg font-medium flex items-center gap-1 transition-colors ${
+                      className={`px-3 py-1 text-xs rounded-full ${
                         deleteConfirm === book.id
-                          ? 'bg-red-600 text-white hover:bg-red-700'
-                          : 'text-red-600 border border-red-100 hover:bg-red-50'
+                          ? 'bg-red-600 text-white'
+                          : 'text-red-600 border border-red-200'
                       }`}
                     >
-                      <Trash2 className="h-3 w-3" />
                       {deleteConfirm === book.id ? 'Confirm' : 'Delete'}
                     </button>
                   </div>

@@ -395,7 +395,10 @@ useEffect(() => {
   /* ===== UI niceties ===== */
   useEffect(() => {
     if (!scrollRef.current) return;
-    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    scrollRef.current.scrollTo({
+      top: scrollRef.current.scrollHeight,
+      behavior: 'smooth',
+    });
   }, [messages]);
 
   useEffect(() => {
@@ -439,237 +442,278 @@ useEffect(() => {
   }, [selectedConv?.thread_id]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
-
-      <div className="py-4 px-2 sm:py-8 sm:px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-4 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-bold mb-1">Messages</h1>
-            <p className="text-gray-600 text-sm sm:text-base">Communicate with your authors and students.</p>
+  
+      <div className="py-6 px-3 sm:py-10 sm:px-6">
+        <div className="max-w-[1200px] mx-auto">
+  
+          {/* HEADER */}
+          <div className="mb-6">
+            <h1 className="font-[var(--font-display)] text-[clamp(1.8rem,2.5vw,2.4rem)] text-[#28251d]">
+              Messages
+            </h1>
+            <p className="text-[#6e6a63] text-sm">
+              Communicate with your experts and users.
+            </p>
           </div>
-
-          {/* 📱 Mobile-first: list OR chat; 🖥️ Desktop: split view */}
-          <div
-            className="min-h-0 h-[calc(100dvh-220px)] grid lg:grid-cols-3 gap-4 sm:gap-6"
-          >
-            {/* Left: Conversations (hide on mobile when a chat is open) */}
-            <div className={`min-h-0 ${selectedUserId ? 'hidden lg:block' : 'block'} lg:col-span-1`}>
-              <Card className="h-full flex flex-col min-h-0">
-                <CardHeader className="sticky top-0 z-10 bg-white">
-                  <CardTitle>Conversations</CardTitle>
+  
+          {/* MAIN GRID */}
+          <div className="  grid lg:grid-cols-3 gap-5">
+  
+            {/* ================= LEFT: CONVERSATIONS ================= */}
+            <div className={`${selectedUserId ? 'hidden lg:block' : ''}`}>
+  
+              <div className="h-full flex flex-col bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl">
+  
+                {/* HEADER */}
+                <div className="p-4 border-b border-[#e5e2dc]">
+                  <h3 className="font-semibold text-[#28251d] mb-3">
+                    Conversations
+                  </h3>
+  
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-                    <Input
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#a8a29e] h-4 w-4" />
+                    <input
                       placeholder="Search conversations..."
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
-                      className="pl-10"
+                      className="w-full pl-10 pr-3 h-[40px] rounded-lg border border-[#e5e2dc] bg-white text-sm outline-none focus:ring-1 focus:ring-[#01696f]"
                     />
                   </div>
-                </CardHeader>
-
-                <CardContent className="p-0 flex-1 overflow-y-auto min-h-0">
-                  <div className="space-y-1">
-                    {filteredConversations.map((item) => {
-                      const isUnread = !!item.unread;
-                      return (
-                        <button
-                          key={item.userId}
-                          onClick={() => setSelectedUserId(item.userId)}
-                          className={`w-full text-left p-4 hover:bg-gray-50 border-b transition-colors ${
-                            selectedUserId === item.userId ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
-                          }`}
-                        >
-                          <div className="flex items-start gap-3">
-                            <Avatar className="h-10 w-10 shrink-0">
-                              <AvatarImage src={item.avatar} />
-                              <AvatarFallback>{initials(item.participant)}</AvatarFallback>
-                            </Avatar>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center justify-between gap-2">
-                                <h4 className={`text-sm flex items-center gap-2 ${isUnread ? 'font-bold' : 'font-medium'}`}>
-                                  {item.participant}
-                                  {item.isActive && <Badge variant="default">Active</Badge>}
-                                  {isUnread && <span className="inline-block h-2 w-2 rounded-full bg-blue-600" aria-label="unread" />}
-                                </h4>
-                                <span className={`text-xs ${isUnread ? 'text-gray-900 font-semibold' : 'text-gray-500'}`}>
-                                  {item.timestamp}
-                                </span>
-                              </div>
-                              <p className={`text-sm truncate mt-1 ${isUnread ? 'font-semibold text-gray-900' : 'text-gray-600'}`}>
-                                {item.lastMessage}
+                </div>
+  
+                {/* LIST */}
+                <div className="flex-1 overflow-y-auto">
+  
+                  {filteredConversations.map((item) => {
+                    const isUnread = !!item.unread;
+  
+                    return (
+                      <button
+                        key={item.userId}
+                        onClick={() => setSelectedUserId(item.userId)}
+                        className={`w-full text-left px-4 py-3 border-b border-[#eee] transition ${
+                          selectedUserId === item.userId
+                            ? 'bg-[#eef4f3]'
+                            : 'hover:bg-[#f3f2ef]'
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+  
+                          <img
+                            src={item.avatar}
+                            className="h-10 w-10 rounded-full object-cover border border-[#e5e2dc]"
+                          />
+  
+                          <div className="flex-1 min-w-0">
+  
+                            <div className="flex justify-between items-center">
+                              <p className={`text-sm ${
+                                isUnread ? 'font-semibold text-[#28251d]' : 'text-[#28251d]'
+                              }`}>
+                                {item.participant}
                               </p>
+  
+                              <span className="text-xs text-[#a8a29e]">
+                                {item.timestamp}
+                              </span>
                             </div>
+  
+                            <p className={`text-xs truncate mt-1 ${
+                              isUnread
+                                ? 'text-[#28251d] font-medium'
+                                : 'text-[#6e6a63]'
+                            }`}>
+                              {item.lastMessage}
+                            </p>
+  
                           </div>
-                        </button>
-                      );
-                    })}
-
-                    {filteredConversations.length === 0 && (
-                      <div className="p-5 text-sm text-gray-500">No conversations found.</div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+  
+                          {isUnread && (
+                            <span className="h-2 w-2 bg-[#01696f] rounded-full mt-2" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+  
+                  {filteredConversations.length === 0 && (
+                    <div className="p-5 text-sm text-[#6e6a63]">
+                      No conversations found.
+                    </div>
+                  )}
+  
+                </div>
+              </div>
             </div>
-
-            {/* Right: Chat (hide on mobile until a chat is selected) */}
-            <div className={`min-h-0 ${selectedUserId ? 'block' : 'hidden lg:block'} lg:col-span-2`}>
-              <Card className="h-full flex flex-col min-h-0">
+  
+            {/* ================= RIGHT: CHAT ================= */}
+            <div className={`${selectedUserId ? '' : 'hidden lg:block'} lg:col-span-2`}>
+  
+              <div className="h-full flex flex-col bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl">
+  
                 {selectedUserId ? (
                   <>
-                    {/* Sticky chat header with mobile Back */}
-                    <CardHeader className="border-b sticky top-0 z-10 bg-white">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 min-w-0">
-                          {/* Back only on mobile */}
-                          <button
-                            type="button"
-                            onClick={() => setSelectedUserId(null)}
-                            className="lg:hidden -ml-2 mr-1 p-2 rounded hover:bg-gray-100"
-                            aria-label="Back to list"
-                          >
-                            <ArrowLeft className="h-5 w-5" />
-                          </button>
-
-                          <Avatar className="h-10 w-10">
-                            <AvatarImage src={selectedAvatar} />
-                            <AvatarFallback>{initials(selectedName)}</AvatarFallback>
-                          </Avatar>
-                          <div className="min-w-0">
-                            <h3 className="font-medium truncate max-w-[50vw] lg:max-w-none">
-                              {selectedName || 'Loading…'}
-                            </h3>
-                            <p className="text-sm text-gray-500">
-                              {selectedConv?.role ? selectedConv?.role : 'hello'}
-                            </p>
-                          </div>
+                    {/* HEADER */}
+                    <div className="border-b border-[#e5e2dc] p-4 flex items-center justify-between">
+  
+                      <div className="flex items-center gap-3">
+  
+                        <button
+                          onClick={() => setSelectedUserId(null)}
+                          className="lg:hidden p-2 rounded hover:bg-[#f3f2ef]"
+                        >
+                          <ArrowLeft className="h-5 w-5" />
+                        </button>
+  
+                        <img
+                          src={selectedAvatar}
+                          className="h-10 w-10 rounded-full border border-[#e5e2dc]"
+                        />
+  
+                        <div>
+                          <p className="font-medium text-[#28251d]">
+                            {selectedName || 'Loading...'}
+                          </p>
+                          <p className="text-xs text-[#6e6a63]">
+                            {selectedConv?.role || 'Active'}
+                          </p>
                         </div>
-                        <Button variant="ghost" size="sm">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
                       </div>
-                    </CardHeader>
-
-                    {/* Messages list (scrollable) */}
-                    <CardContent
+  
+                      <MoreVertical className="h-4 w-4 text-[#6e6a63]" />
+                    </div>
+  
+                    {/* MESSAGES */}
+                    <div
                       ref={scrollRef}
-                      className="flex-1 p-3 sm:p-4 overflow-y-auto min-h-0 space-y-4"
+                       className="flex-1 overflow-y-auto p-4 space-y-1"
                     >
                       {loading ? (
-                        <div className="text-sm text-gray-500">Loading messages…</div>
+                        <p className="text-sm text-[#6e6a63]">
+                          Loading messages...
+                        </p>
                       ) : (
                         <>
-                          {messages.map((m) => {
-                            const isMine = myId != null && m.from === myId;
-                            const open = menuFor === m.id;
+                         {messages.map((m, index) => {
+  const isMine = myId != null && m.from === myId;
 
-                            return (
-                              <div key={m.id} className={`group flex ${isMine ? 'justify-end' : 'justify-start'}`}>
-                                <div className="relative inline-block max-w-[80%] sm:max-w-[70%]" data-msg-menu>
-                                  <div className={`${isMine ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-900'} rounded-2xl px-3 py-2`}>
-                                    <p
-                                      className="text-sm leading-relaxed whitespace-pre-wrap break-words"
-                                      dangerouslySetInnerHTML={{ __html: m.content }}
-                                    />
-                                  </div>
+  const prev = messages[index - 1];
+  const next = messages[index + 1];
 
-                                  {isMine && (
-                                    <button
-                                      type="button"
-                                      onClick={() => setMenuFor(open ? null : m.id)}
-                                      className="absolute top-0 left-full ml-[2px] p-1 rounded hover:bg-gray-200 opacity-0 group-hover:opacity-100 transition"
-                                      aria-label="Message menu"
-                                    >
-                                      <MoreVertical className="h-4 w-4" />
-                                    </button>
-                                  )}
+  const isFirst = !prev || prev.from !== m.from;
+  const isLast = !next || next.from !== m.from;
 
-                                  {isMine && open && (
-                                    <div className="absolute right-0 top-6 z-10 w-44 rounded-md border bg-white shadow-md">
-                                      <button
-                                        onClick={() => startEdit(m)}
-                                        className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50"
-                                      >
-                                        <Pencil className="h-4 w-4" />
-                                        Edit
-                                      </button>
-                                      <button
-                                        onClick={() => handleDelete(m.id)}
-                                        className="w-full flex items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50 text-red-600"
-                                      >
-                                        <Trash2 className="h-4 w-4" />
-                                        Delete
-                                      </button>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          })}
+  return (
+    <div
+      key={m.id}
+      className={`flex ${isMine ? 'justify-end' : 'justify-start'} ${
+        isFirst ? 'mt-3' : 'mt-1'
+      }`}
+    >
+      <div className="max-w-[78%] flex flex-col">
 
+        {/* BUBBLE */}
+        <div
+          className={`px-4 py-2 text-sm leading-relaxed shadow-sm ${
+            isMine
+  ? `bg-[#0f766e] text-white shadow-md 
+     px-4 py-2 min-w-[80px] max-w-[75%]
+     rounded-2xl rounded-br-sm`
+              : `bg-white border border-[#e5e2dc] text-[#28251d] ${
+                  isFirst
+                    ? 'rounded-2xl rounded-bl-md'
+                    : 'rounded-2xl rounded-bl-sm'
+                }`
+          }`}
+        >
+          <p
+  className={`whitespace-pre-wrap break-words ${
+    isMine ? 'text-white' : 'text-[#28251d]'
+  }`}
+  dangerouslySetInnerHTML={{ __html: m.content }}
+/>
+        </div>
+
+        {/* TIMESTAMP (only last in group) */}
+        {isLast && (
+          <span
+            className={`text-[11px] mt-1 ${
+              isMine ? 'text-right' : 'text-left'
+            } text-[#a8a29e]`}
+          >
+            {m.timestamp
+              ? new Date(m.timestamp).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })
+              : ''}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+})}
+  
                           {messages.length === 0 && (
-                            <div className="text-sm text-gray-500">No messages yet. Say hello 👋</div>
+                            <div className="text-center text-[#6e6a63] text-sm">
+                              No messages yet. Say hello 👋
+                            </div>
                           )}
                         </>
                       )}
-                    </CardContent>
-
-                    {/* Sticky composer */}
-                    <div className="border-t p-2 sm:p-3 sticky bottom-0 bg-white">
+                    </div>
+  
+                    {/* INPUT */}
+                    <div className="border-t border-[#e5e2dc] px-4 py-3 bg-[#f9f8f5] flex items-center">
                       {token ? (
-                        <form onSubmit={handleSendMessage} className="flex gap-2 items-end">
-                          <div className="flex-1">
-                            {editingId && (
-                              <div className="text-xs mb-1 text-amber-600">
-                                Editing message…{' '}
-                                <button type="button" onClick={cancelEdit} className="underline">Cancel</button>
-                              </div>
-                            )}
-                            <Textarea
-                              ref={composeRef}
-                              onKeyDown={onComposerKeyDown}
-                              value={newMessage}
-                              onChange={(e) => setNewMessage(e.target.value)}
-                              placeholder={editingId ? 'Edit your message…' : 'Type your message...'}
-                              className="flex-1 min-h-[40px] max-h-[140px] resize-none"
-                              rows={1}
-                            />
-                          </div>
-                          <Button
-                            type="submit"
-                            size="sm"
-                            className="self-end"
-                            disabled={!newMessage.trim() || sending}
-                          >
-                            {editingId ? 'Update' : <Send className="h-4 w-4" />}
-                          </Button>
-                          {editingId && (
-                            <Button type="button" size="sm" variant="secondary" onClick={cancelEdit}>
-                              Cancel
-                            </Button>
-                          )}
-                        </form>
+                        <form onSubmit={handleSendMessage} className="flex items-center gap-2 w-full">
+                        <textarea
+  ref={composeRef}
+  value={newMessage}
+  onChange={(e) => setNewMessage(e.target.value)}
+  onKeyDown={onComposerKeyDown}
+  placeholder="Type a message"
+  rows={1}
+  className="flex-1 h-[40px] border border-[#e5e2dc] rounded-full px-4 text-sm outline-none focus:ring-1 focus:ring-[#01696f] resize-none flex items-center"
+/>
+                      
+<button
+  type="submit"
+  disabled={!newMessage.trim() || sending}
+  className="bg-[#01696f] text-white h-[40px] w-[40px] rounded-full flex items-center justify-center shadow-sm"
+>
+  <Send className="h-4 w-4" />
+</button>
+                      
+                      </form>
                       ) : (
-                        <div className="text-sm text-gray-500">Please sign in to send messages.</div>
+                        <p className="text-sm text-[#6e6a63]">
+                          Please sign in to send messages.
+                        </p>
                       )}
                     </div>
                   </>
                 ) : (
-                  <CardContent className="flex-1 flex items-center justify-center">
-                    <div className="text-center">
-                      <h3 className="text-lg font-medium text-gray-900 mb-2">No conversation selected</h3>
-                      <p className="text-gray-500">Choose a conversation from the list to start messaging.</p>
+                  <div className="flex-1 flex items-center justify-center text-center">
+                    <div>
+                      <p className="text-[#28251d] font-medium">
+                        No conversation selected
+                      </p>
+                      <p className="text-sm text-[#6e6a63]">
+                        Choose a conversation to start messaging.
+                      </p>
                     </div>
-                  </CardContent>
+                  </div>
                 )}
-              </Card>
+              </div>
             </div>
+  
           </div>
         </div>
       </div>
-
+  
       <Footer />
     </div>
   );

@@ -16,8 +16,8 @@ export async function GET() {
     credential,
     ttl: 3600,
     urls: [
-      "turn:Guroos.duckdns.org:3478?transport=udp",
-      "turn:Guroos.duckdns.org:3478?transport=tcp"
+      "turn:mooru.duckdns.org:3478?transport=udp",
+      "turn:mooru.duckdns.org:3478?transport=tcp"
     ]
   });
 }

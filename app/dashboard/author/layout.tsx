@@ -12,9 +12,9 @@ export default function AuthorDashboardLayout({
 }) {
   return (
     <RoleGuard allowed={['author']} redirectTo="/">
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-[#f7f6f2]">
         <Header />
-        <main className="py-8 px-4 max-w-7xl mx-auto">
+        <main className="py-8 px-4 max-w-[1120px]  mx-auto">
           {children}
         </main>
         <Footer />

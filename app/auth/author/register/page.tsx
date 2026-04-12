@@ -24,6 +24,9 @@ export default function TutorRegisterPage() {
     confirmPassword: string;
     zipCode: string;
     agreeToTerms: boolean;
+    amazonLink: string;
+    youtubeLink: string;
+    podcastLink: string;
   }>({
     firstName: '',
     lastName: '',
@@ -32,6 +35,9 @@ export default function TutorRegisterPage() {
     confirmPassword: '',
     zipCode: '',
     agreeToTerms: false,
+    amazonLink: '',
+    youtubeLink: '',
+    podcastLink: '',
   });
 
   const [errors, setErrors] = useState({
@@ -313,21 +319,36 @@ export default function TutorRegisterPage() {
           <label className="text-sm font-medium">
             Amazon book link <span className="text-[#9a958d]">(optional)</span>
           </label>
-          <input className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]" placeholder="https://www.amazon.com/..." />
+          <input
+            className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
+            placeholder="https://www.amazon.com/..."
+            value={formData.amazonLink}
+            onChange={(e) => handleInputChange("amazonLink", e.target.value)}
+          />
         </div>
 
         <div>
           <label className="text-sm font-medium">
             YouTube video link <span className="text-[#9a958d]">(optional)</span>
           </label>
-          <input className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]" placeholder="https://www.youtube.com/..." />
+          <input
+            className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
+            placeholder="https://www.youtube.com/..."
+            value={formData.youtubeLink}
+            onChange={(e) => handleInputChange("youtubeLink", e.target.value)}
+          />
         </div>
 
         <div>
           <label className="text-sm font-medium">
             Apple Podcasts link <span className="text-[#9a958d]">(optional)</span>
           </label>
-          <input className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]" placeholder="https://podcasts.apple.com/..." />
+          <input
+            className="w-full h-[52px] mt-2 px-4 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
+            placeholder="https://podcasts.apple.com/..."
+            value={formData.podcastLink}
+            onChange={(e) => handleInputChange("podcastLink", e.target.value)}
+          />
         </div>
       </div>
     </div>

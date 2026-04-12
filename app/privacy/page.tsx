@@ -1,131 +1,146 @@
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { Card, CardContent } from '@/components/ui/card';
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2] text-[#28251d]">
       <Header />
-      
-      <div className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <Card>
-            <CardContent className="p-8">
-              <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
-              <p className="text-gray-600 mb-8">Last updated: January 1, 2025</p>
 
-              <div className="prose max-w-none space-y-8">
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">1. Information We Collect</h2>
-                  <p className="text-gray-600 mb-4">
-                    We collect information you provide directly to us, such as when you create an account, book a lesson, or contact us for support.
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Personal information (name, email address, phone number)</li>
-                    <li>Profile information (education, subjects, experience)</li>
-                    <li>Payment information (processed securely by our payment providers)</li>
-                    <li>Communications between users on our platform</li>
-                    <li>Usage data and analytics</li>
-                  </ul>
-                </section>
+      {/* HERO */}
+      <section className="px-6 py-20 border-b border-[#e5e2dc]">
+        <div className="max-w-3xl mx-auto">
+          <p className="text-sm text-[#6b665d] mb-4">
+            Last Updated: April 12, 2026
+          </p>
 
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">2. How We Use Your Information</h2>
-                  <p className="text-gray-600 mb-4">
-                    We use the information we collect to provide, maintain, and improve our services:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>To create and maintain your account</li>
-                    <li>To facilitate lesson bookings and communications</li>
-                    <li>To process payments and prevent fraud</li>
-                    <li>To send you notifications and updates</li>
-                    <li>To improve our platform and user experience</li>
-                    <li>To comply with legal obligations</li>
-                  </ul>
-                </section>
+          <h1 className="text-5xl md:text-6xl font-serif leading-tight tracking-tight">
+            Privacy Policy
+          </h1>
 
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">3. Information Sharing</h2>
-                  <p className="text-gray-600 mb-4">
-                    We do not sell, trade, or otherwise transfer your personal information to third parties except in the following circumstances:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>With authors and students to facilitate lessons</li>
-                    <li>With payment processors to handle transactions</li>
-                    <li>With service providers who assist in operating our platform</li>
-                    <li>When required by law or to protect our rights</li>
-                    <li>In connection with a business transfer or acquisition</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">4. Data Security</h2>
-                  <p className="text-gray-600 mb-4">
-                    We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no internet transmission is completely secure.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">5. Your Rights and Choices</h2>
-                  <p className="text-gray-600 mb-4">
-                    You have certain rights regarding your personal information:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600 space-y-2">
-                    <li>Access and update your account information</li>
-                    <li>Delete your account and associated data</li>
-                    <li>Opt out of marketing communications</li>
-                    <li>Request a copy of your personal data</li>
-                    <li>Lodge a complaint with a supervisory authority</li>
-                  </ul>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">6. Cookies and Tracking</h2>
-                  <p className="text-gray-600 mb-4">
-                    We use cookies and similar tracking technologies to improve your experience on our platform. You can control cookie settings through your browser preferences.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">7. Children's Privacy</h2>
-                  <p className="text-gray-600 mb-4">
-                    Our services are not directed to children under 13. We do not knowingly collect personal information from children under 13. If we become aware of such collection, we will take steps to delete the information.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">8. International Data Transfers</h2>
-                  <p className="text-gray-600 mb-4">
-                    Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for such transfers.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">9. Changes to This Policy</h2>
-                  <p className="text-gray-600 mb-4">
-                    We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.
-                  </p>
-                </section>
-
-                <section>
-                  <h2 className="text-2xl font-bold mb-4">10. Contact Us</h2>
-                  <p className="text-gray-600 mb-4">
-                    If you have any questions about this privacy policy or our practices, please contact us:
-                  </p>
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <p className="text-gray-600">
-                      Email: privacy@authorconnect.com<br />
-                      Address: 123 Education Ave, New York, NY 10001<br />
-                      Phone: +1 (555) 123-4567
-                    </p>
-                  </div>
-                </section>
-              </div>
-            </CardContent>
-          </Card>
+          <p className="mt-6 text-lg text-[#6b665d] leading-relaxed">
+            This Privacy Policy explains how Guroos collects, uses, and protects
+            your information when you use our platform.
+          </p>
         </div>
-      </div>
-      
+      </section>
+
+      {/* CONTENT */}
+      <section className="px-6 py-16">
+        <div className="max-w-3xl mx-auto space-y-14">
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              1. Introduction
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Guroos (“we”, “us”, or “our”) collects and processes information
+              to provide a seamless experience connecting users with experts.
+              By using our Service, you agree to this Privacy Policy.
+            </p>
+          </div>
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              2. Information We Collect
+            </h2>
+
+            <div className="space-y-6 text-[#4b463f]">
+
+              <div>
+                <h3 className="font-medium mb-2">Account Information</h3>
+                <p>
+                  Name, email, profile details, and login credentials.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-medium mb-2">Session Data</h3>
+                <p>
+                  Booking details, conversations, and interactions on the platform.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="font-medium mb-2">Usage Data</h3>
+                <p>
+                  Pages visited, features used, and general interaction data.
+                </p>
+              </div>
+
+            </div>
+          </div>
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              3. How We Use Information
+            </h2>
+
+            <ul className="space-y-3 text-[#4b463f] list-disc pl-6">
+              <li>Provide and maintain the Service</li>
+              <li>Process bookings and payments</li>
+              <li>Improve user experience</li>
+              <li>Communicate updates and support</li>
+              <li>Ensure security and prevent fraud</li>
+            </ul>
+          </div>
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              4. Sessions & Communication
+            </h2>
+
+            <p className="text-[#4b463f] leading-relaxed">
+              Sessions may include audio, video, and messaging. Some sessions may
+              be recorded for safety and quality purposes. Users will be notified
+              when recording is active.
+            </p>
+          </div>
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              5. Data Security
+            </h2>
+
+            <p className="text-[#4b463f] leading-relaxed">
+              We implement appropriate safeguards to protect your data, but no
+              system is completely secure.
+            </p>
+          </div>
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              6. Your Rights
+            </h2>
+
+            <ul className="space-y-3 text-[#4b463f] list-disc pl-6">
+              <li>Access your data</li>
+              <li>Request corrections</li>
+              <li>Request deletion</li>
+              <li>Withdraw consent</li>
+            </ul>
+          </div>
+
+          {/* SECTION */}
+          <div>
+            <h2 className="text-2xl font-semibold mb-4">
+              7. Contact Us
+            </h2>
+
+            <div className="bg-white border border-[#e5e2dc] rounded-xl p-6 text-[#4b463f]">
+              <p>Email: support@guroos.com</p>
+              <p>Address: [Your Company Address]</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       <Footer />
     </div>
   );

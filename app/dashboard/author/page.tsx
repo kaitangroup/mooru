@@ -1,19 +1,18 @@
 'use client';
+
 import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { 
-  Users, Calendar, DollarSign, MessageCircle, 
-  Clock, Star, TrendingUp, Settings
+import {
+  Users,
+  Calendar,
+  DollarSign,
+  MessageCircle,
+  Clock,
+  Star,
+  TrendingUp,
+  Settings,
 } from 'lucide-react';
 import Link from 'next/link';
-import { mockBookings, mockMessages } from '@/lib/mockData';
 import { AuthorDashboard } from '@/lib/types';
-
-
-// ... baki imports same
 
 type RecentMessage = {
   id: number;
@@ -27,69 +26,59 @@ type RecentMessage = {
   };
 };
 
-
-
 export default function TutorDashboard() {
- 
-  const unreadMessages = mockMessages.filter(msg => msg.unread);
   const [loading, setLoading] = useState(true);
-  const apiUrl = process.env.NEXT_PUBLIC_WP_URL;
+  const [authorDashboard, setAuthorDashboard] = useState<AuthorDashboard | null>(null);
 
   const [wpToken, setWpToken] = useState<string | null>(null);
   const [recentMessages, setRecentMessages] = useState<RecentMessage[]>([]);
   const [loadingMessages, setLoadingMessages] = useState(false);
   const [messagesError, setMessagesError] = useState<string | null>(null);
 
-  const [authorDashboard, setAuthorDashboard] = useState<AuthorDashboard | null>();
-  const totalEarnings = authorDashboard ? authorDashboard.totalEarnings  : 0; // Mock data
-  const monthlyEarnings = authorDashboard ? authorDashboard.totalEarnings : 0; // Mock data
-  const totalStudents = authorDashboard ? authorDashboard.totalStudents : 0; // Mock data
-  const averageRating = authorDashboard ? authorDashboard.averageRating  : 0.0;
+  const unreadMessages = recentMessages.filter((message) => message.unread);
 
-  const upcomingBookings = authorDashboard && Array.isArray(authorDashboard.bookings)
-    ? authorDashboard.bookings.filter((booking: any) => booking?.status === 'approved')
-    : [];
+  const apiUrl = process.env.NEXT_PUBLIC_WP_URL;
 
-    const pendingBookings = authorDashboard && Array.isArray(authorDashboard.bookings)
-    ? authorDashboard.bookings.filter((booking: any) => booking?.status === 'completed')
-    : [];
+  const totalEarnings = authorDashboard?.totalEarnings || 0;
+  const monthlyEarnings = authorDashboard?.totalEarnings || 0;
+  const totalStudents = authorDashboard?.totalStudents || 0;
+  const averageRating = authorDashboard?.averageRating || 0;
 
-    const toLocalDateTime = (startIso?: string) => {
-      if (!startIso) return { date: 'N/A', time: 'N/A' }; // fallback
-    
-      const d = new Date(startIso); // browser converts from site offset → user local time
-    
-      const date = d.toLocaleDateString(undefined, {
+  const upcomingBookings =
+    authorDashboard?.bookings?.filter((b: any) => b?.status === 'approved') || [];
+
+  const pendingBookings =
+    authorDashboard?.bookings?.filter((b: any) => b?.status === 'completed') || [];
+
+  const toLocalDateTime = (startIso?: string) => {
+    if (!startIso) return { date: 'N/A', time: 'N/A' };
+    const d = new Date(startIso);
+
+    return {
+      date: d.toLocaleDateString(undefined, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
-      });
-    
-      const time = d.toLocaleTimeString(undefined, {
+      }),
+      time: d.toLocaleTimeString(undefined, {
         hour: '2-digit',
         minute: '2-digit',
-      });
-    
-      return { date, time };
+      }),
     };
-    
+  };
 
-
+  // Dashboard data
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchData = async () => {
       try {
         const token = localStorage.getItem('wpToken');
+
         const res = await fetch(`${apiUrl}wp-json/custom/v1/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
-        if (!res.ok) throw new Error('Failed to fetch profile');
         const data = await res.json();
         setAuthorDashboard(data);
-       
       } catch (err) {
         console.error(err);
       } finally {
@@ -97,484 +86,339 @@ export default function TutorDashboard() {
       }
     };
 
-    fetchProfile();
+    fetchData();
   }, []);
 
-
-
-
-  // page load hole ekbar localStorage theke wpToken niye asho
+  // token
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const token = localStorage.getItem('wpToken');
-    setWpToken(token);
-    console.log('Dashboard wpToken from localStorage =>', token);
+    setWpToken(localStorage.getItem('wpToken'));
   }, []);
 
-
-
-    useEffect(() => {
-    const fetchRecentMessages = async () => {
-      if (!wpToken || !apiUrl) {
-        console.log('No token or apiUrl, skipping fetch');
-        return;
-      }
+  // messages
+  useEffect(() => {
+    const fetchMessages = async () => {
+      if (!wpToken || !apiUrl) return;
 
       setLoadingMessages(true);
-      setMessagesError(null);
-
       try {
         const res = await fetch(
           `${apiUrl}/wp-json/authorconnect/v1/recent-messages?limit=2`,
           {
-            headers: {
-              Authorization: `Bearer ${wpToken}`,
-              'Content-Type': 'application/json',
-            },
-            cache: 'no-store',
+            headers: { Authorization: `Bearer ${wpToken}` },
           }
         );
 
-        console.log('recent-messages status =>', res.status);
-        const data = await res.json().catch(() => ({}));
-        console.log('recent-messages body =>', data);
-
-        if (!res.ok) {
-          throw new Error(data?.message || 'Failed to load recent messages');
-        }
-
+        const data = await res.json();
         setRecentMessages(data.messages || []);
       } catch (e: any) {
-        console.error('Recent messages error', e);
-        setMessagesError(e.message || 'Failed to load messages');
+        setMessagesError(e.message);
       } finally {
         setLoadingMessages(false);
       }
     };
 
-    fetchRecentMessages();
-  }, [apiUrl, wpToken]);
+    fetchMessages();
+  }, [wpToken, apiUrl]);
 
-
-  return (
-  
-<>
-      
-      
-      <div className="py-8 px-4">
-        <div className="max-w-7xl mx-auto">
-          {/* Dashboard Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Author Dashboard</h1>
-            <p className="text-gray-600">Manage your lessons, students, and earnings all in one place.</p>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="grid md:grid-cols-4 gap-6 mb-8">
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-blue-100 p-3 rounded-lg">
-                    <Users className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">{totalStudents}</p>
-                    <p className="text-sm text-gray-600">Active Students</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-green-100 p-3 rounded-lg">
-                    <DollarSign className="h-6 w-6 text-green-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">${monthlyEarnings}</p>
-                    <p className="text-sm text-gray-600">This Month</p>
-                  </div>
-                  
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-orange-100 p-3 rounded-lg">
-                    <Calendar className="h-6 w-6 text-orange-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">{upcomingBookings.length}</p>
-                    <p className="text-sm text-gray-600">Upcoming Meetings</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3">
-                  <div className="bg-yellow-100 p-3 rounded-lg">
-                    <Star className="h-6 w-6 text-yellow-600" />
-                  </div>
-                  <div>
-                    <p className="text-2xl font-bold">{averageRating}</p>
-                    <p className="text-sm text-gray-600">Average Rating</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Main Content */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Upcoming Lessons */}
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Upcoming Meetings</CardTitle>
-                    <Link href="/calendar">
-                      {/* <Button size="sm">
-                        <Calendar className="h-4 w-4 mr-2" />
-                        View Calendar
-                      </Button> */}
-                    </Link>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  {upcomingBookings.length > 0 ? (
-                    <div className="space-y-4">
-
-{upcomingBookings.map((booking) => {
-  const { date, time } = toLocalDateTime(booking.start_iso);
-
-  return (
-    <div key={booking?.appointment_id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-      <Avatar>
-        <AvatarImage src={booking.avatar} />
-        <AvatarFallback>{booking.name}</AvatarFallback>
-      </Avatar>
-      <div className="flex-1">
-        <h4 className="font-medium">
-          {booking.subject} with {booking.name}
-        </h4>
-        <p className="text-sm text-gray-600">
-          {date} at {time}
-        </p>
-        <div className="flex items-center gap-2 mt-1">
-        <Clock className="h-3 w-3 text-gray-400" />
-        <span className="text-xs text-gray-500">{booking.duration} minutes</span>
+  if (loading) {
+    return (
+      <div className="h-64 flex items-center justify-center text-[#6e6a63]">
+        Loading dashboard...
       </div>
-
-      {/* ✅ Join Now link */}
-      <Link
-        href={booking.video_link ?? "/room/demo"}
-        className="text-blue-600 text-sm font-medium mt-2 inline-block hover:underline"
-      >
-        Join Link →
-      </Link>
-    </div>
-    <div className="text-right">
-      <Badge variant="secondary">{booking.status}</Badge>
-      <p className="text-sm font-medium mt-1">${booking.price}</p>
-    </div>
-  </div>
-  );
-})}
-
-                     
-
-                    </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <Calendar className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-500">No upcoming lessons scheduled</p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-
-              {pendingBookings.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Completed Meetings</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-
-                    {pendingBookings.map((booking) => {
-  const { date, time } = toLocalDateTime(booking.start_iso);
+    );
+  }
 
   return (
-    <div key={booking?.appointment_id} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-      <Avatar>
-        <AvatarImage src={booking.avatar} />
-        <AvatarFallback>{booking.name}</AvatarFallback>
-      </Avatar>
-      <div className="flex-1">
-        <h4 className="font-medium">
-          {booking.subject} with {booking.name}
-        </h4>
-        <p className="text-sm text-gray-600">
-          {date} at {time}
-        </p>
-        <div className="flex items-center gap-2 mt-1">
-        <Clock className="h-3 w-3 text-gray-400" />
-        <span className="text-xs text-gray-500">{booking.duration} minutes</span>
-      </div>
+    <div className="min-h-screen bg-[#f7f6f2] py-10 px-4">
+      <div className="max-w-[1120px] mx-auto">
 
-    </div>
-    <div className="text-right">
-      <Badge variant="secondary">{booking.status}</Badge>
-      <p className="text-sm font-medium mt-1">${booking.price}</p>
-    </div>
-  </div>
-  );
-})}
-            
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-            {/* My Books */}
-            {Array.isArray((authorDashboard as any)?.books) && (authorDashboard as any).books.length > 0 && (
-                <Card>
-                  <CardHeader>
-  <div className="flex items-center justify-between w-full">
-    <CardTitle>My Books</CardTitle>
-
-    <Link
-      href="/books"
-      className="text-blue-600 text-sm font-medium hover:underline"
-    >
-      Manage All Books →
-    </Link>
-  </div>
-</CardHeader>
-                  <CardContent>
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full text-sm text-left">
-                        <thead>
-                          <tr className="text-gray-500 border-b">
-                            <th className="py-3 px-4 font-medium">Book</th>
-                            <th className="py-3 px-4 font-medium">Link</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {(authorDashboard as any).books.slice(0, 4).map((book: any) => (
-                            <tr
-                              key={book.id}
-                              className="border-b last:border-b-0 hover:bg-muted/60 transition-colors"
-                            >
-                              <td className="py-3 px-4">
-                                <div className="flex items-center gap-3">
-                                  {book.featured_image && (
-                                    <img
-                                      src={book.featured_image}
-                                      alt={book.title}
-                                      className="h-12 w-12 rounded-md object-cover border"
-                                    />
-                                  )}
-                                  <span className="font-medium">{book.title}</span>
-                                </div>
-                              </td>
-                              <td className="py-3 px-4">
-                                {book.book_url ? (
-                                  <a
-                                    href={book.book_url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-600 hover:underline font-medium"
-                                  >
-                                    View Book →
-                                  </a>
-                                ) : (
-                                  <span className="text-gray-400">No link available</span>
-                                )}
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
-
-              {/* Pending Requests */}
-             
-
-              {/* Earnings Chart */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Earnings Overview</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                    <div className="text-center">
-                      <TrendingUp className="h-12 w-12 text-gray-300 mx-auto mb-4" />
-                      <p className="text-gray-500">Earnings chart will be displayed here</p>
-                      <p className="text-sm text-gray-400 mt-2">Total earnings: ${totalEarnings}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-6">
-              {/* Quick Actions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Link href="/books">
-                    <Button variant="outline" className="w-full justify-start">
-                      <Calendar className="h-4 w-4 mr-3" />
-                      Manage Books
-                    </Button>
-                  </Link>
-                  <Link href="/messages">
-                    <Button variant="outline" className="w-full justify-start">
-                      <MessageCircle className="h-4 w-4 mr-3" />
-                      View Messages
-                      {unreadMessages.length > 0 && (
-                        <Badge className="ml-auto">{unreadMessages.length}</Badge>
-                      )}
-                    </Button>
-                  </Link>
-                  <Link href="/profile/edit">
-                    <Button variant="outline" className="w-full justify-start">
-                      <Settings className="h-4 w-4 mr-3" />
-                      Edit Profile
-                    </Button>
-                  </Link>
-
-                  <Link href="/dashboard/author/earnings">
-  <Button variant="outline" className="w-full justify-start">
-    💰 Earnings
-  </Button>
-</Link>
-
-<Link href="/dashboard/author/payout-settings">
-  <Button variant="outline" className="w-full justify-start">
-    🏦 Payout Settings
-  </Button>
-</Link>
-
-                </CardContent>
-              </Card>
-
-              {/* Recent Messages */}
-              <Card>
-  <CardHeader>
-    <CardTitle>Recent Messages</CardTitle>
-  </CardHeader>
-  <CardContent>
-    {loadingMessages && (
-      <p className="text-sm text-gray-500">Loading messages...</p>
-    )}
-
-    {!loadingMessages && messagesError && (
-      <p className="text-sm text-red-500">{messagesError}</p>
-    )}
-
-    {!loadingMessages && !messagesError && recentMessages.length === 0 && (
-      <div className="text-center py-6">
-        <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
-          <MessageCircle className="h-5 w-5 text-blue-500" />
+        {/* HEADER */}
+        <div className="mb-10">
+          <h1 className="font-[var(--font-display)] text-[clamp(2rem,3vw,3rem)]">
+            Your dashboard
+          </h1>
+          <p className="text-[#6e6a63] mt-2">
+            Manage sessions, books, messages and earnings.
+          </p>
         </div>
-        <p className="text-sm font-medium text-gray-800">
-          You don&apos;t have any messages yet
-        </p>
-        <p className="mt-1 text-xs text-gray-500">
-          When a student contacts you, their messages will appear here.
-        </p>
-      </div>
-    )}
 
-    {!loadingMessages && !messagesError && recentMessages.length > 0 && (
-      <>
-        {recentMessages.map((message) => (
-          <div
-            key={message.id}
-            className="flex items-start gap-3 mb-4 last:mb-0"
-          >
-            <Avatar className="h-8 w-8">
-              <AvatarImage src={message.other_user.avatar} />
-              <AvatarFallback>
-                {message.other_user.name?.[0] ?? 'U'}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">
-                {message.other_user.name}
-              </p>
-              <p className="text-xs text-gray-500 truncate">
-                {message.content}
-              </p>
-              <p className="text-xs text-gray-400">
-                {message.timestamp}
-              </p>
+        {/* STATS */}
+        <div className="grid md:grid-cols-4 gap-5 mb-10">
+          {[
+            { label: 'Students', value: totalStudents, icon: Users },
+            { label: 'This month', value: `$${monthlyEarnings}`, icon: DollarSign },
+            { label: 'Upcoming', value: upcomingBookings.length, icon: Calendar },
+            { label: 'Rating', value: averageRating, icon: Star },
+          ].map((item, i) => (
+            <div key={i} className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5 flex gap-3">
+              <item.icon className="h-5 w-5 text-[#01696f]" />
+              <div>
+                <p className="font-semibold">{item.value}</p>
+                <p className="text-sm text-[#6e6a63]">{item.label}</p>
+              </div>
             </div>
+          ))}
+        </div>
+
+        <div className="grid lg:grid-cols-[1fr_300px] gap-8">
+
+          {/* MAIN */}
+          <div className="space-y-6">
+
+            {/* UPCOMING */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+              <h2 className="font-semibold mb-4">Upcoming meetings</h2>
+
+              {upcomingBookings.length === 0 ? (
+                <p className="text-[#6e6a63]">No upcoming meetings</p>
+              ) : (
+                <div className="space-y-4">
+                  {upcomingBookings.map((b: any) => {
+                    const { date, time } = toLocalDateTime(b.start_iso);
+
+                    return (
+                      <div key={b.appointment_id} className="border border-[#e5e2dc] rounded-lg p-4 flex justify-between">
+                        <div>
+                          <p className="font-medium">{b.subject} with {b.name}</p>
+                          <p className="text-sm text-[#6e6a63]">{date} · {time}</p>
+                          <p className="text-xs text-[#6e6a63]">{b.duration} min</p>
+
+                          <Link href={b.video_link || '/'} className="text-[#01696f] text-sm mt-2 inline-block">
+                            Join →
+                          </Link>
+                        </div>
+
+                        <div className="text-right">
+                          <p className="text-sm">{b.status}</p>
+                          <p className="font-medium">${b.price}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* COMPLETED */}
+            {pendingBookings.length > 0 && (
+              <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+                <h2 className="font-semibold mb-4">Completed meetings</h2>
+
+                <div className="space-y-4">
+                  {pendingBookings.map((b: any) => {
+                    const { date, time } = toLocalDateTime(b.start_iso);
+
+                    return (
+                      <div key={b.appointment_id} className="border border-[#e5e2dc] rounded-lg p-4 flex justify-between">
+                        <div>
+                          <p className="font-medium">{b.subject} with {b.name}</p>
+                          <p className="text-sm text-[#6e6a63]">{date} · {time}</p>
+                        </div>
+                        <p className="font-medium">${b.price}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* BOOKS */}
+            {(authorDashboard?.books ?? []).length > 0 && (
+              <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+                <div className="flex justify-between mb-4">
+                  <h2 className="font-semibold">Books</h2>
+                  <Link href="/books" className="text-[#01696f] text-sm">
+                    Manage →
+                  </Link>
+                </div>
+
+                <div className="space-y-3">
+                  {authorDashboard?.books.slice(0, 4).map((book: any) => (
+                    <div key={book.id} className="flex justify-between border border-[#e5e2dc] rounded-lg p-3">
+                      <span>{book.title}</span>
+                      <a href={book.book_url} target="_blank" className="text-[#01696f] text-sm">
+                        View →
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* EARNINGS */}
+            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6 text-center">
+              <TrendingUp className="mx-auto text-[#a8a29e]" />
+              <p className="text-[#6e6a63]">Total earnings</p>
+              <p className="text-xl font-semibold">${totalEarnings}</p>
+            </div>
+
+          </div>
+
+          {/* SIDEBAR */}
+          <div className="space-y-6">
+
+            {/* ACTIONS */}
+     {/* Quick Actions */}
+<div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5">
+
+{/* HEADER */}
+<h3 className="font-semibold text-[#28251d] mb-4">
+  Quick actions
+</h3>
+
+<div className="space-y-2">
+
+  {/* MANAGE BOOKS */}
+  <Link
+    href="/books"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <Calendar className="h-4 w-4 text-[#6e6a63]" />
+    <span className="text-sm text-[#28251d]">Manage books</span>
+  </Link>
+
+  {/* MESSAGES */}
+  <Link
+    href="/messages"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <MessageCircle className="h-4 w-4 text-[#6e6a63]" />
+    <span className="text-sm text-[#28251d]">View messages</span>
+
+    {unreadMessages.length > 0 && (
+      <span className="ml-auto text-xs px-2 py-[2px] rounded-full bg-[#01696f] text-white">
+        {unreadMessages.length}
+      </span>
+    )}
+  </Link>
+
+  {/* EDIT PROFILE */}
+  <Link
+    href="/profile/edit"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <Settings className="h-4 w-4 text-[#6e6a63]" />
+    <span className="text-sm text-[#28251d]">Edit profile</span>
+  </Link>
+
+  {/* EARNINGS */}
+  <Link
+    href="/dashboard/author/earnings"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <span className="text-sm">💰</span>
+    <span className="text-sm text-[#28251d]">Earnings</span>
+  </Link>
+
+  {/* PAYOUT */}
+  <Link
+    href="/dashboard/author/payout-settings"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <span className="text-sm">🏦</span>
+    <span className="text-sm text-[#28251d]">Payout settings</span>
+  </Link>
+
+</div>
+
+</div>
+
+            {/* MESSAGES */}
+          {/* Recent Messages */}
+<div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5">
+
+{/* HEADER */}
+<h3 className="font-semibold text-[#28251d] mb-4">
+  Recent messages
+</h3>
+
+{/* LOADING */}
+{loadingMessages && (
+  <p className="text-sm text-[#6e6a63]">Loading messages...</p>
+)}
+
+{/* ERROR */}
+{!loadingMessages && messagesError && (
+  <p className="text-sm text-red-600">{messagesError}</p>
+)}
+
+{/* EMPTY */}
+{!loadingMessages && !messagesError && recentMessages.length === 0 && (
+  <div className="text-center py-6">
+
+    <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#eef2f1]">
+      <MessageCircle className="h-5 w-5 text-[#a8a29e]" />
+    </div>
+
+    <p className="text-sm font-medium text-[#28251d]">
+      No messages yet
+    </p>
+
+    <p className="mt-1 text-xs text-[#6e6a63]">
+      When users contact you, messages will appear here.
+    </p>
+  </div>
+)}
+
+{/* LIST */}
+{!loadingMessages && !messagesError && recentMessages.length > 0 && (
+  <div className="space-y-4">
+    {recentMessages.map((message) => (
+      <div
+        key={message.id}
+        className="flex items-start gap-3"
+      >
+
+        {/* AVATAR */}
+        <img
+          src={message.other_user.avatar}
+          alt={message.other_user.name}
+          className="h-9 w-9 rounded-full object-cover border border-[#e5e2dc]"
+        />
+
+        {/* CONTENT */}
+        <div className="flex-1 min-w-0">
+
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-[#28251d]">
+              {message.other_user.name}
+            </p>
+
             {message.unread && (
-              <div className="h-2 w-2 bg-blue-500 rounded-full"></div>
+              <span className="h-2 w-2 bg-[#01696f] rounded-full"></span>
             )}
           </div>
-        ))}
-      </>
-    )}
 
-    <Link href="/messages">
-      <Button variant="ghost" size="sm" className="w-full mt-3">
-        View All Messages
-      </Button>
-    </Link>
-  </CardContent>
-</Card>
+          <p className="text-xs text-[#6e6a63] truncate">
+            {message.content}
+          </p>
 
-              {/* Performance Metrics */}
-              <Card>
-                <CardHeader>
-                  <CardTitle>Performance</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Response Rate</span>
-                      <span className="text-sm font-medium text-green-600">95%</span>
-                    </div>
-                    
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Completion Rate</span>
-                      <span className="text-sm font-medium text-green-600">98%</span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Repeat Students</span>
-                      <span className="text-sm font-medium text-blue-600">85%</span>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm">Profile Views</span>
-                      <span className="text-sm font-medium">247 this week</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+          <p className="text-[11px] text-[#a8a29e] mt-1">
+            {message.timestamp}
+          </p>
         </div>
       </div>
-      
+    ))}
+  </div>
+)}
 
-</>
- 
+{/* FOOTER LINK */}
+<div className="mt-5">
+  <Link
+    href="/messages"
+    className="text-sm text-[#01696f] hover:underline"
+  >
+    View all messages →
+  </Link>
+</div>
+
+</div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
   );
 }
