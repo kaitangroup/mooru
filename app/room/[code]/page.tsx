@@ -134,7 +134,7 @@ export default function RoomPage({ params }: RoomPageProps) {
   const [pinnedId, setPinnedId] = useState<string | null>(null);
 
   // Timer state
-  const [durationMin, setDurationMin] = useState<30 | 60>(60);
+  const [durationMin, setDurationMin] = useState<number>(15);
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [endsAt, setEndsAt] = useState<number | null>(null);
   const [timeLeftSec, setTimeLeftSec] = useState<number>(0);
@@ -251,6 +251,15 @@ useEffect(() => {
         const start = new Date(startIso); // same instant, displayed in local tz
         const end   = new Date(endIso);
         const now   = new Date();
+
+        // ✅ use backend duration if available
+if (typeof json.duration === "number") {
+  setDurationMin(json.duration);
+} else {
+  // fallback (safe)
+  const duration = Math.floor((end.getTime() - start.getTime()) / 60000);
+  setDurationMin(duration);
+}
   
         const nowMs         = now.getTime();
         const startMs       = start.getTime();
@@ -314,7 +323,7 @@ console.log("Socket effect running with:", { displayName, validationStatus });
   // --- Timer listeners (moved here so they attach to the right socket) ---
   socket.on("timer-state", (state: { startedAt: number | null; duration: number } | null) => {
     if (!state) return;
-    setDurationMin(state.duration as 30 | 60); // ensure types match your UI
+    setDurationMin(state.duration);// ensure types match your UI
     if (state.startedAt) {
       setStartedAt(state.startedAt);
       setEndsAt(state.startedAt + state.duration * 60 * 1000);
@@ -327,7 +336,7 @@ console.log("Socket effect running with:", { displayName, validationStatus });
 
   socket.on("timer-start", (payload: { startedAt: number; duration: number }) => {
     if (!payload) return;
-    setDurationMin(payload.duration as 30 | 60);
+    setDurationMin(payload.duration );
     setStartedAt(payload.startedAt);
     setEndsAt(payload.startedAt + payload.duration * 60 * 1000);
   });
@@ -439,7 +448,11 @@ console.log("Socket effect running with:", { displayName, validationStatus });
       (localVideoRef.current as HTMLVideoElement & { srcObject?: MediaStream }).srcObject = stream;
     }
     // join after we have local media
-    socket.emit("join", { room: code, displayName });
+    socket.emit("join", {
+      room: code,
+      displayName,
+      duration: durationMin, // ✅ send actual duration
+    });
   }
 
   // Presence + Chat
@@ -989,7 +1002,7 @@ console.log("Socket effect running with:", { displayName, validationStatus });
               <label style={{ fontSize: 12, color: "#9aa4b2" }}>Duration</label>
               <select
                 value={durationMin}
-                onChange={(e) => setDurationMin(Number(e.target.value) as 30 | 60)}
+                onChange={(e) => setDurationMin(Number(e.target.value))}
                 style={{
                   background: "#0f172a",
                   color: "#e5e7eb",
@@ -998,8 +1011,10 @@ console.log("Socket effect running with:", { displayName, validationStatus });
                   borderRadius: 10,
                 }}
               >
-                <option value={30}>30 min</option>
-                <option value={60}>60 min</option>
+               <option value={15}>15 min</option>
+<option value={30}>30 min</option>
+<option value={45}>45 min</option>
+<option value={60}>60 min</option>
               </select>
             </div>
           )}
