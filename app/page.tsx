@@ -49,13 +49,21 @@ export default function HomePage() {
       </p>
 
       <div className="mt-8 flex flex-wrap gap-4">
+
+        <Link
+        href="/search"
+        className="text-gray-600 hover:text-black transition-colors"
+        >
         <Button className=" btn bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-6">
           Find an expert
         </Button>
+        </Link>
 
+        <Link href="/auth/author/register">
         <Button variant="outline" className=" btn rounded-full px-6 border-[#d4d1ca]">
           Become an expert
         </Button>
+        </Link>
       </div>
 
       <div className="mt-8 flex flex-wrap gap-6 text-sm text-gray-500">
@@ -218,9 +226,11 @@ export default function HomePage() {
       </ul>
 
       <div className="mt-6">
+        <Link href="#common">
         <Button className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full">
           See common questions
         </Button>
+        </Link>
       </div>
     </div>
 
@@ -252,7 +262,7 @@ export default function HomePage() {
   </div>
 </section>
 
-<section className="py-20 px-4 bg-[#f7f6f2]">
+<section id="common" className="py-20 px-4 bg-[#f7f6f2]">
   <div className="max-w-[1120px] mx-auto">
 
     <h2 className="text-3xl font-serif mb-6">Common questions</h2>

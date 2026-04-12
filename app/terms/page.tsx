@@ -44,7 +44,7 @@ export default function TermsPage() {
               2. Description of Service
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
-              Guroos connects readers with authors through live video sessions.
+              Guroos connects readers with Experts through live video sessions.
               We provide the platform but do not guarantee outcomes or endorse participants.
             </p>
           </div>
@@ -79,8 +79,8 @@ export default function TermsPage() {
             </h2>
 
             <div className="space-y-4 text-[#4b463f]">
-              <p><strong>Readers:</strong> Book sessions and interact with authors.</p>
-              <p><strong>Authors:</strong> Provide sessions and set pricing.</p>
+              <p><strong>Readers:</strong> Book sessions and interact with Experts.</p>
+              <p><strong>Experts:</strong> Provide sessions and set pricing.</p>
             </div>
           </div>
 
