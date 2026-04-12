@@ -27,7 +27,7 @@ export default function HomePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
       {/* HERO SECTION */}
 {/* HERO SECTION */}

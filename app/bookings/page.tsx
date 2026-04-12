@@ -438,7 +438,7 @@ const handleCancelBooking = async (appointmentId: number) => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
 
       <div className="py-8 px-4">
@@ -446,7 +446,7 @@ const handleCancelBooking = async (appointmentId: number) => {
           <div className="mb-8">
             <h1 className="text-3xl font-bold mb-2">My Bookings</h1>
             <p className="text-gray-600">
-              Manage your authoring sessions and appointments.
+              Manage your Experts sessions and appointments.
             </p>
           </div>
 

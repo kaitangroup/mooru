@@ -243,175 +243,202 @@ export default function ProfileEditPage() {
   // ==========================================================================
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2] text-[#28251d]">
       <Header />
-
-      <div className="py-8 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold mb-2">Edit Profile</h1>
-            <p className="text-gray-600">Update your profile information and preferences.</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-8">
-            {/* Profile Photo */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Profile Photo</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-6">
-                  <Avatar className="h-24 w-24">
-                    <AvatarImage src={profileData?.avatar || ''} alt="Profile" />
-                    <AvatarFallback>
-                      {(profileData?.firstName?.[0] || '') + (profileData?.lastName?.[0] || '')}
-                    </AvatarFallback>
-                  </Avatar>
-
-                  <div>
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={onPickAvatar}
-                    />
-                    <Button
-                      type="button"
-                      variant="outline"
-                      onClick={handleAvatarButton}
-                      disabled={uploadingAvatar}
-                    >
-                      <Camera className="h-4 w-4 mr-2" />
-                      {uploadingAvatar ? 'Uploading...' : 'Change Photo'}
-                    </Button>
-                    <p className="text-sm text-gray-500 mt-2">
-                      Upload a professional photo. JPG, PNG, GIF or WEBP. Max size 5MB.
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Basic Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Basic Information</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="firstName">First Name *</Label>
-                    <Input
-                      id="firstName"
-                      value={profileData?.firstName || ''}
-                      onChange={(e) => handleInputChange('firstName', e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="lastName">Last Name *</Label>
-                    <Input
-                      id="lastName"
-                      value={profileData?.lastName || ''}
-                      onChange={(e) => handleInputChange('lastName', e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="email">Email Address *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={profileData?.email || ''}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      required
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input
-                      id="phone"
-                      value={profileData?.phone || ''}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="location">Location</Label>
-                  <Input
-                    id="location"
-                    value={profileData?.location || ''}
-                    onChange={(e) => handleInputChange('location', e.target.value)}
-                    placeholder="City, State"
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="bio">Bio</Label>
-                  <Textarea
-                    id="bio"
-                    value={profileData?.bio || ''}
-                    onChange={(e) => handleInputChange('bio', e.target.value)}
-                    rows={4}
-                    placeholder="Tell students about yourself, your teaching style, and experience..."
-                  />
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Tutor-specific fields */}
-            {userType === 'tutor' && (
-              <>
-              
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Languages</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex flex-wrap gap-2">
-                      {profileData?.languages.map((language) => (
-                        <Badge key={language} variant="secondary" className="flex items-center gap-1">
-                          {language}
-                          <button
-                            type="button"
-                            onClick={() => removeLanguage(language)}
-                            className="ml-1 hover:text-red-600"
-                          >
-                            <X className="h-3 w-3" />
-                          </button>
-                        </Badge>
-                      ))}
-                    </div>
-
-                    <div className="flex gap-2">
-                      <Input
-                        value={newLanguage}
-                        onChange={(e) => setNewLanguage(e.target.value)}
-                        placeholder="Add a language"
-                        onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addLanguage())}
-                      />
-                      <Button type="button" onClick={addLanguage} variant="outline">
-                        <Plus className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </>
-            )}
-
-            <div className="flex justify-end gap-4">
-              <Button type="button" variant="outline">Cancel</Button>
-              <Button type="submit" className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-5">Save Changes</Button>
+  
+      <div className="px-6 py-16">
+        <div className="max-w-[1100px] mx-auto grid lg:grid-cols-[320px_1fr] gap-10">
+  
+          {/* ================= LEFT PANEL ================= */}
+          <div className="space-y-6">
+  
+            {/* PROFILE CARD */}
+            <div className="bg-[#f9f8f5] border border-[#e5e2dc] rounded-2xl p-6 text-center">
+              <Avatar className="h-20 w-20 mx-auto mb-4">
+                <AvatarImage src={profileData?.avatar || ''} />
+                <AvatarFallback>
+                  {(profileData?.firstName?.[0] || '') +
+                    (profileData?.lastName?.[0] || '')}
+                </AvatarFallback>
+              </Avatar>
+  
+              <h3 className="font-semibold">
+                {profileData?.firstName} {profileData?.lastName}
+              </h3>
+  
+              <p className="text-sm text-[#6b665d] mt-1">
+                {profileData?.location || 'Add your location'}
+              </p>
+  
+              {/* CHANGE PHOTO */}
+              <div className="mt-4">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={onPickAvatar}
+                />
+  
+                <button
+                  type="button"
+                  onClick={handleAvatarButton}
+                  className="text-sm text-[#01696f] hover:underline"
+                >
+                  {uploadingAvatar ? 'Uploading...' : 'Change photo'}
+                </button>
+              </div>
             </div>
-          </form>
+  
+            {/* PROFILE COMPLETION */}
+            <div className="bg-[#f9f8f5] border border-[#e5e2dc] rounded-2xl p-6">
+              <h4 className="font-medium mb-3">Profile completeness</h4>
+  
+              <div className="h-2 bg-[#e5e2dc] rounded-full overflow-hidden">
+                <div className="h-full bg-[#01696f] w-[70%]" />
+              </div>
+  
+              <p className="text-xs text-[#6b665d] mt-3">
+                Complete your profile to increase visibility and bookings.
+              </p>
+            </div>
+  
+            {/* HELP TEXT */}
+            <div className="text-sm text-[#6b665d]">
+              <p>
+                A complete profile builds trust. Add clear information about your
+                expertise and experience.
+              </p>
+            </div>
+          </div>
+  
+          {/* ================= RIGHT PANEL ================= */}
+          <div className="space-y-10">
+  
+            {/* HEADER */}
+            <div>
+              <h1 className="text-4xl font-serif tracking-tight">
+                Edit your profile
+              </h1>
+              <p className="text-[#6b665d] mt-2">
+                Keep your information accurate and up to date.
+              </p>
+            </div>
+  
+            <form onSubmit={handleSubmit} className="space-y-10">
+  
+              {/* BASIC INFO */}
+              <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6 space-y-6">
+                <h2 className="text-lg font-semibold">Basic information</h2>
+  
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    placeholder="First name"
+                    value={profileData?.firstName || ''}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    className="h-[44px]"
+                  />
+  
+                  <Input
+                    placeholder="Last name"
+                    value={profileData?.lastName || ''}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    className="h-[44px]"
+                  />
+                </div>
+  
+                <div className="grid md:grid-cols-2 gap-4">
+                  <Input
+                    type="email"
+                    placeholder="Email address"
+                    value={profileData?.email || ''}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="h-[44px]"
+                  />
+  
+                  <Input
+                    placeholder="Phone number"
+                    value={profileData?.phone || ''}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className="h-[44px]"
+                  />
+                </div>
+  
+                <Input
+                  placeholder="Location"
+                  value={profileData?.location || ''}
+                  onChange={(e) => handleInputChange('location', e.target.value)}
+                  className="h-[44px]"
+                />
+  
+                <Textarea
+                  rows={4}
+                  placeholder="Write a short bio about yourself..."
+                  value={profileData?.bio || ''}
+                  onChange={(e) => handleInputChange('bio', e.target.value)}
+                  className="min-h-[100px]"
+                />
+              </div>
+  
+              {/* LANGUAGES */}
+              {userType === 'tutor' && (
+                <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6 space-y-6">
+                  <h2 className="text-lg font-semibold">Languages</h2>
+  
+                  <div className="flex flex-wrap gap-2">
+                    {profileData?.languages.map((language) => (
+                      <div
+                        key={language}
+                        className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#f3f2ee] text-sm"
+                      >
+                        {language}
+                        <button
+                          type="button"
+                          onClick={() => removeLanguage(language)}
+                        >
+                          <X className="h-3 w-3 text-[#6b665d]" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+  
+                  <div className="flex gap-2">
+                    <Input
+                      value={newLanguage}
+                      onChange={(e) => setNewLanguage(e.target.value)}
+                      placeholder="Add a language"
+                      className="h-[44px]"
+                    />
+  
+                    <Button type="button" onClick={addLanguage} variant="outline">
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+  
+              {/* ACTIONS */}
+              <div className="flex justify-between items-center pt-4 border-t border-[#e5e2dc]">
+  
+                <Button variant="ghost" type="button" className="text-[#6b665d]">
+                  Cancel
+                </Button>
+  
+                <Button
+                  type="submit"
+                  className="bg-[#01696f] hover:bg-[#0c4e54] text-white rounded-full px-6 h-[44px]"
+                >
+                  Save changes
+                </Button>
+  
+              </div>
+  
+            </form>
+          </div>
+  
         </div>
       </div>
-
+  
       <Footer />
     </div>
   );

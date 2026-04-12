@@ -128,7 +128,7 @@ console.log("Fetched profile data:", data);
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
       
       <div className="py-8 px-4">

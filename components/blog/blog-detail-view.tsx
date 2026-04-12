@@ -34,7 +34,7 @@ export function BlogDetailView({ post }: BlogDetailViewProps) {
   const readingTime = estimateReadingTime(post.content.rendered);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       {/* Header with back button */}
       <Header />
 

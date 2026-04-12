@@ -18,17 +18,17 @@ export default function FAQPage() {
         {
           id: '1',
           question: 'How do I create an account?',
-          answer: 'You can create an account by clicking the "Sign Up" button and choosing whether you want to register as a student or author. Fill out the required information and verify your email to get started.'
+          answer: 'You can create an account by clicking the "Sign Up" button and choosing whether you want to register as a student or Expert. Fill out the required information and verify your email to get started.'
         },
         {
           id: '2',
-          question: 'How do I find a author?',
-          answer: 'Use our search feature to find authors by subject, location, price range, or availability. You can also browse author profiles to see their qualifications, ratings, and reviews before making a decision.'
+          question: 'How do I find a Expert?',
+          answer: 'Use our search feature to find Experts by subject, location, price range, or availability. You can also browse Expert profiles to see their qualifications, ratings, and reviews before making a decision.'
         },
         {
           id: '3',
           question: 'How do I book my first lesson?',
-          answer: 'Once you find a author you like, click on their profile and then "Book a Lesson". Select your preferred date, time, and subject, then send your booking request. The author will confirm or suggest alternative times.'
+          answer: 'Once you find a Expert you like, click on their profile and then "Book a Lesson". Select your preferred date, time, and subject, then send your booking request. The Expert will confirm or suggest alternative times.'
         }
       ]
     },
@@ -38,12 +38,12 @@ export default function FAQPage() {
         {
           id: '4',
           question: 'Can I reschedule or cancel a lesson?',
-          answer: 'Yes, you can reschedule or cancel lessons up to 24 hours before the scheduled time without penalty. For cancellations within 24 hours, you may be charged a cancellation fee depending on the author\'s policy.'
+          answer: 'Yes, you can reschedule or cancel lessons up to 24 hours before the scheduled time without penalty. For cancellations within 24 hours, you may be charged a cancellation fee depending on the Expert\'s policy.'
         },
         {
           id: '5',
-          question: 'What happens if my author cancels?',
-          answer: 'If your author needs to cancel, you\'ll receive an immediate notification and full refund. We\'ll also help you find an alternative author or reschedule with the same author if possible.'
+          question: 'What happens if my Expert cancels?',
+          answer: 'If your Expert needs to cancel, you\'ll receive an immediate notification and full refund. We\'ll also help you find an alternative Expert or reschedule with the same Expert if possible.'
         },
         {
           id: '6',
@@ -74,17 +74,17 @@ export default function FAQPage() {
       ]
     },
     {
-      title: 'For Authors',
+      title: 'For Experts',
       questions: [
         {
           id: '10',
-          question: 'How do I become a author?',
-          answer: 'Apply through our author registration form, providing details about your qualifications, experience, and subjects you teach. We review all applications and conduct background checks before approval.'
+          question: 'How do I become a Expert?',
+          answer: 'Apply through our Expert registration form, providing details about your qualifications, experience, and subjects you teach. We review all applications and conduct background checks before approval.'
         },
         {
           id: '11',
-          question: 'How much can I earn as a author?',
-          answer: 'Authors set their own hourly rates typically ranging from $20-$100+ per hour. Your earnings depend on your subjects, experience, ratings, and how many lessons you teach.'
+          question: 'How much can I earn as a Expert?',
+          answer: 'Experts set their own hourly rates typically ranging from $20-$100+ per hour. Your earnings depend on your subjects, experience, ratings, and how many lessons you teach.'
         },
         {
           id: '12',
@@ -116,7 +116,7 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
       
       {/* Hero Section */}
@@ -126,7 +126,7 @@ export default function FAQPage() {
             Frequently Asked Questions
           </h1>
           <p className="text-xl text-gray-600 mb-8">
-            Find answers to common questions about AuthorConnect. Can't find what you're looking for? Contact our support team.
+            Find answers to common questions about ExpertConnect. Can't find what you're looking for? Contact our support team.
           </p>
         </div>
       </section>
@@ -178,7 +178,7 @@ export default function FAQPage() {
                   Contact Support
                 </a>
                 <a 
-                  href="mailto:support@authorconnect.com"
+                  href="mailto:support@expertconnect.com"
                   className="bg-white text-blue-600 px-6 py-3 rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors"
                 >
                   Email Us

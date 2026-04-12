@@ -81,7 +81,7 @@ export default function SearchPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#f7f6f2]">
       <Header />
       <div className="py-8 px-4 max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-4">Find Your Authors</h1>
@@ -266,7 +266,7 @@ export default function SearchPage() {
           {u.hourly_rate ? `$${u.hourly_rate}/hr` : "Contact for rate"}
         </div>
         <div className="flex gap-2">
-          <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" 
+          <button className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-[#f7f6f2] hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" 
             onClick={() => router.push(`/messages?to=${u.id}`)}   // ← GO TO MESSAGES WITH to=<id>
           >
             <svg
