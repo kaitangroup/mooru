@@ -19,7 +19,7 @@ export default function AboutPage() {
           </h1>
 
           <p className="mt-6 text-[#6e6a63] text-lg max-w-[60ch] mx-auto">
-            Guroos helps you learn directly from authors, creators, and experts through meaningful conversations.
+            Guroos helps you learn directly from experts, creators, and experts through meaningful conversations.
           </p>
         </div>
       </section>

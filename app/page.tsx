@@ -80,7 +80,7 @@ export default function HomePage() {
             <div>
               <h4 className="all-bold-text-1 font-semibold">Dr. Maya Bennett</h4>
               <p className="text-sm text-gray-500">
-                Author, host, and policy expert
+                Expert, host, and policy expert
               </p>
             </div>
             <span className="all-bold-text-1 font-semibold">$120 / 30 min</span>

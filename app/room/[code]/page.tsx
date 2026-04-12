@@ -71,6 +71,7 @@ async function getICE(): Promise<RTCConfiguration> {
 
 export default function RoomPage({ params }: RoomPageProps) {
   const { data: session, status } = useSession();  
+  const durationRef = useRef<number>(15);
   const isMobile = useIsMobile();
   const search = useSearchParams(); // 🔍 get query params from hook
   const resolvedParams = use(params);  // ← FIX
@@ -253,13 +254,10 @@ useEffect(() => {
         const now   = new Date();
 
         // ✅ use backend duration if available
-if (typeof json.duration === "number") {
-  setDurationMin(json.duration);
-} else {
-  // fallback (safe)
-  const duration = Math.floor((end.getTime() - start.getTime()) / 60000);
-  setDurationMin(duration);
-}
+        if (typeof json.duration === "number") {
+          durationRef.current = json.duration;
+          setDurationMin(json.duration);
+        }
   
         const nowMs         = now.getTime();
         const startMs       = start.getTime();
@@ -451,7 +449,7 @@ console.log("Socket effect running with:", { displayName, validationStatus });
     socket.emit("join", {
       room: code,
       displayName,
-      duration: durationMin, // ✅ send actual duration
+      duration: durationRef.current, // ✅ send actual duration
     });
   }
 
@@ -998,25 +996,18 @@ console.log("Socket effect running with:", { displayName, validationStatus });
               ⏱ {fmtClock(timeLeftSec)}
             </div>
           ) : (
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <label style={{ fontSize: 12, color: "#9aa4b2" }}>Duration</label>
-              <select
-                value={durationMin}
-                onChange={(e) => setDurationMin(Number(e.target.value))}
-                style={{
-                  background: "#0f172a",
-                  color: "#e5e7eb",
-                  border: "1px solid #1f2b40",
-                  padding: "6px 10px",
-                  borderRadius: 10,
-                }}
-              >
-               <option value={15}>15 min</option>
-<option value={30}>30 min</option>
-<option value={45}>45 min</option>
-<option value={60}>60 min</option>
-              </select>
-            </div>
+            <div
+  style={{
+    fontSize: 12,
+    color: "#9aa4b2",
+    background: "#0f172a",
+    border: "1px solid #1f2b40",
+    padding: "6px 10px",
+    borderRadius: 10,
+  }}
+>
+  Duration: {durationMin} min
+</div>
           )}
   
           <TopBtn
