@@ -111,6 +111,9 @@ export default function RoomPage({ params }: RoomPageProps) {
   const recordedChunksRef = useRef<Blob[]>([]);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
+  const [showRecordConsent, setShowRecordConsent] = useState(false);
+  const [recordConsentGiven, setRecordConsentGiven] = useState(false);
+
   // State
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [peers, setPeers] = useState<Record<string, PeerInfo>>({});
@@ -1262,7 +1265,17 @@ console.log("Socket effect running with:", { displayName, validationStatus });
         <Ctrl
           icon={recording ? StopIcon : RecordIcon}
           label={recording ? "Stop" : "Record"}
-          onClick={() => (recording ? stopRecording() : startRecording())}
+          onClick={() => {
+            if (recording) {
+              stopRecording();
+            } else {
+              if (!recordConsentGiven) {
+                setShowRecordConsent(true);
+              } else {
+                startRecording();
+              }
+            }
+          }}
           active={recording}
           danger={recording}
         />
@@ -1270,6 +1283,67 @@ console.log("Socket effect running with:", { displayName, validationStatus });
         <Ctrl icon={ChatIcon} label="Chat" onClick={() => { setPanelTab("chat"); setPanelOpen(true); }} badge={unreadChat} />
         <Ctrl icon={EndIcon} label="Leave" onClick={() => endMeeting("left")} danger />
       </footer>
+      {showRecordConsent && (
+  <div style={{
+    position: "fixed",
+    inset: 0,
+    background: "rgba(0,0,0,0.7)",
+    display: "grid",
+    placeItems: "center",
+    zIndex: 999,
+  }}>
+    <div style={{
+      background: "#0f172a",
+      padding: 20,
+      borderRadius: 12,
+      maxWidth: 400,
+      textAlign: "center",
+      border: "1px solid #1f2937"
+    }}>
+      <h3 style={{ marginBottom: 10 }}>Recording Consent</h3>
+
+      <p style={{ fontSize: 14, color: "#9ca3af", marginBottom: 20 }}>
+        This meeting will be recorded. Do you agree to being recorded?
+      </p>
+
+      <div style={{ display: "flex", gap: 10, justifyContent: "center" }}>
+        <button
+          onClick={() => {
+            setShowRecordConsent(false);
+          }}
+          style={{
+            padding: "8px 14px",
+            borderRadius: 8,
+            background: "#374151",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          Cancel
+        </button>
+
+        <button
+          onClick={() => {
+            setRecordConsentGiven(true);
+            setShowRecordConsent(false);
+            startRecording();
+          }}
+          style={{
+            padding: "8px 14px",
+            borderRadius: 8,
+            background: "#2563eb",
+            color: "#fff",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          Agree & Record
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
   
