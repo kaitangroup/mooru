@@ -721,7 +721,7 @@ export default function TutorApplicationPage() {
                   required
                 />
               </div>
-              <p className="text-sm text-gray-500 mt-1">Most tutors charge between $20-$80 per hour</p>
+              <p className="text-sm text-gray-500 mt-1">Most experts charge between $20-$80 per hour</p>
               {errors.hourlyRate && <p className="text-red-500 text-sm">{errors.hourlyRate}</p>}
             </div>
 

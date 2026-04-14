@@ -195,12 +195,12 @@ export default function TutorProfilePage() {
           <div>
             <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6 sticky top-24">
 
-              <div className="text-center mb-6">
-                <div className="text-2xl font-semibold">
-                  ${author.hourly_rate}
-                  <span className="text-sm text-[#6e6a63]"> / 30 min</span>
-                </div>
-              </div>
+            <div className="text-center mb-6">
+  <div className="text-2xl font-semibold">
+    ${(Number(author.hourly_rate) / 2).toFixed(2)}
+    <span className="text-sm text-[#6e6a63]"> / 30 minutes</span>
+  </div>
+</div>
 
               <button
                 className="w-full h-[44px] rounded-full bg-[#01696f] text-white"

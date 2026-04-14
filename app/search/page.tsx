@@ -357,7 +357,8 @@ return (
 
       {/* PRICE */}
       <div className="font-semibold text-lg">
-        ${t.hourlyRate}
+        
+        ${(Number(t.hourlyRate) / 2).toFixed(2)}
         <span className="text-sm text-gray-500"> / 30 min</span>
       </div>
 
