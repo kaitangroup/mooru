@@ -138,6 +138,27 @@ export default function TutorRegisterPage() {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      zipCode: '',
+      agreeToTerms: false,
+      amazonLink: '',
+      youtubeLink: '',
+      podcastLink: '',
+    });
+  
+    setErrors({
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
+  };
+
   return (
     <div className="min-h-screen bg-[#f7f6f2] relative">
   
@@ -377,11 +398,12 @@ export default function TutorRegisterPage() {
       </button>
 
       <button
-        type="reset"
-        className="flex-1 h-[48px] rounded-full border border-[#d4d1ca] bg-[#f9f8f5]"
-      >
-        Clear form
-      </button>
+  type="button"
+  onClick={resetForm}
+  className="flex-1 h-[48px] rounded-full border border-[#d4d1ca] bg-[#f9f8f5]"
+>
+  Clear form
+</button>
     </div>
 
   </form>

@@ -157,14 +157,19 @@ export default function StudentDashboard() {
           <div className="max-w-[1120px] mx-auto">
   
             {/* HEADER */}
-            <div className="mb-10">
-              <h1 className="font-[var(--font-display)] text-[clamp(2rem,3vw,3rem)]">
-                Your dashboard
-              </h1>
-              <p className="text-[#6e6a63] mt-2">
-                Track your sessions, messages and learning progress.
-              </p>
-            </div>
+            <div className="mb-8">
+  <span className="inline-block text-xs font-semibold bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full uppercase tracking-wide">
+    User dashboard
+  </span>
+
+  <h1 className="font-[var(--font-display)] text-[clamp(2rem,3vw,3rem)] mt-3">
+    Manage your bookings and conversations
+  </h1>
+
+  <p className="text-[#6e6a63] mt-2 max-w-[600px]">
+    View upcoming sessions, revisit past bookings, message experts, and continue learning — all in one place.
+  </p>
+</div>
   
             {/* STATS */}
             <div className="grid md:grid-cols-3 gap-5 mb-10">

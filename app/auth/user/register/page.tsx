@@ -191,14 +191,14 @@ export default function StudentRegisterPage() {
             </div>
   
             {/* SOCIAL */}
-            <div className="space-y-3 mb-6">
+            {/* <div className="space-y-3 mb-6">
               <button
                 onClick={() => handleSocialSignup("google")}
                 className="w-full h-[48px] rounded-full border border-[#d4d1ca] bg-[#fbfbf9] flex items-center justify-center"
               >
                 Continue with Google
               </button>
-            </div>
+            </div> */}
   
             {/* DIVIDER */}
             <div className="flex items-center gap-3 my-6">

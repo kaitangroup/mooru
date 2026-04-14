@@ -12,6 +12,9 @@ import { useSearchParams } from 'next/navigation';
 import { TutorCard } from '@/components/tutors/TutorCard';
 import { useDebounce } from 'react-use';
 import { toast } from 'sonner';
+import { Heart } from 'lucide-react';
+import { wpFetch } from '@/lib/wpApi';
+
 
 type Filters = {
   subjects: string[];
@@ -69,7 +72,25 @@ type Tutor = {
 };
 
 export default function SearchPage() {
+
+  const getToken = () => {
+    if (typeof window === 'undefined') return null;
+    return localStorage.getItem('wpToken');
+  };
+  
+  const isLoggedIn = () => !!getToken();
+  
+  const getGuestSaved = (): number[] => {
+    if (typeof window === 'undefined') return [];
+    const data = localStorage.getItem('guestSavedExperts');
+    return data ? JSON.parse(data) : [];
+  };
+  
+  const setGuestSaved = (ids: number[]) => {
+    localStorage.setItem('guestSavedExperts', JSON.stringify(ids));
+  };
   const searchParams = useSearchParams();
+  const [savedIds, setSavedIds] = useState<number[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [tutors, setTutors] = useState<Tutor[]>([]);
   const [showFilters, setShowFilters] = useState(false);
@@ -97,6 +118,7 @@ export default function SearchPage() {
   const [savingSearch, setSavingSearch] = useState(false);
   const [searchTypes, setSearchTypes] = useState<string[]>([]);
   const [emailError, setEmailError] = useState('');
+  
 
   useEffect(() => {
     const q = searchParams.get('q') ?? '';
@@ -207,6 +229,61 @@ export default function SearchPage() {
   };
 }, [debounceSearchTerm, filters, page]);
 
+useEffect(() => {
+  const loadSaved = async () => {
+    try {
+      if (isLoggedIn()) {
+        const data = await wpFetch('/wp-json/guroos/v1/saved-experts');
+
+        setSavedIds(
+          data.data.map((d: any) => Number(d.expert_id))
+        );
+      } else {
+        setSavedIds(getGuestSaved());
+      }
+    } catch (err) {
+      console.error('Load saved error:', err);
+    }
+  };
+
+  loadSaved();
+}, []);
+
+
+const toggleSave = async (expertId: number) => {
+  const loggedIn = isLoggedIn();
+  const isSaved = savedIds.includes(expertId);
+
+  // 🔹 Logged in → API call
+  if (loggedIn) {
+    const endpoint = isSaved
+      ? '/wp-json/guroos/v1/unsave-expert'
+      : '/wp-json/guroos/v1/save-expert';
+
+    try {
+      await wpFetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify({ expert_id: expertId }),
+      });
+    } catch (err) {
+      console.error('Save API error:', err);
+      return;
+    }
+  }
+
+  // 🔹 Update UI instantly
+  const updated = isSaved
+    ? savedIds.filter(id => id !== expertId)
+    : [...savedIds, expertId];
+
+  setSavedIds(updated);
+
+  // 🔹 Guest → store locally
+  if (!loggedIn) {
+    setGuestSaved(updated);
+  }
+};
+
 
 return (
   <div className="min-h-screen bg-[#f7f6f2]">
@@ -294,9 +371,7 @@ return (
               </div>
 
               <div className="flex gap-2">
-                <span className="text-xs bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full">
-                  Guest browsing
-                </span>
+              
                 <span className="text-xs bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full">
                   Book in 2 steps
                 </span>
@@ -369,6 +444,24 @@ return (
 >
   View profile
 </Link>
+
+
+
+<button
+  onClick={() => toggleSave(Number(t.id))}
+  className={`inline-flex items-center gap-2 justify-center whitespace-nowrap px-5 h-[40px] rounded-full text-sm font-medium transition border ${
+    savedIds.includes(Number(t.id))
+      ? 'bg-[#01696f] text-white border-[#01696f]'
+      : 'border-[#01696f] text-[#01696f] hover:bg-[#01696f] hover:text-white'
+  }`}
+>
+  <Heart
+    className={`h-4 w-4 ${
+      savedIds.includes(Number(t.id)) ? 'fill-white' : ''
+    }`}
+  />
+  {savedIds.includes(Number(t.id)) ? 'Saved' : 'Save'}
+</button>
 
     </div>
   </div>
@@ -525,3 +618,7 @@ return (
   </div>
 );
 }
+function setSavedIds(arg0: any) {
+  throw new Error('Function not implemented.');
+}
+

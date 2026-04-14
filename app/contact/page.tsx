@@ -16,18 +16,22 @@ export default function ContactPage() {
     message: '',
   });
 
+  const [submitting, setSubmitting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
+      setSubmitting(true); // ✅ START LOADING
+  
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-
+  
       const json = await res.json();
-
+  
       if (json.success) {
         toast.success('Message sent successfully!');
         setFormData({
@@ -42,6 +46,8 @@ export default function ContactPage() {
       }
     } catch {
       toast.error('Something went wrong.');
+    } finally {
+      setSubmitting(false); // ✅ STOP LOADING
     }
   };
 
@@ -188,12 +194,17 @@ export default function ContactPage() {
                 className="w-full px-4 py-3 rounded-md border border-[#d4d1ca] bg-[#fbfbf9]"
               />
 
-              <button
-                type="submit"
-                className="w-full h-[48px] rounded-full bg-[#01696f] text-white font-medium hover:bg-[#0c4e54]"
-              >
-                Send message
-              </button>
+<button
+  type="submit"
+  disabled={submitting}
+  className={`w-full h-[48px] rounded-full text-white font-medium transition ${
+    submitting
+      ? 'bg-[#6aa6a3] cursor-not-allowed'
+      : 'bg-[#01696f] hover:bg-[#0c4e54]'
+  }`}
+>
+  {submitting ? 'Sending message...' : 'Send message'}
+</button>
 
             </form>
 
