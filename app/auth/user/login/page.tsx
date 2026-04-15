@@ -183,7 +183,7 @@ export default function StudentLoginPage() {
   
       {/* MINIMAL TOP BAR */}
       <div className="absolute top-0 left-0 w-full px-6 py-5 flex justify-between items-center">
-        
+      <Link href="/" className="flex items-center gap-3">
       <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
   <svg
     width="22"
@@ -206,6 +206,7 @@ export default function StudentLoginPage() {
     />
   </svg>
 </div>
+</Link>
   
         <Link href="/" className="text-sm text-[#6e6a63] hover:text-[#28251d]">
           ← Back to home

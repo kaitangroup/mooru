@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
-  BookOpen, Calendar, MessageCircle, CreditCard, 
+  BookOpen, DollarSign, Calendar, MessageCircle, CreditCard, 
   Clock, Star, Search, Plus
 } from 'lucide-react';
 import Link from 'next/link';
@@ -172,11 +172,12 @@ export default function StudentDashboard() {
 </div>
   
             {/* STATS */}
-            <div className="grid md:grid-cols-3 gap-5 mb-10">
+            <div className="grid md:grid-cols-4 gap-5 mb-10">
               {[
                 { label: 'Total Meetings', value: totalBookings, icon: BookOpen },
                 { label: 'Upcoming', value: upcomingBookings.length, icon: Calendar },
-                { label: 'Messages', value: unreadMessages.length, icon: MessageCircle },
+                { label: 'Total Spent', value: `$${authorDashboard?.total_spent ?? 0}`, icon: DollarSign },
+                { label: 'Expert Saved', value: authorDashboard?.saved_count ?? 0 ,icon: Star }
               ].map((item, i) => (
                 <div key={i} className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5 flex gap-3">
                   <item.icon className="h-5 w-5 text-[#01696f]" />
@@ -259,7 +260,7 @@ export default function StudentDashboard() {
                 </div>
   
                 {/* ACTIVITY */}
-                <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+                {/* <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
                   <h2 className="font-semibold mb-4">Recent activity</h2>
   
                   <div className="space-y-3 text-sm text-[#6e6a63]">
@@ -267,7 +268,7 @@ export default function StudentDashboard() {
                     <div>New message received</div>
                     <div>Payment processed</div>
                   </div>
-                </div>
+                </div> */}
   
               </div>
   
@@ -307,10 +308,20 @@ export default function StudentDashboard() {
                       </div>
                     </div>
                   ))}
+
+                  {/* FOOTER LINK */}
+<div className="mt-5">
+  <Link
+    href="/messages"
+    className="text-sm text-[#01696f] hover:underline"
+  >
+    View all messages →
+  </Link>
+</div>
                 </div>
   
                 {/* PROGRESS */}
-                <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5">
+                {/* <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5">
                   <h3 className="font-semibold mb-4">Learning progress</h3>
   
                   <div className="space-y-4 text-sm">
@@ -334,7 +345,7 @@ export default function StudentDashboard() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
   
               </div>
   

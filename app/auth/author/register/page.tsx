@@ -166,6 +166,7 @@ export default function TutorRegisterPage() {
       <div className="absolute top-0 left-0 w-full px-6 py-5 flex justify-between items-center">
         
         {/* LOGO → Guroos */}
+        <Link href="/" className="flex items-center gap-3">
         <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
   <svg
     width="22"
@@ -188,6 +189,7 @@ export default function TutorRegisterPage() {
     />
   </svg>
 </div>
+</Link>
   
         {/* BACK LINK */}
         <Link

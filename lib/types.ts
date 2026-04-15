@@ -96,6 +96,8 @@ export interface AuthorDashboard {
   books: string[];
   bookings: any[] | any;
   totalStudents: number;
+  total_spent: number;
+  saved_count: number;
   averageRating: GLfloat;
   
 };
