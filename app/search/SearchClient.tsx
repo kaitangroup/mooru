@@ -334,7 +334,7 @@ return (
           <div>
 
             {/* SEARCH BAR (IMPORTANT FIX) */}
-            <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-5 shadow-md mb-6">
+            {/* <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-5 shadow-md mb-6">
 
               <div className="grid md:grid-cols-[1fr_180px_180px_auto] gap-3">
 
@@ -362,7 +362,32 @@ return (
                   Search
                 </button>
               </div>
-            </div>
+            </div> */}
+
+<div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 shadow-sm hover:shadow-md transition mb-6">
+
+  <div className="flex gap-3 items-center">
+
+    {/* INPUT */}
+    <input
+      value={searchTerm}
+      onChange={(e) => {
+        setSearchTerm(e.target.value);
+        setPage(1);
+      }}
+      placeholder="Search experts..."
+      className="flex-1 h-[48px] px-4 rounded-full border border-[#d4d1ca] bg-[#fbfbf9] focus:outline-none focus:ring-2 focus:ring-[#01696f]/20"
+    />
+
+    {/* BUTTON */}
+    <button
+      className="h-[48px] px-6 rounded-full bg-[#01696f] hover:bg-[#0c4e54] text-white font-medium transition whitespace-nowrap"
+    >
+      Search
+    </button>
+
+  </div>
+</div>
 
             {/* META INFO */}
             <div className="flex justify-between items-center mb-4">

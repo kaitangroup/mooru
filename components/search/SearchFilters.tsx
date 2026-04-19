@@ -159,7 +159,7 @@ export function SearchFilters({ filters, onFiltersChange }: SearchFiltersProps) 
 
         
           {/* Booking & Modality */}
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Checkbox
                 id="instant-book"
@@ -197,7 +197,7 @@ export function SearchFilters({ filters, onFiltersChange }: SearchFiltersProps) 
                 </Tooltip>
               </Label>
             </div>
-          </div>
+          </div> */}
 
           {/* Credentials */}
           {/* <div>
