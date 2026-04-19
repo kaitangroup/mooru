@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { JSXElementConstructor, Key, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useEffect, useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -172,22 +172,59 @@ export default function StudentDashboard() {
 </div>
   
             {/* STATS */}
-            <div className="grid md:grid-cols-4 gap-5 mb-10">
-              {[
-                { label: 'Total Meetings', value: totalBookings, icon: BookOpen },
-                { label: 'Upcoming', value: upcomingBookings.length, icon: Calendar },
-                { label: 'Total Spent', value: `$${authorDashboard?.total_spent ?? 0}`, icon: DollarSign },
-                { label: 'Expert Saved', value: authorDashboard?.saved_count ?? 0 ,icon: Star }
-              ].map((item, i) => (
-                <div key={i} className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5 flex gap-3">
-                  <item.icon className="h-5 w-5 text-[#01696f]" />
-                  <div>
-                    <p className="font-semibold">{item.value}</p>
-                    <p className="text-sm text-[#6e6a63]">{item.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <div className="grid md:grid-cols-4 gap-6 mb-10">
+  {[
+    {
+      label: 'Total Meetings',
+      value: totalBookings,
+      sub: 'Sessions booked',
+      icon: BookOpen,
+    },
+    {
+      label: 'Upcoming',
+      value: upcomingBookings.length,
+      sub: 'Scheduled sessions',
+      icon: Calendar,
+    },
+    {
+      label: 'Total Spent',
+      value: `$${authorDashboard?.total_spent ?? 0}`,
+      sub: 'Across all bookings',
+      icon: DollarSign,
+    },
+    {
+      label: 'Saved Experts',
+      value: authorDashboard?.saved_count ?? 0,
+      sub: 'Ready to revisit',
+      icon: Star,
+    },
+  ].map((item, i) => (
+    <div
+      key={i}
+      className="bg-white border border-[#e5e2dc] rounded-2xl p-6 shadow-sm hover:shadow-md transition"
+    >
+      <div className="flex items-start justify-between mb-4">
+        <div className="w-10 h-10 rounded-lg bg-[#f3f7f6] flex items-center justify-center">
+          <item.icon className="h-5 w-5 text-[#01696f]" />
+        </div>
+      </div>
+
+      <div>
+        <p className="text-xl font-semibold text-[#28251d]">
+          {item.value}
+        </p>
+
+        <p className="text-sm text-[#6e6a63] mt-1">
+          {item.label}
+        </p>
+
+        <p className="text-xs text-[#9ca3af] mt-0.5">
+          {item.sub}
+        </p>
+      </div>
+    </div>
+  ))}
+</div>
   
             <div className="grid lg:grid-cols-[1fr_300px] gap-8">
   
@@ -195,7 +232,7 @@ export default function StudentDashboard() {
               <div className="space-y-6">
   
                 {/* UPCOMING */}
-                <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+                <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6">
                   <div className="flex justify-between mb-4">
                     <h2 className="font-semibold">Upcoming meetings</h2>
                     <Link href="/search" className="text-[#01696f] text-sm">
@@ -260,7 +297,7 @@ export default function StudentDashboard() {
                 </div>
   
                 {/* ACTIVITY */}
-                {/* <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+                {/* <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6">
                   <h2 className="font-semibold mb-4">Recent activity</h2>
   
                   <div className="space-y-3 text-sm text-[#6e6a63]">
@@ -275,25 +312,60 @@ export default function StudentDashboard() {
               {/* ================= SIDEBAR ================= */}
               <div className="space-y-6">
   
-                {/* QUICK ACTIONS */}
-                <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5 space-y-2">
-                  <h3 className="font-semibold mb-2">Quick actions</h3>
-  
-                  <Link href="/search" className="block text-sm">
-                    Find author
-                  </Link>
-  
-                  <Link href="/messages" className="block text-sm">
-                    Messages
-                  </Link>
-  
-                  <Link href="/bookings" className="block text-sm">
-                    Bookings
-                  </Link>
-                </div>
+{/* QUICK ACTIONS */}
+<div className="bg-white border border-[#e5e2dc] rounded-2xl p-5">
+  <h3 className="font-semibold text-[#28251d] mb-4">
+    Quick actions
+  </h3>
+
+  <div className="space-y-3">
+    
+    <Link
+      href="/search"
+      className="flex items-center justify-between px-4 h-[44px] rounded-xl border border-[#e5e2dc] bg-[#fbfbf9] hover:bg-white transition"
+    >
+      <span className="flex items-center gap-2 text-sm font-medium text-[#28251d]">
+        🔍 Find Experts
+      </span>
+      <span className="text-[#9ca3af]">→</span>
+    </Link>
+
+    <Link
+      href="/messages"
+      className="flex items-center justify-between px-4 h-[44px] rounded-xl border border-[#e5e2dc] bg-[#fbfbf9] hover:bg-white transition"
+    >
+      <span className="flex items-center gap-2 text-sm font-medium text-[#28251d]">
+        💬 View Messages
+      </span>
+      <span className="text-[#9ca3af]">→</span>
+    </Link>
+
+    <Link
+      href="/saved-experts"
+      className="flex items-center justify-between px-4 h-[44px] rounded-xl border border-[#e5e2dc] bg-[#fbfbf9] hover:bg-white transition"
+    >
+      <span className="flex items-center gap-2 text-sm font-medium text-[#28251d]">
+        ⭐ Saved Experts
+      </span>
+      <span className="text-[#9ca3af]">→</span>
+    </Link>
+
+    {/* NEW: PAYMENTS */}
+    <Link
+      href="/user-payments"
+      className="flex items-center justify-between px-4 h-[44px] rounded-xl border border-[#e5e2dc] bg-[#fbfbf9] hover:bg-white transition"
+    >
+      <span className="flex items-center gap-2 text-sm font-medium text-[#28251d]">
+        💳 Payments
+      </span>
+      <span className="text-[#9ca3af]">→</span>
+    </Link>
+
+  </div>
+</div>
   
                 {/* RECENT MESSAGES */}
-                <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5">
+                <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5">
                   <h3 className="font-semibold mb-4">Recent messages</h3>
   
                   {recentMessages.map((m) => (
@@ -310,18 +382,73 @@ export default function StudentDashboard() {
                   ))}
 
                   {/* FOOTER LINK */}
-<div className="mt-5">
-  <Link
-    href="/messages"
-    className="text-sm text-[#01696f] hover:underline"
-  >
-    View all messages →
-  </Link>
-</div>
+                  <div className="mt-5">
+                    <Link
+                      href="/messages"
+                      className="text-sm text-[#01696f] hover:underline"
+                    >
+                      View all messages →
+                    </Link>
+                  </div>
                 </div>
+
+                {/* PAYMENTS */}
+<div className="bg-white border border-[#e5e2dc] rounded-2xl p-5">
+  <h3 className="font-semibold mb-4">Payments</h3>
+
+  {authorDashboard?.payments?.length > 0 ? (
+    authorDashboard?.payments.slice(0, 4).map((p: { id: Key | null | undefined; description: any; date: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; amount: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | PromiseLikeOfReactNode | null | undefined; status: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | PromiseLikeOfReactNode | null | undefined; }) => (
+      <div
+        key={p.id}
+        className="flex items-center justify-between mb-3 last:mb-0"
+      >
+        {/* LEFT */}
+        <div className="text-sm">
+          <p className="font-medium text-[#28251d]">
+            {p.description || 'Session payment'}
+          </p>
+          <p className="text-[#6e6a63] text-xs">
+            {p.date}
+          </p>
+        </div>
+
+        {/* RIGHT */}
+        <div className="text-right">
+          <p className="text-sm font-semibold text-[#28251d]">
+            ${p.amount}
+          </p>
+
+          <span
+            className={`text-xs px-2 py-0.5 rounded-full ${
+              p.status === 'completed'
+                ? 'bg-green-100 text-green-700'
+                : 'bg-[#f3f4f6] text-[#6e6a63]'
+            }`}
+          >
+            {p.status}
+          </span>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-sm text-[#6e6a63]">
+      No payments yet
+    </p>
+  )}
+
+  {/* FOOTER LINK */}
+  <div className="mt-5">
+    <Link
+      href="/user-payments"
+      className="text-sm text-[#01696f] hover:underline"
+    >
+      View all payments →
+    </Link>
+  </div>
+</div>
   
                 {/* PROGRESS */}
-                {/* <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5">
+                {/* <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5">
                   <h3 className="font-semibold mb-4">Learning progress</h3>
   
                   <div className="space-y-4 text-sm">

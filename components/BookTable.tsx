@@ -123,7 +123,7 @@ export function BookTable() {
 
       {/* EMPTY STATE */}
       {books.length === 0 ? (
-        <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-12 text-center">
+        <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-12 text-center">
           <h3 className="font-[var(--font-display)] text-xl mb-2">
             No books yet
           </h3>
@@ -142,7 +142,7 @@ export function BookTable() {
       ) : (
         <>
           {/* TABLE VIEW */}
-          <div className="hidden md:block bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl overflow-hidden">
+          <div className="hidden md:block bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="border-b border-[#e5e2dc]">
@@ -237,7 +237,7 @@ export function BookTable() {
             {books.map((book) => (
               <div
                 key={book.id}
-                className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-4 flex gap-4"
+                className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-4 flex gap-4"
               >
                 <div>
                   {book.featured_image_url ? (

@@ -253,7 +253,7 @@ export default function ProfileEditPage() {
           <div className="space-y-6">
   
             {/* PROFILE CARD */}
-            <div className="bg-[#f9f8f5] border border-[#e5e2dc] rounded-2xl p-6 text-center">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6 text-center">
               <Avatar className="h-20 w-20 mx-auto mb-4">
                 <AvatarImage src={profileData?.avatar || ''} />
                 <AvatarFallback>
@@ -291,7 +291,7 @@ export default function ProfileEditPage() {
             </div>
   
             {/* PROFILE COMPLETION */}
-            <div className="bg-[#f9f8f5] border border-[#e5e2dc] rounded-2xl p-6">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6">
               <h4 className="font-medium mb-3">Profile completeness</h4>
   
               <div className="h-2 bg-[#e5e2dc] rounded-full overflow-hidden">

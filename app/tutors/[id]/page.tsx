@@ -78,7 +78,7 @@ export default function TutorProfilePage() {
           <div className="space-y-6">
 
             {/* PROFILE HEADER */}
-            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6">
               <div className="flex gap-6 items-start">
 
                 <img
@@ -113,7 +113,7 @@ export default function TutorProfilePage() {
             </div>
 
             {/* ABOUT */}
-            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6">
               <h2 className="font-[var(--font-display)] text-xl mb-3">
                 About
               </h2>
@@ -124,7 +124,7 @@ export default function TutorProfilePage() {
 
             {/* BOOKS */}
             {author.books?.length > 0 && (
-              <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+              <div className="bg-white border border-[#e5e2dc] rounded-2xl hover:shadow-md transition p-6">
                 <h2 className="font-[var(--font-display)] text-xl mb-4">
                   Books
                 </h2>
@@ -157,7 +157,7 @@ export default function TutorProfilePage() {
             )}
 
             {/* EXPERIENCE */}
-            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6">
               <h2 className="font-[var(--font-display)] text-xl mb-4">
                 Experience & Education
               </h2>
@@ -170,7 +170,7 @@ export default function TutorProfilePage() {
             </div>
 
             {/* REVIEWS */}
-            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6">
               <h2 className="font-[var(--font-display)] text-xl mb-4">
                 Reviews ({author.reviews_count})
               </h2>
@@ -193,7 +193,7 @@ export default function TutorProfilePage() {
 
           {/* RIGHT SIDEBAR */}
           <div>
-            <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-6 sticky top-24">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6 sticky top-24">
 
             <div className="text-center mb-6">
   <div className="text-2xl font-semibold">

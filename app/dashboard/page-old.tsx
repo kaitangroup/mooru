@@ -152,54 +152,24 @@ export default function TutorDashboard() {
         {/* STATS */}
         <div className="grid md:grid-cols-4 gap-6 mb-10">
   {[
-    {
-      label: 'Clients',
-      value: totalStudents,
-      sub: 'People you helped',
-      icon: Users,
-    },
-    {
-      label: 'This month',
-      value: `$${monthlyEarnings}`,
-      sub: 'Earnings this month',
-      icon: DollarSign,
-    },
-    {
-      label: 'Upcoming',
-      value: upcomingBookings.length,
-      sub: 'Sessions scheduled',
-      icon: Calendar,
-    },
-    {
-      label: 'Lifetime',
-      value: `$${authorDashboard?.totalEarningsLifetime ?? 0}`,
-      sub: 'Total earnings',
-      icon: DollarSign
-    }
+    { label: 'Clients', value: 4, sub: 'Active clients', icon: Users },
+    { label: 'This month', value: '$85', sub: 'Earnings', icon: DollarSign },
+    { label: 'Upcoming', value: 9, sub: 'Sessions scheduled', icon: Calendar },
+    { label: 'Rating', value: 0, sub: 'Avg rating', icon: Star },
   ].map((item, i) => (
     <div
       key={i}
       className="bg-white border border-[#e5e2dc] rounded-2xl p-6 shadow-sm hover:shadow-md transition"
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-lg bg-[#f3f7f6] flex items-center justify-center">
+      <div className="flex items-center justify-between mb-4">
+        <div className="w-10 h-10 bg-[#f3f7f6] rounded-lg flex items-center justify-center">
           <item.icon className="h-5 w-5 text-[#01696f]" />
         </div>
       </div>
 
-      <div>
-        <p className="text-xl font-semibold text-[#28251d]">
-          {item.value}
-        </p>
-
-        <p className="text-sm text-[#6e6a63] mt-1">
-          {item.label}
-        </p>
-
-        <p className="text-xs text-gray-400 mt-0.5">
-          {item.sub}
-        </p>
-      </div>
+      <p className="text-xl font-semibold">{item.value}</p>
+      <p className="text-sm text-[#6e6a63] mt-1">{item.label}</p>
+      <p className="text-xs text-gray-400">{item.sub}</p>
     </div>
   ))}
 </div>
@@ -210,7 +180,7 @@ export default function TutorDashboard() {
           <div className="space-y-6">
 
             {/* UPCOMING */}
-            <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-6">
+            <div className="bg-white border border-[#e5e2dc] rounded-2xl p-6 shadow-sm">
               <h2 className="font-semibold mb-4">Upcoming meetings</h2>
 
               {upcomingBookings.length === 0 ? (
@@ -237,6 +207,8 @@ export default function TutorDashboard() {
                           <p className="font-medium">${b.price}</p>
                         </div>
                       </div>
+
+                      
                     );
                   })}
                 </div>
@@ -293,7 +265,7 @@ export default function TutorDashboard() {
             <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-6 text-center">
               <TrendingUp className="mx-auto text-[#a8a29e]" />
               <p className="text-[#6e6a63]">Total earnings</p>
-              <p className="text-xl font-semibold">{`$${authorDashboard?.totalEarningsLifetime ?? 0}`}</p>
+              <p className="text-xl font-semibold">${totalEarnings}</p>
             </div>
 
           </div>
@@ -303,27 +275,68 @@ export default function TutorDashboard() {
 
             {/* ACTIONS */}
      {/* Quick Actions */}
-     <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 shadow-sm">
-  <h3 className="font-semibold mb-4">Quick actions</h3>
+<div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-5">
 
-  <div className="space-y-2">
-    {[
-      { label: 'Manage books', icon: '📅', href: '/books' },
-      { label: 'View messages', icon: '💬', href: '/messages' },
-      { label: 'Edit profile', icon: '⚙️', href: '/profile/edit' },
-      { label: 'Earnings', icon: '💰', href: '/dashboard/author/earnings' },
-      { label: 'Payout settings', icon: '🏦', href: '/dashboard/author/payout-settings' },
-    ].map((item, i) => (
-      <Link
-        key={i}
-        href={item.href}
-        className="flex items-center gap-3 px-4 h-[42px] rounded-lg border border-[#ece9e4] hover:bg-[#f9f8f5] transition text-sm"
-      >
-        <span>{item.icon}</span>
-        {item.label}
-      </Link>
-    ))}
-  </div>
+{/* HEADER */}
+<h3 className="font-semibold text-[#28251d] mb-4">
+  Quick actions
+</h3>
+
+<div className="space-y-2">
+
+  {/* MANAGE BOOKS */}
+  <Link
+    href="/books"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <Calendar className="h-4 w-4 text-[#6e6a63]" />
+    <span className="text-sm text-[#28251d]">Manage books</span>
+  </Link>
+
+  {/* MESSAGES */}
+  <Link
+    href="/messages"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <MessageCircle className="h-4 w-4 text-[#6e6a63]" />
+    <span className="text-sm text-[#28251d]">View messages</span>
+
+    {unreadMessages.length > 0 && (
+      <span className="ml-auto text-xs px-2 py-[2px] rounded-full bg-[#01696f] text-white">
+        {unreadMessages.length}
+      </span>
+    )}
+  </Link>
+
+  {/* EDIT PROFILE */}
+  <Link
+    href="/profile/edit"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <Settings className="h-4 w-4 text-[#6e6a63]" />
+    <span className="text-sm text-[#28251d]">Edit profile</span>
+  </Link>
+
+  {/* EARNINGS */}
+  <Link
+    href="/dashboard/author/earnings"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <span className="text-sm">💰</span>
+    <span className="text-sm text-[#28251d]">Earnings</span>
+  </Link>
+
+  {/* PAYOUT */}
+  <Link
+    href="/dashboard/author/payout-settings"
+    className="flex items-center gap-3 px-3 h-[42px] rounded-lg border border-[#e5e2dc] bg-white hover:bg-[#f3f2ef] transition"
+  >
+    <span className="text-sm">🏦</span>
+    <span className="text-sm text-[#28251d]">Payout settings</span>
+  </Link>
+
+</div>
+
 </div>
 
             {/* MESSAGES */}
@@ -365,41 +378,37 @@ export default function TutorDashboard() {
 
 {/* LIST */}
 {!loadingMessages && !messagesError && recentMessages.length > 0 && (
-  <div className="space-y-3">
+  <div className="space-y-4">
     {recentMessages.map((message) => (
       <div
         key={message.id}
-        className="flex items-start gap-3 p-3 rounded-xl hover:bg-[#fbfbf9] transition"
+        className="flex items-start gap-3"
       >
 
         {/* AVATAR */}
-        <div className="relative">
-          <img
-            src={message.other_user.avatar}
-            alt={message.other_user.name}
-            className="h-10 w-10 rounded-full object-cover border border-[#e5e2dc]"
-          />
-
-          {/* UNREAD DOT (overlay) */}
-          {message.unread && (
-            <span className="absolute top-0 right-0 h-2.5 w-2.5 bg-[#01696f] rounded-full border-2 border-white"></span>
-          )}
-        </div>
+        <img
+          src={message.other_user.avatar}
+          alt={message.other_user.name}
+          className="h-9 w-9 rounded-full object-cover border border-[#e5e2dc]"
+        />
 
         {/* CONTENT */}
         <div className="flex-1 min-w-0">
 
-          {/* NAME */}
-          <p className="text-sm font-medium text-[#28251d]">
-            {message.other_user.name}
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium text-[#28251d]">
+              {message.other_user.name}
+            </p>
 
-          {/* MESSAGE */}
-          <p className="text-xs text-[#6e6a63] mt-0.5 truncate">
+            {message.unread && (
+              <span className="h-2 w-2 bg-[#01696f] rounded-full"></span>
+            )}
+          </div>
+
+          <p className="text-xs text-[#6e6a63] truncate">
             {message.content}
           </p>
 
-          {/* TIME */}
           <p className="text-[11px] text-[#a8a29e] mt-1">
             {message.timestamp}
           </p>

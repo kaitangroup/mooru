@@ -38,12 +38,25 @@ const displayFont = Playfair_Display({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  title: "Guroos - Read, Listen, Watch, Ask",
-  description:
-    "Connect with qualified authors for personalized learning. Browse subjects, book lessons, and achieve your academic goals.",
-  keywords:
-    "author, authoring, education, learning, online authoring, academic support",
+export const metadata = {
+  title: {
+    default: 'Guroos – Read. Listen. Watch. Ask',
+    template: '%s | Guroos',
+  },
+  description: 'Connect with experts through sessions, messages, and sessions.',
+  metadataBase: new URL('https://guroos.net'),
+  openGraph: {
+    type: 'website',
+    siteName: 'Guroos',
+    images: ['/og-default.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -95,10 +95,12 @@ export interface AuthorDashboard {
   messages: string[];
   books: string[];
   bookings: any[] | any;
+  payments: any[] | any;
   totalStudents: number;
   total_spent: number;
   saved_count: number;
   averageRating: GLfloat;
+  totalEarningsLifetime: number;
   
 };
 

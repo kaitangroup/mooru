@@ -206,7 +206,7 @@ setTutors(tutorsData);
             {tutors.map((t) => (
               <div
                 key={t.id}
-                className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl p-5 flex flex-col justify-between"
+                className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-5 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center gap-3">

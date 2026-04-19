@@ -10,7 +10,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
     post?.excerpt?.rendered?.replace(/<[^>]*>/g, '') || '';
 
   return (
-    <div className="bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl overflow-hidden">
+    <div className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition overflow-hidden">
 
       {image && (
         <img

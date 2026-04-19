@@ -464,7 +464,7 @@ useEffect(() => {
             {/* ================= LEFT: CONVERSATIONS ================= */}
             <div className={`${selectedUserId ? 'hidden lg:block' : ''}`}>
   
-              <div className="h-full flex flex-col bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl">
+              <div className="h-full flex flex-col bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition">
   
                 {/* HEADER */}
                 <div className="p-4 border-b border-[#e5e2dc]">
@@ -551,7 +551,7 @@ useEffect(() => {
             {/* ================= RIGHT: CHAT ================= */}
             <div className={`${selectedUserId ? '' : 'hidden lg:block'} lg:col-span-2`}>
   
-              <div className="h-full flex flex-col bg-[#f9f8f5] border border-[#dcd9d5] rounded-xl">
+              <div className="h-full flex flex-col bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition">
   
                 {selectedUserId ? (
                   <>
@@ -669,15 +669,21 @@ useEffect(() => {
                     <div className="border-t border-[#e5e2dc] px-4 py-3 bg-[#f9f8f5] flex items-center">
                       {token ? (
                         <form onSubmit={handleSendMessage} className="flex items-center gap-2 w-full">
-                        <textarea
-  ref={composeRef}
-  value={newMessage}
-  onChange={(e) => setNewMessage(e.target.value)}
-  onKeyDown={onComposerKeyDown}
-  placeholder="Type a message"
-  rows={1}
-  className="flex-1 h-[40px] border border-[#e5e2dc] rounded-full px-4 text-sm outline-none focus:ring-1 focus:ring-[#01696f] resize-none flex items-center"
-/>
+<div className="flex items-center w-full border border-[#01696f] rounded-full px-4 h-[48px]">
+  <textarea
+    className="
+      w-full 
+      bg-transparent 
+      outline-none 
+      resize-none 
+      text-sm 
+      leading-normal
+      flex items-center
+    "
+    rows={1}
+    placeholder="Type a message"
+  />
+</div>
                       
 <button
   type="submit"
