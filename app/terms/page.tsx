@@ -8,28 +8,30 @@ export default function TermsPage() {
 
       {/* HERO */}
       <section className="px-6 py-20 border-b border-[#e5e2dc]">
-        <div className="max-w-3xl mx-auto">
-          <p className="text-sm text-[#6b665d] mb-4">
-            Effective Date: April 12, 2026
-          </p>
+        <div className="max-w-[1120px] mx-auto">
+        <span className="inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+          Terms of Use
+        </span>
 
-          <h1 className="text-5xl md:text-6xl font-serif leading-tight tracking-tight">
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[700px] leading-[1.05]">
             Terms of Use
           </h1>
 
-          <p className="mt-6 text-lg text-[#6b665d] leading-relaxed">
-            These Terms govern your use of Guroos. Please read them carefully before using the platform.
+          <p className="text-[#6e6a63] mt-4 max-w-[600px] text-base leading-relaxed">
+            These Terms govern your use of Guroos.Net. Please read them carefully before using the platform.
           </p>
         </div>
       </section>
 
+
+
       {/* CONTENT */}
       <section className="px-6 py-16">
-        <div className="max-w-3xl mx-auto space-y-14">
+        <div className="max-w-[1120px] mx-auto space-y-14">
 
           {/* 1 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               1. Acceptance of Terms
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -40,7 +42,7 @@ export default function TermsPage() {
 
           {/* 2 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               2. Description of Service
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -51,7 +53,7 @@ export default function TermsPage() {
 
           {/* 3 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               3. Eligibility
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -62,7 +64,7 @@ export default function TermsPage() {
 
           {/* 4 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               4. Accounts & Security
             </h2>
             <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
@@ -74,7 +76,7 @@ export default function TermsPage() {
 
           {/* 5 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               5. User Roles
             </h2>
 
@@ -86,7 +88,7 @@ export default function TermsPage() {
 
           {/* 6 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               6. Payments & Fees
             </h2>
             <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
@@ -98,7 +100,7 @@ export default function TermsPage() {
 
           {/* 7 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               7. Prohibited Activities
             </h2>
             <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
@@ -111,7 +113,7 @@ export default function TermsPage() {
 
           {/* 8 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               8. Sessions & Recording
             </h2>
             <p className="text-[#4b463f] leading-relaxed mb-4">
@@ -127,7 +129,7 @@ export default function TermsPage() {
 
           {/* 9 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               9. Intellectual Property
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -137,7 +139,7 @@ export default function TermsPage() {
 
           {/* 10 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               10. Disclaimers
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -148,7 +150,7 @@ export default function TermsPage() {
 
           {/* 11 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               11. Limitation of Liability
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -158,7 +160,7 @@ export default function TermsPage() {
 
           {/* 12 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               12. Termination
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -168,7 +170,7 @@ export default function TermsPage() {
 
           {/* 13 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               13. Changes to Terms
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -178,7 +180,7 @@ export default function TermsPage() {
 
           {/* 14 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               14. Governing Law
             </h2>
             <p className="text-[#4b463f] leading-relaxed">
@@ -188,7 +190,7 @@ export default function TermsPage() {
 
           {/* 15 */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
               15. Contact
             </h2>
 

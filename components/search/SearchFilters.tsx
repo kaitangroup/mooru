@@ -95,7 +95,7 @@ export function SearchFilters({ filters, onFiltersChange }: SearchFiltersProps) 
   const resetFilters = () => {
     onFiltersChange({
       subjects: [],
-      priceRange: [0, 100],
+      priceRange: [0, 5000],
       rating: 0,
       availability: 'any',
       ageRange: [18, 80],
@@ -131,7 +131,7 @@ export function SearchFilters({ filters, onFiltersChange }: SearchFiltersProps) 
           <Slider
             value={filters.priceRange}
             onValueChange={(value: number[]) => updateFilters('priceRange', value)}
-            max={100}
+            max={5000}
             min={0}
             step={5}
             className="w-full"

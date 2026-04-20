@@ -1,195 +1,115 @@
+import Link from "next/link";
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { Card, CardContent } from '@/components/ui/card';
-import { 
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Badge } from '@/components/ui/badge';
+
+export const metadata = {
+  title: "FAQ",
+  description: "Find answers to common questions about using Guroos.",
+  alternates: { canonical: "/faq" },
+};
 
 export default function FAQPage() {
-  const faqCategories = [
+  const faqs = [
     {
-      title: 'Getting Started',
-      badge: 'Popular',
-      questions: [
-        {
-          id: '1',
-          question: 'How do I create an account?',
-          answer: 'You can create an account by clicking the "Sign Up" button and choosing whether you want to register as a student or Expert. Fill out the required information and verify your email to get started.'
-        },
-        {
-          id: '2',
-          question: 'How do I find a Expert?',
-          answer: 'Use our search feature to find Experts by subject, location, price range, or availability. You can also browse Expert profiles to see their qualifications, ratings, and reviews before making a decision.'
-        },
-        {
-          id: '3',
-          question: 'How do I book my first lesson?',
-          answer: 'Once you find a Expert you like, click on their profile and then "Book a Lesson". Select your preferred date, time, and subject, then send your booking request. The Expert will confirm or suggest alternative times.'
-        }
-      ]
+      q: "What is Guroos?",
+      a: "Guroos is a platform that connects you with experts and content creators for meaningful one-on-one conversations.",
     },
     {
-      title: 'Bookings & Scheduling',
-      questions: [
-        {
-          id: '4',
-          question: 'Can I reschedule or cancel a lesson?',
-          answer: 'Yes, you can reschedule or cancel lessons up to 24 hours before the scheduled time without penalty. For cancellations within 24 hours, you may be charged a cancellation fee depending on the Expert\'s policy.'
-        },
-        {
-          id: '5',
-          question: 'What happens if my Expert cancels?',
-          answer: 'If your Expert needs to cancel, you\'ll receive an immediate notification and full refund. We\'ll also help you find an alternative Expert or reschedule with the same Expert if possible.'
-        },
-        {
-          id: '6',
-          question: 'How do I join my online lesson?',
-          answer: 'You\'ll receive a lesson link via email and in your dashboard 15 minutes before your scheduled time. Simply click the link to join the virtual classroom.'
-        }
-      ]
+      q: "How do I book an expert?",
+      a: "You can search for experts, view their profiles, and book a session directly through the platform.",
     },
     {
-      title: 'Payments & Billing',
-      badge: 'Important',
-      questions: [
-        {
-          id: '7',
-          question: 'How do I pay for lessons?',
-          answer: 'We accept major credit cards, debit cards, and PayPal. Payment is processed securely after each lesson is completed. You can also purchase lesson credits in advance.'
-        },
-        {
-          id: '8',
-          question: 'When am I charged for a lesson?',
-          answer: 'Payment is automatically processed within 24 hours after your lesson is completed. You\'ll receive a receipt via email confirming the transaction.'
-        },
-        {
-          id: '9',
-          question: 'What is your refund policy?',
-          answer: 'If you\'re not satisfied with a lesson, contact us within 24 hours and we\'ll investigate. We offer full refunds for legitimate concerns and work to resolve any issues with your learning experience.'
-        }
-      ]
+      q: "Can I message an expert before booking?",
+      a: "Yes, you can message experts to ask questions before confirming a booking.",
     },
     {
-      title: 'For Experts',
-      questions: [
-        {
-          id: '10',
-          question: 'How do I become a Expert?',
-          answer: 'Apply through our Expert registration form, providing details about your qualifications, experience, and subjects you teach. We review all applications and conduct background checks before approval.'
-        },
-        {
-          id: '11',
-          question: 'How much can I earn as a Expert?',
-          answer: 'Experts set their own hourly rates typically ranging from $20-$100+ per hour. Your earnings depend on your subjects, experience, ratings, and how many lessons you teach.'
-        },
-        {
-          id: '12',
-          question: 'When do I get paid?',
-          answer: 'Payments are released to your account 24 hours after each completed lesson. You can withdraw your earnings weekly via direct deposit or PayPal.'
-        }
-      ]
+      q: "How are payments handled?",
+      a: "All payments are securely processed through the platform. You can view your transactions in your dashboard.",
     },
     {
-      title: 'Technical Support',
-      questions: [
-        {
-          id: '13',
-          question: 'What technical requirements do I need?',
-          answer: 'You need a stable internet connection, a computer or tablet with a camera and microphone, and a modern web browser. No special software installation is required.'
-        },
-        {
-          id: '14',
-          question: 'I\'m having trouble with video or audio',
-          answer: 'First, check your internet connection and browser permissions for camera/microphone access. If issues persist, try refreshing the page or switching to a different browser. Contact support if problems continue.'
-        },
-        {
-          id: '15',
-          question: 'How do I share my screen during a lesson?',
-          answer: 'Click the "Share Screen" button in your lesson room. Your browser will ask for permission to share your screen or a specific application. Choose what you want to share and click "Share".'
-        }
-      ]
-    }
+      q: "Can I become an expert?",
+      a: "Yes, you can apply to join as an expert and start offering sessions to users.",
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-[#f7f6f2]">
-      <Header />
-      
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-blue-50 to-white py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Frequently Asked Questions
+
+<div className="min-h-screen bg-[#f7f6f2]">
+    <Header />
+
+    <main className="px-4 py-10">
+
+      {/* HERO */}
+      <section className=" px-4">
+        <div className="max-w-[1100px] mx-auto">
+
+          <span className="inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+            Help center
+          </span>
+
+          <h1 className="font-[var(--font-display)] text-[clamp(2.5rem,4vw,3.5rem)] mt-4 leading-tight text-[#28251d] max-w-[700px]">
+            Frequently asked questions
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Find answers to common questions about ExpertConnect. Can't find what you're looking for? Contact our support team.
+
+          <p className="text-[#6e6a63] mt-4 max-w-[600px] leading-relaxed">
+            Find quick answers to common questions about using Guroos.
           </p>
+
         </div>
       </section>
 
-      <div className="py-16 px-4">
-        <div className="max-w-4xl mx-auto space-y-8">
-          {faqCategories.map((category, index) => (
-            <Card key={index}>
-              <CardContent className="p-6">
-                <div className="flex items-center gap-3 mb-6">
-                  <h2 className="text-2xl font-bold">{category.title}</h2>
-                  {category.badge && (
-                    <Badge variant={category.badge === 'Popular' ? 'default' : 'secondary'}>
-                      {category.badge}
-                    </Badge>
-                  )}
-                </div>
-                
-                <Accordion type="single" collapsible className="w-full">
-                  {category.questions.map((faq) => (
-                    <AccordionItem key={faq.id} value={faq.id}>
-                      <AccordionTrigger className="text-left">
-                        {faq.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-gray-600 leading-relaxed">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      {/* FAQ LIST */}
+      <section className="px-4 pb-20">
+        <div className="max-w-[800px] mx-auto space-y-4">
 
-        {/* Contact Section */}
-        <div className="max-w-4xl mx-auto mt-12">
-          <Card className="bg-blue-50 border-blue-200">
-            <CardContent className="p-8 text-center">
-              <h3 className="text-2xl font-bold mb-4">Still have questions?</h3>
-              <p className="text-gray-600 mb-6">
-                Our support team is here to help. Get in touch and we'll respond within 24 hours.
+          {faqs.map((item, i) => (
+            <details
+              key={i}
+              className="group bg-white border border-[#e5e2dc] rounded-2xl p-5 cursor-pointer"
+            >
+              <summary className="flex justify-between items-center font-medium text-[#28251d] list-none">
+                {item.q}
+
+                <span className="text-[#01696f] transition group-open:rotate-45">
+                  +
+                </span>
+              </summary>
+
+              <p className="text-[#6e6a63] mt-3 leading-relaxed">
+                {item.a}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="/contact" 
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Contact Support
-                </a>
-                <a 
-                  href="mailto:support@expertconnect.com"
-                  className="bg-white text-blue-600 px-6 py-3 rounded-lg border border-blue-200 hover:bg-blue-50 transition-colors"
-                >
-                  Email Us
-                </a>
-              </div>
-            </CardContent>
-          </Card>
+            </details>
+          ))}
+
         </div>
-      </div>
-      
-      <Footer />
+      </section>
+
+      {/* CTA */}
+      <section className="px-4 py-20 border-t border-[#e5e2dc] bg-[#f9f8f5]">
+        <div className="max-w-[700px] mx-auto text-center">
+
+          <h2 className="font-[var(--font-display)] text-[28px] mb-4 text-[#28251d]">
+            Still have questions?
+          </h2>
+
+          <p className="text-[#6e6a63] mb-6">
+            Contact our team and we’ll help you get the answers you need.
+          </p>
+
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center px-6 h-[44px] rounded-full bg-[#01696f] text-white hover:bg-[#0c4e54] transition"
+          >
+            Contact support
+          </Link>
+
+        </div>
+      </section>
+
+    </main>
+
+    <Footer />
+
     </div>
   );
 }

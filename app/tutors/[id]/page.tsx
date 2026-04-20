@@ -157,17 +157,7 @@ export default function TutorProfilePage() {
             )}
 
             {/* EXPERIENCE */}
-            <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6">
-              <h2 className="font-[var(--font-display)] text-xl mb-4">
-                Experience & Education
-              </h2>
 
-              <div className="space-y-3 text-[#6e6a63]">
-                <p><strong>Education:</strong> {author.education}</p>
-                <p><strong>Experience:</strong> {author.teaching_experience}</p>
-                <p><strong>Languages:</strong> {author.languages}</p>
-              </div>
-            </div>
 
             {/* REVIEWS */}
             <div className="bg-white border border-[#e5e2dc] rounded-2xl  hover:shadow-md transition p-6">

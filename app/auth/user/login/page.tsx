@@ -184,28 +184,11 @@ export default function StudentLoginPage() {
       {/* MINIMAL TOP BAR */}
       <div className="absolute top-0 left-0 w-full px-6 py-5 flex justify-between items-center">
       <Link href="/" className="flex items-center gap-3">
-      <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
-  <svg
-    width="22"
-    height="22"
-    viewBox="0 0 64 64"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M20 32C20 26 25 22 32 22C36 22 40 24 42 28"
-      stroke="white"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-    <path
-      d="M32 32H44V40"
-      stroke="white"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-  </svg>
-</div>
+      <div className="w-[42px] h-[42px] rounded-xl bg-[#01696f] flex items-center justify-center shadow-sm">
+        <span className="text-white text-[20px] font-bold leading-none">
+          G
+        </span>
+      </div>
 </Link>
   
         <Link href="/" className="text-sm text-[#6e6a63] hover:text-[#28251d]">
@@ -222,10 +205,12 @@ export default function StudentLoginPage() {
   
             <div>
               <div className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#01696f] to-[#6aa6a3] text-white flex items-center justify-center font-bold">
                   G
                 </div>
                 <span className="font-semibold">Guroos</span>
+                </Link>
               </div>
   
               <span className="inline-block mt-6 text-xs font-bold uppercase tracking-[0.06em] bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">

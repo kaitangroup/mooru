@@ -127,7 +127,10 @@ export default function HelpCenterPage() {
       {/* Hero */}
       <section className="bg-gradient-to-b from-blue-700 to-blue-500 text-white">
         <div className="mx-auto max-w-[1120px] px-4 py-16 text-center">
-          <h1 className="text-3xl font-bold sm:text-4xl md:text-5xl">How can we help you?</h1>
+          {/* <span className=" eyebrow inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-4 py-1.5 rounded-full">
+            Private video sessions with experts
+          </span> */}
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[700px] leading-[1.05]">How can we help you?</h1>
           <p className="mt-3 text-white/90">Search our knowledge base or browse categories below</p>
           
         </div>

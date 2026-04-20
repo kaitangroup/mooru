@@ -60,16 +60,22 @@ export default function ContactPage() {
       <Header />
 
       {/* HERO */}
-      <section className="py-20 px-4 text-center">
-        <div className="max-w-[800px] mx-auto">
-          <h1 className="font-[var(--font-display)] text-[clamp(2.5rem,4vw,4rem)]">
+      <section className="py-20 px-4 text-left">
+        <div className="max-w-[1120px] mx-auto">
+        <span className="inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+          contact
+        </span>
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[700px] leading-[1.05]">
             Get in touch
           </h1>
-          <p className="text-[#6e6a63] mt-4">
+          <p className="text-[#6e6a63] mt-4 max-w-[600px] text-base leading-relaxed">
             We usually respond within a few hours.
           </p>
         </div>
       </section>
+
+
+
 
       <div className="px-4 pb-20">
         <div className="max-w-[1120px] mx-auto grid lg:grid-cols-3 gap-10">
@@ -84,7 +90,7 @@ export default function ContactPage() {
 
                 <div className="flex gap-3 items-center">
                   <Mail className="w-5 h-5 text-[#01696f]" />
-                  <span>rgj@rolandjones.com</span>
+                  <span>rgj@guroos.net</span>
                 </div>
 
                 <div className="flex gap-3 items-center">

@@ -46,6 +46,9 @@ export default function TutorRegisterPage() {
     confirmPassword: '',
   });
   const [submitting, setSubmitting] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [agreed, setAgreed] = useState(false);
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -167,28 +170,11 @@ export default function TutorRegisterPage() {
         
         {/* LOGO → Guroos */}
         <Link href="/" className="flex items-center gap-3">
-        <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
-  <svg
-    width="22"
-    height="22"
-    viewBox="0 0 64 64"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M20 32C20 26 25 22 32 22C36 22 40 24 42 28"
-      stroke="white"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-    <path
-      d="M32 32H44V40"
-      stroke="white"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-  </svg>
-</div>
+        <div className="w-[42px] h-[42px] rounded-xl bg-[#01696f] flex items-center justify-center shadow-sm">
+        <span className="text-white text-[20px] font-bold leading-none">
+          G
+        </span>
+      </div>
 </Link>
   
         {/* BACK LINK */}
@@ -210,10 +196,12 @@ export default function TutorRegisterPage() {
             <div>
               {/* BRAND */}
               <div className="flex items-center gap-3">
+              <Link href="/" className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#01696f] to-[#6aa6a3] text-white flex items-center justify-center font-bold">
                   G
                 </div>
                 <span className="font-semibold">Guroos</span>
+                </Link>
               </div>
   
               {/* EYEBROW */}
@@ -377,17 +365,25 @@ export default function TutorRegisterPage() {
     </div>
 
     {/* CONSENT (MISSING BEFORE) */}
-    <div className="flex items-start gap-3 p-4 rounded-lg bg-[#f3f2ee] border border-[#e5e2dc]">
-      <input
-        type="checkbox"
-        className="mt-1 accent-[#01696f]"
-        checked={formData.agreeToTerms}
-        onChange={(e) => handleInputChange("agreeToTerms", e.target.checked)}
-      />
-      <span className="text-sm">
-        I agree to the User Agreement <span className="text-[#01696f]">*</span>
-      </span>
-    </div>
+    <div className="flex items-start gap-2 text-sm">
+  <input
+    type="checkbox"
+    checked={agreed}
+    readOnly
+    className="mt-1"
+  />
+
+  <span>
+    I agree to the{" "}
+    <button
+      type="button"
+      onClick={() => setShowTerms(true)}
+      className="text-[#01696f] underline"
+    >
+      User Agreement
+    </button>
+  </span>
+</div>
 
     {/* BUTTONS (IMPORTANT DIFFERENCE) */}
     <div className="flex gap-3">
@@ -419,6 +415,263 @@ export default function TutorRegisterPage() {
   
         </div>
       </div>
+
+      {showTerms && (
+  <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4">
+
+    <div className="bg-white rounded-2xl max-w-[700px] w-full max-h-[80vh] flex flex-col">
+
+      {/* HEADER */}
+      <div className="p-5 border-b border-[#e5e2dc]">
+        <h2 className="font-semibold text-lg">User Agreement</h2>
+      </div>
+
+      {/* SCROLL CONTENT */}
+      <div
+        className="p-5 overflow-y-auto text-sm text-[#6e6a63] leading-relaxed"
+        onScroll={(e) => {
+          const el = e.currentTarget;
+          if (el.scrollTop + el.clientHeight >= el.scrollHeight - 10) {
+            setHasScrolled(true);
+          }
+        }}
+      >
+        {/* LONG CONTENT */}
+        <section className="px-6 py-5 border-b border-[#e5e2dc]">
+        <div className="max-w-[1120px] mx-auto">
+        {!hasScrolled && (
+  <p className="text-xs text-gray-400 mt-2">
+    Scroll to the bottom to enable agreement
+  </p>
+)}
+        <span className="inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
+          Terms of Use
+        </span>
+
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[700px] leading-[1.05]">
+            Terms of Use
+          </h1>
+
+        
+
+          <p className="text-[#6e6a63] mt-4 max-w-[600px] text-base leading-relaxed">
+            These Terms govern your use of Guroos.Net. Please read them carefully before using the platform.
+          </p>
+        </div>
+      </section>
+
+
+
+      {/* CONTENT */}
+      <section className="px-6 py-16">
+        <div className="max-w-[1120px] mx-auto space-y-14">
+
+          {/* 1 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              1. Acceptance of Terms
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              By using Guroos, you agree to these Terms and our Privacy Policy.
+              If you do not agree, you may not access or use the Service.
+            </p>
+          </div>
+
+          {/* 2 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              2. Description of Service
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Guroos connects readers with Experts through live video sessions.
+              We provide the platform but do not guarantee outcomes or endorse participants.
+            </p>
+          </div>
+
+          {/* 3 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              3. Eligibility
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              You must be at least 18 years old and legally capable of entering
+              into binding agreements.
+            </p>
+          </div>
+
+          {/* 4 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              4. Accounts & Security
+            </h2>
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>You are responsible for your account credentials</li>
+              <li>Provide accurate information</li>
+              <li>Notify us of unauthorized access</li>
+            </ul>
+          </div>
+
+          {/* 5 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              5. User Roles
+            </h2>
+
+            <div className="space-y-4 text-[#4b463f]">
+              <p><strong>Readers:</strong> Book sessions and interact with Experts.</p>
+              <p><strong>Experts:</strong> Provide sessions and set pricing.</p>
+            </div>
+          </div>
+
+          {/* 6 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              6. Payments & Fees
+            </h2>
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>Payments are processed via third-party providers</li>
+              <li>Fees are displayed at booking</li>
+              <li>Refunds follow platform policy</li>
+            </ul>
+          </div>
+
+          {/* 7 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              7. Prohibited Activities
+            </h2>
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>Harassment or abuse</li>
+              <li>Illegal or harmful content</li>
+              <li>Impersonation</li>
+              <li>System misuse or scraping</li>
+            </ul>
+          </div>
+
+          {/* 8 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              8. Sessions & Recording
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed mb-4">
+              Sessions may be recorded for quality, safety, and support purposes.
+              By continuing participation, you consent to recording.
+            </p>
+
+            <ul className="list-disc pl-6 space-y-3 text-[#4b463f]">
+              <li>Unauthorized recording is prohibited</li>
+              <li>Users must comply with applicable laws</li>
+            </ul>
+          </div>
+
+          {/* 9 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              9. Intellectual Property
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              All platform content and branding belong to Guroos or its licensors.
+            </p>
+          </div>
+
+          {/* 10 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              10. Disclaimers
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              The Service is provided “as is” without warranties. We do not guarantee
+              results or session quality.
+            </p>
+          </div>
+
+          {/* 11 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              11. Limitation of Liability
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Guroos is not liable for indirect damages or losses arising from platform use.
+            </p>
+          </div>
+
+          {/* 12 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              12. Termination
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              We may suspend or terminate accounts that violate these Terms.
+            </p>
+          </div>
+
+          {/* 13 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              13. Changes to Terms
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              Continued use after updates means acceptance of revised Terms.
+            </p>
+          </div>
+
+          {/* 14 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              14. Governing Law
+            </h2>
+            <p className="text-[#4b463f] leading-relaxed">
+              These Terms are governed by the laws of Delaware, USA.
+            </p>
+          </div>
+
+          {/* 15 */}
+          <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight tracking-tight mb-4">
+              15. Contact
+            </h2>
+
+            <div className="bg-white border border-[#e5e2dc] rounded-xl p-6 text-[#4b463f]">
+              <p>Email: support@guroos.net</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      </div>
+
+      {/* FOOTER */}
+      <div className="p-5 border-t border-[#e5e2dc] flex justify-end gap-3">
+
+        <button
+          onClick={() => setShowTerms(false)}
+          className="px-4 py-2 text-sm"
+        >
+          Cancel
+        </button>
+
+        <button
+          disabled={!hasScrolled}
+          onClick={() => {
+            setAgreed(true);
+            setShowTerms(false);
+          }}
+          className={`px-5 py-2 rounded-full text-sm text-white ${
+            hasScrolled
+              ? "bg-[#01696f]"
+              : "bg-gray-300 cursor-not-allowed"
+          }`}
+        >
+          I Agree
+        </button>
+
+      </div>
     </div>
+  </div>
+)}
+    </div>
+
+    
   );
 }

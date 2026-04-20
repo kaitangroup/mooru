@@ -100,7 +100,7 @@ export default function SearchClient() {
   const [debounceSearchTerm, setDebounceSearchTerm] = useState('');
   const [filters, setFilters] = useState<Filters>({
     subjects: [],
-    priceRange: [0, 100],
+    priceRange: [0, 5000],
     ageRange: [18, 80],
     rating: 0,
     availability: '',
@@ -300,7 +300,7 @@ return (
             Search and compare
           </span>
 
-          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[12ch] leading-[1.05]">
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[700px] leading-[1.05]">
             Find the right expert before you book.
           </h1>
 
@@ -313,7 +313,7 @@ return (
         <div className="grid lg:grid-cols-[280px_1fr] gap-8">
 
           {/* SIDEBAR (FIXED STYLE) */}
-          <aside className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-6 shadow-md h-fit sticky top-24">
+          <aside className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition  shadow-md h-fit sticky top-24">
             <h2 className="font-semibold text-lg">Filters</h2>
             <p className="text-sm text-[#6e6a63] mt-2">
               Refine results without losing context.
@@ -517,7 +517,7 @@ return (
           setSearchTerm('');
           setFilters({
             subjects: [],
-            priceRange: [0, 100],
+            priceRange: [0, 5000],
             ageRange: [18, 80],
             rating: 0,
             availability: '',

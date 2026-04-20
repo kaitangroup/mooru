@@ -67,32 +67,14 @@ export function Header() {
     </div>
   );
 
- const GuroosLogo = () => (
+  const GuroosLogo = () => (
     <div className="flex items-center gap-3">
   
       {/* ICON */}
-      <div className="w-[40px] h-[40px] rounded-lg bg-[#01696f] flex items-center justify-center shadow-sm">
-        <svg
-          width="22"
-          height="22"
-          viewBox="0 0 64 64"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Simplified G mark */}
-          <path
-            d="M20 32C20 26 25 22 32 22C36 22 40 24 42 28"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-          <path
-            d="M32 32H44V40"
-            stroke="white"
-            strokeWidth="3"
-            strokeLinecap="round"
-          />
-        </svg>
+      <div className="w-[42px] h-[42px] rounded-xl bg-[#01696f] flex items-center justify-center shadow-sm">
+        <span className="text-white text-[20px] font-bold leading-none">
+          G
+        </span>
       </div>
   
       {/* TEXT */}
@@ -101,9 +83,10 @@ export function Header() {
           Guroos
         </span>
         <span className="text-xs text-[#6e6a63]">
-          Read. Listen. Watch. Ask
+          Read. Listen. Watch. Asks
         </span>
       </div>
+  
     </div>
   );
 
@@ -172,12 +155,7 @@ export function Header() {
             >
               About
             </Link>
-            <Link
-              href="/blogs"
-              className="text-gray-600 hover:text-black transition-colors"
-            >
-              Blogs
-            </Link>
+
             <Link
               href="/contact"
               className="text-gray-600 hover:text-black transition-colors"

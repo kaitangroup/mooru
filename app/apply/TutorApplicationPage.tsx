@@ -17,6 +17,8 @@ import { Check, Plus, X, DollarSign, Clock, Users, Star, Camera } from 'lucide-r
 import { Avatar, AvatarImage, AvatarFallback } from '@radix-ui/react-avatar';
 import {RoleGuard} from "@/components/auth/RoleGuard";
 
+
+
 interface ProfileData {
   firstName: string;
   lastName: string;
@@ -55,6 +57,7 @@ export default function TutorApplicationPage() {
   const apiUrl = process.env.NEXT_PUBLIC_WP_URL;
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const browserTZ = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const normalizeToString = (value: any): string => {
     if (Array.isArray(value)) {
@@ -241,27 +244,30 @@ export default function TutorApplicationPage() {
 
     switch (step) {
       case 1:
+        if (profileData.subjects.length === 0) newErrors.subjects = "Select at least one Expertise area";
+        if (!profileData.hourlyRate) newErrors.hourlyRate = "Hourly rate is required";
+   
+        break;
+
+      case 2:
         if (!profileData.firstName) newErrors.firstName = "First name is required";
         if (!profileData.lastName) newErrors.lastName = "Last name is required";
         if (!profileData.email) newErrors.email = "Email is required";
         if (!profileData.phone) newErrors.phone = "Phone number is required";
         if (!profileData.dateOfBirth) newErrors.dateOfBirth = "Date of birth is required";
         if (!profileData.location) newErrors.location = "Location is required";
-        break;
-
-      case 2:
-        if (!profileData.education) newErrors.education = "Education is required";
-        break;
-
-      case 3:
-        if (profileData.subjects.length === 0) newErrors.subjects = "Select at least one subject";
-        if (!profileData.hourlyRate) newErrors.hourlyRate = "Hourly rate is required";
-        break;
-
-      case 4:
+        
         if (!profileData.bio) newErrors.bio = "Bio is required";
         if (!profileData.agreeToBackground) newErrors.agreeToBackground = "You must agree to background check";
         if (!profileData.agreeToTerms) newErrors.agreeToTerms = "You must agree to Terms of Service";
+        break;
+
+      case 3:
+       
+        break;
+
+      case 4:
+        
          break;
     }
 
@@ -271,7 +277,7 @@ export default function TutorApplicationPage() {
 
   const nextStep = () => {
     if (validateStep(currentStep)) {
-      if (currentStep < 4) setCurrentStep(currentStep + 1);
+      if (currentStep < 2) setCurrentStep(currentStep + 1);
     }
   };
 
@@ -392,7 +398,9 @@ export default function TutorApplicationPage() {
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (!validateStep(4)) return;
+    if (isSubmitting) return; // prevent double click
+    setIsSubmitting(true);
+    if (!validateStep(2)) return;
 
     try {
       const token = localStorage.getItem("wpToken");
@@ -417,6 +425,124 @@ export default function TutorApplicationPage() {
   const renderStepContent = () => {
     switch (currentStep) {
       case 1:
+        return (
+          <div className="space-y-6">
+            <div>
+            <h2 className="text-3xl md:text-4xl font-serif leading-tight">Expertise, Rates & Availability</h2>
+              <p className="text-gray-600 mb-6">What are your areas of expertise, your hourly rate, and when are you available?</p>
+            </div>
+            <div>
+              <Label htmlFor="hourlyRate">Desired Hourly Rate (USD) *</Label>
+              <div className="relative">
+                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  id="hourlyRate"
+                  type="number"
+                  min="15"
+                  max="200"
+                  value={profileData?.hourlyRate}
+                  onChange={(e) => handleInputChange('hourlyRate', e.target.value)}
+                  className="pl-10"
+                  placeholder="e.g., 45"
+                  required
+                />
+              </div>
+              <p className="text-sm text-gray-500 mt-1">Most experts charge between $50-$5000 per hour</p>
+              {errors.hourlyRate && <p className="text-red-500 text-sm">{errors.hourlyRate}</p>}
+            </div>
+
+            <div>
+              <Label className="text-base font-medium mb-3 block">Areas of expertise *</Label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4">
+              {subjects.map((subject) => {
+  const selected = profileData.subjects.includes(subject);
+
+  return (
+    <div
+      key={subject}
+      onClick={() => addSubject(subject)}
+      className={`px-3 py-2 text-sm rounded-lg cursor-pointer border transition-all duration-150
+        ${
+          selected
+            ? 'bg-[#d7e7e5] border-[#01696f] text-[#01696f]'
+            : 'bg-[#fbfbf9] border-[#e5e2dc] text-[#3a3732] hover:border-[#bdb8ae]'
+        }
+      `}
+    >
+      {subject}
+    </div>
+  );
+})}
+              </div>
+
+              <div className="flex gap-2 mb-4">
+                <Input
+                  value={newSubject}
+                  onChange={(e) => setNewSubject(e.target.value)}
+                  placeholder="Add custom area of expertise"
+                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomSubject())}
+                />
+                <Button type="button" onClick={addCustomSubject} variant="outline">
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                {profileData?.subjects.map((subject) => (
+                  <Badge key={subject} variant="secondary" className="flex items-center gap-1">
+                    {subject}
+                    <button
+                      type="button"
+                      onClick={() => removeSubject(subject)}
+                      className="ml-1 hover:text-red-600"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </Badge>
+                ))}
+              </div>
+              {errors.subjects && <p className="text-red-500 text-sm">{errors.subjects}</p>}
+            </div>
+
+        
+
+            <div>
+              <Label className="text-base font-medium mb-3 block">Availability</Label>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                {availabilityOptions.map((slot) => (
+                  <div key={slot} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={slot}
+                      checked={profileData?.availability.includes(slot)}
+                      onCheckedChange={() => toggleAvailability(slot)}
+                    />
+                    <Label htmlFor={slot} className="text-sm">
+                      {slot}
+                    </Label>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+  <Label className="text-base font-medium mb-2 block">Timezone</Label>
+
+  <input
+  type="hidden"
+  name="timezone"
+  value={profileData.timezone || browserTZ}
+/>
+
+<p className="text-xs text-gray-500 mt-1">
+  Detected timezone: {profileData.timezone || browserTZ}
+</p>
+
+</div>
+
+          </div>
+        );
+
+      case 2:
         return (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
@@ -530,265 +656,8 @@ export default function TutorApplicationPage() {
                 />
                 {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
               </div>
+             
             </div>
-          </div>
-        );
-
-      case 2:
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Education & Experience</h2>
-              <p className="text-gray-600 mb-6">Share your educational background and teaching experience.</p>
-            </div>
-
-            <div>
-              <Label>Highest Level of Education *</Label>
-              <Select
-                value={profileData.education}
-                onValueChange={(value) => handleInputChange("education", value)}
-              >
-                <SelectTrigger className={errors.education ? "border-red-500" : ""}>
-                  <SelectValue placeholder="Select your education level" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="high-school">High School Diploma</SelectItem>
-                  <SelectItem value="bachelors">Bachelor's Degree</SelectItem>
-                  <SelectItem value="masters">Master's Degree</SelectItem>
-                  <SelectItem value="doctorate">Doctorate/PhD</SelectItem>
-                </SelectContent>
-              </Select>
-              {errors.education && <p className="text-red-500 text-sm">{errors.education}</p>}
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="degree">Degree/Major</Label>
-                <Input
-                  id="degree"
-                  value={profileData?.degree}
-                  onChange={(e) => handleInputChange('degree', e.target.value)}
-                  placeholder="e.g., Mathematics, English Literature"
-                />
-              </div>
-              <div>
-                <Label htmlFor="university">University/Institution</Label>
-                <Input
-                  id="university"
-                  value={profileData.university}
-                  onChange={(e) => handleInputChange('university', e.target.value)}
-                  placeholder="e.g., Harvard University"
-                />
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="graduationYear">Graduation Year</Label>
-              <Input
-                id="graduationYear"
-                type="number"
-                min="1950"
-                max="2030"
-                value={profileData.graduationYear}
-                onChange={(e) => handleInputChange('graduationYear', e.target.value)}
-                placeholder="e.g., 2020"
-              />
-            </div>
-
-            
-
-            <div>
-              <Label htmlFor="teachingExperience">Teaching Experience</Label>
-              <Select
-                value={profileData.teachingExperience}
-                onValueChange={(value) => handleInputChange('teachingExperience', value)}
-              >
-
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your teaching experience" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">No formal teaching experience</SelectItem>
-                  <SelectItem value="less-than-1">Less than 1 year</SelectItem>
-                  <SelectItem value="1-2">1-2 years</SelectItem>
-                  <SelectItem value="3-5">3-5 years</SelectItem>
-                  <SelectItem value="5-10">5-10 years</SelectItem>
-                  <SelectItem value="10-plus">10+ years</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-
-
-            <div>
-              <Label htmlFor="tutoringExperience">Tutoring Experience</Label>
-              {/* <Select onValueChange={(value) => handleInputChange('tutoringExperience', value)}> */}
-              <Select
-                value={profileData.tutoringExperience}
-                onValueChange={(value) => handleInputChange('tutoringExperience', value)}
-              >
-
-                <SelectTrigger>
-                  <SelectValue placeholder="Select your tutoring experience" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">No tutoring experience</SelectItem>
-                  <SelectItem value="less-than-1">Less than 1 year</SelectItem>
-                  <SelectItem value="1-2">1-2 years</SelectItem>
-                  <SelectItem value="3-5">3-5 years</SelectItem>
-                  <SelectItem value="5-10">5-10 years</SelectItem>
-                  <SelectItem value="10-plus">10+ years</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        );
-
-      case 3:
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Subjects & Availability</h2>
-              <p className="text-gray-600 mb-6">What subjects can you teach and when are you available?</p>
-            </div>
-
-            <div>
-              <Label className="text-base font-medium mb-3 block">Subjects You Can Teach *</Label>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mb-4">
-              {subjects.map((subject) => {
-  const selected = profileData.subjects.includes(subject);
-
-  return (
-    <div
-      key={subject}
-      onClick={() => addSubject(subject)}
-      className={`px-3 py-2 text-sm rounded-lg cursor-pointer border transition-all duration-150
-        ${
-          selected
-            ? 'bg-[#d7e7e5] border-[#01696f] text-[#01696f]'
-            : 'bg-[#fbfbf9] border-[#e5e2dc] text-[#3a3732] hover:border-[#bdb8ae]'
-        }
-      `}
-    >
-      {subject}
-    </div>
-  );
-})}
-              </div>
-
-              <div className="flex gap-2 mb-4">
-                <Input
-                  value={newSubject}
-                  onChange={(e) => setNewSubject(e.target.value)}
-                  placeholder="Add custom subject"
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addCustomSubject())}
-                />
-                <Button type="button" onClick={addCustomSubject} variant="outline">
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {profileData?.subjects.map((subject) => (
-                  <Badge key={subject} variant="secondary" className="flex items-center gap-1">
-                    {subject}
-                    <button
-                      type="button"
-                      onClick={() => removeSubject(subject)}
-                      className="ml-1 hover:text-red-600"
-                    >
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ))}
-              </div>
-              {errors.subjects && <p className="text-red-500 text-sm">{errors.subjects}</p>}
-            </div>
-
-            <div>
-              <Label htmlFor="hourlyRate">Desired Hourly Rate (USD) *</Label>
-              <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  id="hourlyRate"
-                  type="number"
-                  min="15"
-                  max="200"
-                  value={profileData?.hourlyRate}
-                  onChange={(e) => handleInputChange('hourlyRate', e.target.value)}
-                  className="pl-10"
-                  placeholder="e.g., 45"
-                  required
-                />
-              </div>
-              <p className="text-sm text-gray-500 mt-1">Most experts charge between $20-$80 per hour</p>
-              {errors.hourlyRate && <p className="text-red-500 text-sm">{errors.hourlyRate}</p>}
-            </div>
-
-            <div>
-              <Label className="text-base font-medium mb-3 block">Availability</Label>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                {availabilityOptions.map((slot) => (
-                  <div key={slot} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={slot}
-                      checked={profileData?.availability.includes(slot)}
-                      onCheckedChange={() => toggleAvailability(slot)}
-                    />
-                    <Label htmlFor={slot} className="text-sm">
-                      {slot}
-                    </Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-  <Label className="text-base font-medium mb-2 block">Timezone</Label>
-
-  <input
-  type="hidden"
-  name="timezone"
-  value={profileData.timezone || browserTZ}
-/>
-
-<p className="text-xs text-gray-500 mt-1">
-  Detected timezone: {profileData.timezone || browserTZ}
-</p>
-
-</div>
-
-          </div>
-        );
-
-      case 4:
-        return (
-          <div className="space-y-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-4">Profile & Verification</h2>
-              <p className="text-gray-600 mb-6">Complete your profile and agree to our verification process.</p>
-            </div>
-            <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="instantBook"
-                  checked={profileData.instantBook}
-                  onCheckedChange={(checked) => handleInputChange('instantBook', checked)}
-                />
-                <Label htmlFor="instantBook" className="text-sm">
-                  I am available for Instant Book
-                </Label>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="AvailableInPerson"
-                  checked={profileData.AvailableInPerson}
-                  onCheckedChange={(checked) => handleInputChange('AvailableInPerson', checked)}
-                />
-                <Label htmlFor="AvailableInPerson" className="text-sm">
-                  I am Available In Person
-                </Label>
-              </div>
 
             <div>
               <Label htmlFor="bio">About You *</Label>
@@ -797,78 +666,15 @@ export default function TutorApplicationPage() {
                 value={profileData?.bio}
                 onChange={(e) => handleInputChange('bio', e.target.value)}
                 rows={4}
-                placeholder="Tell students about yourself, your background, and what makes you a great tutor..."
+                placeholder="Tell people about yourself and what makes you a great expert..."
                 required
               />
             </div>
-
-            <div>
-              <Label htmlFor="teachingStyle">Teaching Style</Label>
-              <Textarea
-                id="teachingStyle"
-                value={profileData?.teachingStyle}
-                onChange={(e) => handleInputChange('teachingStyle', e.target.value)}
-                rows={3}
-                placeholder="Describe your teaching approach and methods..."
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="whyTutor">Why do you want to tutor?</Label>
-              <Textarea
-                id="whyTutor"
-                value={profileData.whyTutor}
-                onChange={(e) => handleInputChange('whyTutor', e.target.value)}
-                rows={3}
-                placeholder="Share your motivation for becoming a tutor..."
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="references">References (Optional)</Label>
-              <Textarea
-                id="references"
-                value={profileData.references}
-                onChange={(e) => handleInputChange('references', e.target.value)}
-                rows={2}
-                placeholder="Provide contact information for professional or academic references..."
-              />
-            </div>
-
-            <div className="space-y-4 p-4 bg-[#fbfbf9] border border-[#e5e2dc] rounded-lg">
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="agreeToBackground"
-                  checked={profileData.agreeToBackground}
-                  onCheckedChange={(checked) => handleInputChange('agreeToBackground', checked)}
-                  required
-                />
-                <Label htmlFor="agreeToBackground" className="text-sm">
-                  I agree to undergo a background check as part of the verification process. *
-                </Label>
-
-                {errors.agreeToBackground && <p className="text-red-500 text-sm">{errors.agreeToBackground}</p>}
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <Checkbox
-                  id="agreeToTerms"
-                  checked={profileData.agreeToTerms}
-                  onCheckedChange={(checked) => handleInputChange('agreeToTerms', checked)}
-                  required
-                />
-                <Label htmlFor="agreeToTerms" className="text-sm">
-                  I agree to TutorConnect's{' '}
-                  <a href="/terms" className="text-blue-600 hover:underline">Terms of Service</a>
-                  {' '}and{' '}
-                  <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>. *
-                </Label>
-              </div>
-
-            
-            </div>
           </div>
         );
+        
+
+    
 
       default:
         return null;
@@ -933,13 +739,13 @@ export default function TutorApplicationPage() {
         Update your profile
         </h2>
         <p className="text-[#6e6a63] text-sm mt-1">
-          Step {currentStep} of 4
+          Step {currentStep} of 2
         </p>
       </div>
 
       {/* PROGRESS BAR */}
       <div className="flex gap-2 mb-8">
-        {[1,2,3,4].map(step => (
+        {[1,2].map(step => (
           <div
             key={step}
             className={`h-1 flex-1 rounded-full ${
@@ -965,7 +771,7 @@ export default function TutorApplicationPage() {
             Back
           </button>
 
-          {currentStep < 4 ? (
+          {currentStep < 2 ? (
             <button
               type="button"
               onClick={nextStep}
@@ -977,9 +783,11 @@ export default function TutorApplicationPage() {
             <button
               type="button"
               onClick={handleSubmit}
-              className="px-5 h-[40px] rounded-full bg-[#01696f] text-white text-sm"
+              disabled={isSubmitting}
+              
+              className={`${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'px-5 h-[40px] rounded-full bg-[#01696f] text-white text-sm'}`}
             >
-              Save changes
+             {isSubmitting ? 'Saving changes...' : 'Save Changes'}
             </button>
           )}
 

@@ -43,7 +43,7 @@ export function Footer() {
               links: [
                 { label: "Find Expert", href: "/search" },
                 { label: "Sign Up", href: "/auth/user/register" },
-                { label: "Blog", href: "/blogs" },
+              
               ],
             },
             {

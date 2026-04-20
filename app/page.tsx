@@ -45,7 +45,7 @@ export default function HomePage() {
       </h1>
 
       <p className="mt-6 text-gray-600 max-w-xl text-base">
-        When a book, podcast, or video leaves you with real questions, you should be able to ask the person who made it.
+        When a book, podcast, or video leaves you with real questions, you should be able to question the person who created it.
       </p>
 
       <div className="mt-8 flex flex-wrap gap-4">
