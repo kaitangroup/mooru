@@ -140,7 +140,7 @@ export default function TutorDashboard() {
             Expert dashboard
           </span>
   
-          <h1 className="font-[var(--font-display)] text-[clamp(2rem,3vw,3rem)] mt-3">
+          <h1 className="mt-5 font-[var(--font-display)] text-[clamp(2rem,3vw,3.5rem)] max-w-[700px] leading-[1.05]">
             Manage your sessions, availability, and earnings
           </h1>
   

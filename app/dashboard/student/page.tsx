@@ -341,7 +341,7 @@ export default function StudentDashboard() {
     </Link>
 
     <Link
-      href="/saved-experts"
+      href="/saved-search"
       className="flex items-center justify-between px-4 h-[44px] rounded-xl border border-[#e5e2dc] bg-[#fbfbf9] hover:bg-white transition"
     >
       <span className="flex items-center gap-2 text-sm font-medium text-[#28251d]">

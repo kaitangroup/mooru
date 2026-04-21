@@ -13,7 +13,7 @@ export default function AboutClient() {
 
     {/* EYEBROW */}
     <span className="inline-block text-xs font-semibold tracking-wide uppercase bg-[#d7e7e5] text-[#01696f] px-3 py-1 rounded-full">
-      About Guroos.Net
+      About Guroos.net
  
     </span>
 
@@ -24,7 +24,7 @@ export default function AboutClient() {
 
     {/* SUBTEXT */}
     <p className="text-[#6e6a63] mt-4 max-w-[600px] text-base leading-relaxed">
-      Guroos.Net helps you connect directly with experts and content creators, so you can learn through meaningful, real question and answer sessions.
+      Guroos.net helps you connect directly with experts and content creators, so you can learn through meaningful, real question and answer sessions.
     </p>
 
   </div>
@@ -40,7 +40,7 @@ export default function AboutClient() {
 
     <p className="text-[#6e6a63] leading-relaxed mb-4">
       We believe knowledge should be accessible directly from the source.
-      Instead of searching endlessly, Guroos.Net lets you talk to the people who
+      Instead of searching endlessly, Guroos.net lets you talk to the people who
       write books and  create podcasts and other contents.
     </p>
 

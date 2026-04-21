@@ -254,12 +254,11 @@ export default function TutorApplicationPage() {
         if (!profileData.lastName) newErrors.lastName = "Last name is required";
         if (!profileData.email) newErrors.email = "Email is required";
         if (!profileData.phone) newErrors.phone = "Phone number is required";
-        if (!profileData.dateOfBirth) newErrors.dateOfBirth = "Date of birth is required";
+      
         if (!profileData.location) newErrors.location = "Location is required";
         
         if (!profileData.bio) newErrors.bio = "Bio is required";
-        if (!profileData.agreeToBackground) newErrors.agreeToBackground = "You must agree to background check";
-        if (!profileData.agreeToTerms) newErrors.agreeToTerms = "You must agree to Terms of Service";
+       
         break;
 
       case 3:
@@ -398,10 +397,15 @@ export default function TutorApplicationPage() {
 
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (isSubmitting) return; // prevent double click
+    if (isSubmitting) return;
+  
     setIsSubmitting(true);
-    if (!validateStep(2)) return;
-
+  
+    if (!validateStep(2)) {
+      setIsSubmitting(false); // ✅ FIX
+      return;
+    }
+  
     try {
       const token = localStorage.getItem("wpToken");
       const res = await fetch(`${apiUrl}wp-json/custom/v1/profile`, {
@@ -412,13 +416,17 @@ export default function TutorApplicationPage() {
         },
         body: JSON.stringify(profileData),
       });
+  
       if (!res.ok) throw new Error("Failed to update profile");
+  
       const data = await res.json();
       toast.success(data.message || "Profile updated");
       router.push('/');
     } catch (err) {
       toast.error("Failed to update profile");
       console.error(err);
+    } finally {
+      setIsSubmitting(false); // ✅ ALSO IMPORTANT
     }
   };
 

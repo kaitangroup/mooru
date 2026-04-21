@@ -412,7 +412,7 @@ return (
             {tutors.map((t) => (
   <div
     key={t.id}
-    className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition p-6 flex gap-5 justify-between"
+    className="bg-white border border-[#e5e2dc] rounded-2xl p-5 hover:shadow-md transition  flex gap-5 justify-between"
   >
 
     {/* LEFT */}
@@ -428,7 +428,7 @@ return (
       <div>
         {/* SUBJECT TAGS */}
         <div className="flex flex-wrap gap-2 text-xs mb-2">
-          {t.subjects.slice(0, 3).map((s, i) => (
+          {t.subjects.slice(0, 10).map((s, i) => (
             <span
               key={i}
               className="bg-[#d7e7e5] text-[#01696f] px-2 py-1 rounded-full"

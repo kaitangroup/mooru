@@ -110,7 +110,7 @@ export default function UserPaymentsPage() {
         {/* BACK LINK */}
         <div className="mt-6">
           <Link
-            href="/dashboard"
+            href="/dashboard/student"
             className="text-sm text-[#01696f] hover:underline"
           >
             ← Back to dashboard

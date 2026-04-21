@@ -7,6 +7,7 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { BookingModal } from '@/components/booking/BookingModal';
 import { useSession } from 'next-auth/react';
+import { Star, MapPin, Clock, MessageCircle } from "lucide-react";
 
 export default function TutorProfilePage() {
   const params = useParams();
@@ -92,11 +93,41 @@ export default function TutorProfilePage() {
                     {author.name}
                   </h1>
 
-                  <div className="flex flex-wrap gap-4 text-sm text-[#6e6a63] mt-2">
+                  <div className="flex items-center gap-4 text-sm text-[#6e6a63] mt-2">
+
+  {/* RATING + REVIEWS */}
+  <div className="flex items-center gap-1">
+    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+    
+    <span className="font-medium text-[#28251d]">
+      {author.average_rating ?? 0}
+    </span>
+
+    <span className="text-gray-500">
+      ({author.reviews_count ?? 0} reviews)
+    </span>
+  </div>
+
+  {/* RESPONSE TIME */}
+  {/* <div className="flex items-center gap-1">
+    <span>
+      {t.responseTime || "Fast response"}
+    </span>
+  </div> */}
+
+  {/* LOCATION */}
+  <div className="flex items-center gap-1">
+    <MapPin className="h-4 w-4 text-[#9ca3af]" />
+    <span>{author.location}</span>
+  </div>
+
+</div>
+
+                  {/* <div className="flex flex-wrap gap-4 text-sm text-[#6e6a63] mt-2">
                     <span>{author.average_rating} rating</span>
                     <span>{author.reviews_count} reviews</span>
                     <span>{author.location}</span>
-                  </div>
+                  </div> */}
 
                   <div className="flex flex-wrap gap-2 mt-3">
                     {author.subjects?.map((s: string) => (

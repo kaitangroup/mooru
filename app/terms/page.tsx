@@ -18,7 +18,7 @@ export default function TermsPage() {
           </h1>
 
           <p className="text-[#6e6a63] mt-4 max-w-[600px] text-base leading-relaxed">
-            These Terms govern your use of Guroos.Net. Please read them carefully before using the platform.
+            These Terms govern your use of Guroos.net. Please read them carefully before using the platform.
           </p>
         </div>
       </section>
