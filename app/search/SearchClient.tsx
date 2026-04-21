@@ -7,6 +7,7 @@ import { SearchFilters } from '@/components/search/SearchFilters';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Filter } from 'lucide-react';
+import { Star, MapPin, Clock, MessageCircle } from "lucide-react";
 import Link from "next/link"; 
 import { useSearchParams } from 'next/navigation';
 import { TutorCard } from '@/components/tutors/TutorCard';
@@ -446,11 +447,37 @@ return (
         </p>
 
         {/* META */}
-        <div className="flex gap-4 text-sm text-[#6e6a63] mt-2">
-          <span>{t.rating} rating</span>
-          <span>{t.responseTime || "Fast response"}</span>
-          <span>{t.location}</span>
-        </div>
+       
+
+<div className="flex items-center gap-4 text-sm text-[#6e6a63] mt-2">
+
+  {/* RATING + REVIEWS */}
+  <div className="flex items-center gap-1">
+    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+    
+    <span className="font-medium text-[#28251d]">
+      {t.rating ?? 0}
+    </span>
+
+    <span className="text-gray-500">
+      ({t.reviewCount ?? 0} reviews)
+    </span>
+  </div>
+
+  {/* RESPONSE TIME */}
+  {/* <div className="flex items-center gap-1">
+    <span>
+      {t.responseTime || "Fast response"}
+    </span>
+  </div> */}
+
+  {/* LOCATION */}
+  <div className="flex items-center gap-1">
+    <MapPin className="h-4 w-4 text-[#9ca3af]" />
+    <span>{t.location}</span>
+  </div>
+
+</div>
       </div>
     </div>
 

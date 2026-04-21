@@ -48,7 +48,7 @@ export default function TutorRegisterPage() {
   const [submitting, setSubmitting] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [agreed, setAgreed] = useState(false);
+
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,6 +59,17 @@ export default function TutorRegisterPage() {
     // Strong password: at least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return true;
+  };
+
+  const handleAgreementToggle = () => {
+    if (formData.agreeToTerms) {
+      // already agreed → uncheck
+      setFormData((prev) => ({ ...prev, agreeToTerms: false }));
+    } else {
+      // not agreed → open modal (do NOT check yet)
+      setShowTerms(true);
+      setHasScrolled(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -364,20 +375,23 @@ export default function TutorRegisterPage() {
       </div>
     </div>
 
-    {/* CONSENT (MISSING BEFORE) */}
+    {/* User agreement */}
     <div className="flex items-start gap-2 text-sm">
   <input
     type="checkbox"
-    checked={agreed}
-    readOnly
-    className="mt-1"
+    checked={formData.agreeToTerms}
+    onChange={handleAgreementToggle}
+    className="mt-1 cursor-pointer"
   />
 
   <span>
     I agree to the{" "}
     <button
       type="button"
-      onClick={() => setShowTerms(true)}
+      onClick={() => {
+        setShowTerms(true);
+        setHasScrolled(false);
+      }}
       className="text-[#01696f] underline"
     >
       User Agreement
@@ -652,19 +666,20 @@ export default function TutorRegisterPage() {
         </button>
 
         <button
-          disabled={!hasScrolled}
-          onClick={() => {
-            setAgreed(true);
-            setShowTerms(false);
-          }}
-          className={`px-5 py-2 rounded-full text-sm text-white ${
-            hasScrolled
-              ? "bg-[#01696f]"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
-        >
-          I Agree
-        </button>
+  disabled={!hasScrolled}
+  onClick={() => {
+    setFormData((prev) => ({
+      ...prev,
+      agreeToTerms: true, // single source of truth
+    }));
+    setShowTerms(false);
+  }}
+  className={`px-5 py-2 rounded-full text-white ${
+    hasScrolled ? "bg-[#01696f]" : "bg-gray-300 cursor-not-allowed"
+  }`}
+>
+  I Agree
+</button>
 
       </div>
     </div>

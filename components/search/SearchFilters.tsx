@@ -140,7 +140,7 @@ export function SearchFilters({ filters, onFiltersChange }: SearchFiltersProps) 
 
         {/* Subjects */}
         <div>
-          <Label className="text-sm tracking-wider font-bold mb-3 block">Subjects</Label>
+          <Label className="text-sm tracking-wider font-bold mb-3 block">Areas of Expertise</Label>
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {subjects.map((subject) => (
               <div key={subject} className="flex items-center space-x-2">
