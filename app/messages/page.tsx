@@ -670,19 +670,22 @@ useEffect(() => {
                       {token ? (
                         <form onSubmit={handleSendMessage} className="flex items-center gap-2 w-full">
 <div className="flex items-center w-full border border-[#01696f] rounded-full px-4 h-[48px]">
-  <textarea
-    className="
-      w-full 
-      bg-transparent 
-      outline-none 
-      resize-none 
-      text-sm 
-      leading-normal
-      flex items-center
-    "
-    rows={1}
-    placeholder="Type a message"
-  />
+<textarea
+  value={newMessage}
+  ref={composeRef}
+  onKeyDown={onComposerKeyDown}
+  onChange={(e) => setNewMessage(e.target.value)}
+  className="
+    w-full 
+    bg-transparent 
+    outline-none 
+    resize-none 
+    text-sm 
+    leading-normal
+  "
+  rows={1}
+  placeholder={editingId ? 'Edit your message…' : 'Type your message...'}
+/>
 </div>
                       
 <button
