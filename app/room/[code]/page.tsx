@@ -466,6 +466,8 @@ console.log("Socket effect running with:", { displayName, validationStatus });
     if (!(panelOpen && panelTab === "chat")) setUnreadChat((c) => c + 1);
   });
 
+  
+
   // Signaling
   socket.on("need-offer", async ({ targetId }: { targetId: string }) => {
     const pc = await ensurePeer(targetId);

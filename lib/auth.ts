@@ -100,6 +100,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.role    = (user as any).role ?? "user";
         token.wpToken = (user as any).token ?? null; // ✅ client/session থেকে ব্যবহার করবে
+        token.userId  = (user as any).id ?? null; // ✅ ADD THIS
       }
       return token;
     },
@@ -107,8 +108,12 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       (session as any).role    = token.role ?? "user";
       (session as any).wpToken = token.wpToken ?? null;
+    
+      // ✅ ADD THIS
+      (session as any).userId  = token.userId ?? null;
+    
       return session;
-    },
+    }
   },
 };
 
