@@ -425,7 +425,20 @@ const endIso = toIsoWithOffset(end);
       const res = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amountInCents }),
+        body: JSON.stringify({
+          amount: amountInCents,
+          currency: 'usd',
+      
+          // 🔗 required context (must match backend)
+          user_id: userId,
+          tutor_id: tutor?.id,
+          service_id: serviceId,
+          staff_id: staffId,
+      
+          // booking context
+          appointment_start: startIso,
+          duration: formData.duration,
+        }),
       });
 
       const { clientSecret } = await res.json();
@@ -440,6 +453,9 @@ const endIso = toIsoWithOffset(end);
         return;
       } else if (result.paymentIntent?.status === 'succeeded') {
         // Create booking in Bookly
+
+        const pi = result.paymentIntent as any;
+const chargeId = pi.latest_charge ?? null;
         const res2 = await fetch(endpoint, {
           method: 'POST',
           headers: {
@@ -473,6 +489,7 @@ const endIso = toIsoWithOffset(end);
                 meta: {
                   payment_intent: result.paymentIntent.id,
                   amount: result.paymentIntent.amount,
+                  charge_id: chargeId,
                   currency: result.paymentIntent.currency,
                 },
               },
