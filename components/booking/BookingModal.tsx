@@ -399,7 +399,7 @@ const userTimeZone =
       setIsSubmitting(false);
       return;
     }
-
+// start
     const endpoint = process.env.NEXT_PUBLIC_BOOKLY_ENDPOINT!;
     const token = process.env.NEXT_PUBLIC_BOOKLY_TOKEN!;
     const serviceId = Number(tutor?.service_id || 0);
@@ -468,9 +468,13 @@ const endIso = toIsoWithOffset(end);
               status: 'completed',
               type: 'stripe',
               external: {
-                gateway: 'sslcommerz',
-                transaction_id: 'TXN12345',
-                meta: { order_id: 'ABC-1' },
+                gateway: 'stripe',
+                transaction_id: result.paymentIntent.id, // ✅ CRITICAL
+                meta: {
+                  payment_intent: result.paymentIntent.id,
+                  amount: result.paymentIntent.amount,
+                  currency: result.paymentIntent.currency,
+                },
               },
             },
           }),
@@ -495,6 +499,9 @@ const endIso = toIsoWithOffset(end);
       setIsSubmitting(false); // re-enable after request
     }
   };
+
+
+  // end
 
   const handleInputChange = (field: string, value: string | number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
